@@ -2,8 +2,8 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div>page moustafa</div>
   )
 }
 
-export default page
+export default page;
