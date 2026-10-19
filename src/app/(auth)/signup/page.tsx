@@ -8,7 +8,7 @@ const signUpPage=({}:IProps)=> {
   return (
     <div>
 
-
+signuppppppp
     </div>
   )
 }
