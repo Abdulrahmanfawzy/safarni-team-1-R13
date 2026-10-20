@@ -15,7 +15,7 @@ export function AuthLayout({image,imageAlt, children,hasIcon,href }: AuthLayoutP
   return (
     <main className="min-h-screen bg-background">
       {hasIcon && href && (
-        <div className="absolute left-4 top-4 z-10 sm:left-8 sm:top-8 lg:left-32 lg:top-15">
+        <div className="absolute left-4 top-4 z-10 sm:left-8 sm:top-8 lg:left-41 lg:top-15">
           <BackButton hrefName={href} />
         </div>
       )}
