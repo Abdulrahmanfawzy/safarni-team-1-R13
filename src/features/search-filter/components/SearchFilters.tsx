@@ -157,15 +157,48 @@ function PriceHistogram({
 
 /* --------------------------------- component --------------------------------- */
 
-export default function SearchFilters() {
-  const [selectedSort, setSelectedSort] = useState<string | null>(null);
-  const [budget, setBudget] = useState<[number, number]>([MIN_PRICE, MAX_PRICE]);
-  const [selectedStyles, setSelectedStyles] = useState<string[]>([]);
-  const [locationQuery, setLocationQuery] = useState("");
-  const [locations, setLocations] = useState<string[]>([]);
-  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+export type Filters = {
+  sort: string | null;
+  price: [number, number];
+  styles: string[];
+  locations: string[];
+  ratings: number[];
+};
 
-  const totalTours = 56; // TODO: derive from your filtered results
+export const INITIAL_FILTERS: Filters = {
+  sort: null,
+  price: [MIN_PRICE, MAX_PRICE],
+  styles: [],
+  locations: [],
+  ratings: [],
+};
+
+type SearchFiltersProps = {
+  filters: Filters;
+  onChange: (filters: Filters) => void;
+  resultCount: number;
+};
+
+export default function SearchFilters({
+  filters,
+  onChange,
+  resultCount,
+}: SearchFiltersProps) {
+  const [locationQuery, setLocationQuery] = useState("");
+
+  // Read from props, write through onChange, so the JSX below stays the same.
+  const selectedSort = filters.sort;
+  const budget = filters.price;
+  const selectedStyles = filters.styles;
+  const locations = filters.locations;
+  const selectedRatings = filters.ratings;
+
+  const setSelectedSort = (sort: string | null) => onChange({ ...filters, sort });
+  const setBudget = (price: [number, number]) => onChange({ ...filters, price });
+  const setSelectedStyles = (styles: string[]) => onChange({ ...filters, styles });
+  const setLocations = (locations: string[]) => onChange({ ...filters, locations });
+  const setSelectedRatings = (ratings: number[]) =>
+    onChange({ ...filters, ratings });
 
   function toggleSelection<T>(
     value: T,
@@ -188,16 +221,12 @@ export default function SearchFilters() {
   }
 
   function clearAll() {
-    setSelectedSort(null);
-    setBudget([MIN_PRICE, MAX_PRICE]);
-    setSelectedStyles([]);
+    onChange(INITIAL_FILTERS);
     setLocationQuery("");
-    setLocations([]);
-    setSelectedRatings([]);
   }
 
   return (
-    <aside className="w-full max-w-xl space-y-6 rounded-2xl border border-border bg-background p-6">
+    <aside className="w-full space-y-6 rounded-2xl border border-border bg-background p-5">
       {/* Sort */}
       <section className="flex flex-wrap gap-3">
         {sortOptions.map((option) => (
@@ -365,7 +394,7 @@ export default function SearchFilters() {
           className="text-white hover:opacity-90"
           style={{ backgroundColor: BRAND }}
         >
-          {totalTours} Tours Found
+          {resultCount} Tours Found
         </Button>
       </div>
     </aside>
