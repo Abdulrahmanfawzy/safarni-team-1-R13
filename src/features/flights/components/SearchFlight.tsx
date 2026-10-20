@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import FlightsDialog from "./FlightsDialog";
+
 import Image from "next/image";
 import { ArrowRight, RefreshCw } from "lucide-react";
 import Flight from "@/assets/images/1f333dd2b89d7ab8cf544bc5d5b4878e6d6f2f3c.png";
@@ -35,9 +37,16 @@ const inputClass = "w-full text-xs sm:text-sm";
 const SearchFlight = () => {
   const [tripType, setTripType] =
     useState<(typeof tripTypes)[number]["id"]>("round");
-
+  const [departure, setDeparture] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+  const [open, setOpen] = useState(false);
+  const maybeOpen = (dep: string, ret: string) => {
+    // Round Trip: لازم التاريخين | غير كده: الذهاب بس
+    if (dep && (tripType !== "round" || ret)) setOpen(true);
+  };
   return (
-    <section className="w-full min-h-[calc(100dvh-4rem)] flex items-center justify-center py-6 sm:py-10 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 lg:px-12">
+    <>
+    <section className="w-full min-h-screen flex items-center justify-center py-6 sm:py-10 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 lg:px-12">
       <main className="w-full max-w-xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-8 lg:gap-12 xl:gap-16">
         {/* Image panel */}
         <div className="flex items-center justify-center w-full max-w-md sm:max-w-lg md:max-w-none md:w-5/12 lg:w-[46%] xl:w-[42%] 2xl:w-[40%] h-48 sm:h-60 md:h-[460px] lg:h-[500px] xl:h-[540px] 2xl:h-[580px] bg-light-gray rounded-2xl md:rounded-3xl p-4 sm:p-6 lg:p-8 shrink-0 overflow-hidden">
@@ -114,6 +123,10 @@ const SearchFlight = () => {
                   id="departure"
                   type="date"
                   containerClassName={inputContainerClass}
+                  onChange={(e) => {
+                    setDeparture(e.target.value);
+                    maybeOpen(e.target.value, returnDate);
+                  }}
                   className={inputClass}
                 />
               </div>
@@ -128,6 +141,10 @@ const SearchFlight = () => {
                     type="date"
                     containerClassName={inputContainerClass}
                     className={inputClass}
+                    onChange={(e) => {
+                      setReturnDate(e.target.value);
+                      maybeOpen(departure, e.target.value);
+                    }}
                   />
                 </div>
               )}
@@ -160,7 +177,19 @@ const SearchFlight = () => {
           </form>
         </div>
       </main>
+     
     </section>
+  
+
+      <FlightsDialog
+        open={open}
+        onOpenChange={setOpen}
+        departureDate={departure}
+        returnDate={tripType === "round" ? returnDate : undefined}
+        onSelect={(flight, leg) => console.log(leg, flight)}
+      />
+  </>
+ 
   );
 };
 
