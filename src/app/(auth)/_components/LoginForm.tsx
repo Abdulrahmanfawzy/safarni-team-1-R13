@@ -75,7 +75,7 @@ const LoginForm=({}:IProps)=> {
           placeholder="********"
           type={showPassword ? "text" : "password"}
         />
-        <Link href='/forget-passowrd'  className="pt-1.5 flex items-center justify-end text-lg text-gray-800 font-medium ">
+        <Link href='/forgot-password'  className="pt-1.5 flex items-center justify-end text-lg text-gray-800 font-medium ">
           Forgot Password?
         </Link>
         {errors.password && (

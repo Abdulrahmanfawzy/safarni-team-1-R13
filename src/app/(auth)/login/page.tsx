@@ -1,5 +1,5 @@
 'use client'
-import { Input } from "@/components/ui/input"
+
 import loginImg from "@/assets/images/login.svg"
 import { useState } from "react";
 import { AuthLayout } from "../_components/auth-layout";
