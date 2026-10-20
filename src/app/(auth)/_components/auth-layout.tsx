@@ -1,21 +1,28 @@
 import Image, { StaticImageData } from "next/image";
 import logo from "@/assets/images/logo.svg"
 import type { ReactNode } from "react";
+import { BackButton } from "./BackButton";
 
 type AuthLayoutProps = {
   children: ReactNode;
   image?:StaticImageData;
-   imageAlt?: string;
+  imageAlt?: string;
+  hasIcon?:boolean;
+  href?:string;
 };
 
-export function AuthLayout({image,imageAlt, children }: AuthLayoutProps) {
+export function AuthLayout({image,imageAlt, children,hasIcon,href }: AuthLayoutProps) {
   return (
     <main className="min-h-screen bg-background">
-       
+      {hasIcon && href && (
+        <div className="absolute left-8 top-8 z-10">
+          <BackButton hrefName={href} />
+        </div>
+      )}
       <div className="grid min-h-screen lg:grid-cols-2 ">
          {/* Left: Image */}
-        <section className="hidden lg:flex items-center justify-center p-32 lg:pr-2 ">
-          {image &&<Image
+        <section className="hidden lg:flex lg:flex-col items-start justify-center p-32 lg:pr-2 ">
+          {image && <Image
             src={image}
             alt={imageAlt ?? ''}
             width={608}
