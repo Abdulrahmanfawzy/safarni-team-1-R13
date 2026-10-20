@@ -18,7 +18,7 @@ export function PasswordRequirements({password}: PasswordRequirementsProps) {
 ];
 
   return (
-    <ul className="space-y-4">
+    <ul className="space-y-3 sm:space-y-4">
       {requirements.map((requirement) => (
         <li key={requirement.id} className="flex items-center gap-2">
           <CircleCheck
@@ -30,7 +30,7 @@ export function PasswordRequirements({password}: PasswordRequirementsProps) {
             }`}
           />
           <span
-            className={`text-base leading-[140%] capitalize ${
+            className={`text-sm leading-[140%] capitalize sm:text-base ${
               requirement.isValid
                 ? "text-green-600"
                 : "text-gray-500"

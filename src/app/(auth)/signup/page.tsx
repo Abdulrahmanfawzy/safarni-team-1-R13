@@ -7,8 +7,8 @@ import { SocialLoginOptions } from "../_components/SocialLoginOptions"
 
 const signUpPage = () => {
   return (
-    <AuthLayout image={signupImg} imageAlt="Safari travel illustration" hasIcon={true} href="/get-started">
-      <div className="flex flex-col justify-between gap-6 mt-3">
+    <AuthLayout image={signupImg} imageAlt="Safari travel illustration" hasIcon={true} href="/login">
+      <div className="flex flex-col gap-5 sm:gap-6">
         <AuthFormHeading
           title="Start Your Journey"
           description="Create your account to explore the world"

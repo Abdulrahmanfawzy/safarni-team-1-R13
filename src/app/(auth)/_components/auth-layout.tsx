@@ -15,30 +15,37 @@ export function AuthLayout({image,imageAlt, children,hasIcon,href }: AuthLayoutP
   return (
     <main className="min-h-screen bg-background">
       {hasIcon && href && (
-        <div className="absolute left-8 top-8 z-10">
+        <div className="absolute left-4 top-4 z-10 sm:left-8 sm:top-8 lg:left-32 lg:top-15">
           <BackButton hrefName={href} />
         </div>
       )}
-      <div className="grid min-h-screen lg:grid-cols-2 ">
+      <div className="grid min-h-screen lg:grid-cols-2">
          {/* Left: Image */}
-        <section className="hidden lg:flex lg:flex-col items-start justify-center p-32 lg:pr-2 ">
+        <section className="hidden items-start justify-center p-32 lg:flex lg:flex-col lg:pr-0">
           {image && <Image
             src={image}
             alt={imageAlt ?? ''}
             width={608}
             height={772}
-            className="  w-full h-full object-fit"
+            className="h-full w-full object-contain"
             priority
           />}
         </section>
  
         {/* Right: Content */}
 
-        <section className="relative flex flex-col items-center justify-center p-6 sm:p-10 lg:pl-0 ">
-          <div className="absolute right-6 top-6 sm:right-10">
-          <Image src={logo} alt="logo" width={135} height={100} />
-        </div>
-          <div className="w-full max-w-md mt-8">
+        <section className="relative flex min-h-screen flex-col items-center justify-start px-6 pb-8 pt-28 sm:px-10 sm:pb-10 sm:pt-32 lg:justify-center lg:pl-0 lg:pt-10">
+          <div className="absolute right-4 top-4 z-10 sm:right-8 sm:top-8">
+            <Image
+              src={logo}
+              alt="Safarni"
+              width={145}
+              height={104}
+              className="h-auto w-24 sm:w-28 lg:w-[135px]"
+              priority
+            />
+          </div>
+          <div className="w-full max-w-md">
             {children}
           </div>
         </section>

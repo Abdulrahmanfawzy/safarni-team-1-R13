@@ -12,18 +12,18 @@ const socialOptions = [
 export function SocialLoginOptions() {
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-3 mx-3">
+      <div className="mx-3 flex items-center gap-3">
         <div className="flex-1 border-t border-gray-400" />
         <span className="text-sm text-gray-400">Or</span>
         <div className="flex-1 border-t border-gray-400" />
       </div>
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex w-full items-center justify-center gap-2">
         {socialOptions.map(({ name, icon }) => (
           <div
             key={name}
-            className="flex h-15.5 w-40 items-center justify-center rounded-lg border border-primary px-8 py-4"
+            className="flex h-14 min-w-0 max-w-40 flex-1 items-center justify-center rounded-lg border border-primary px-3 py-4 sm:h-15.5 sm:px-6"
           >
-            <Image src={icon} alt={name} />
+            <Image src={icon} alt={name} className="h-6 w-6 object-contain" />
           </div>
         ))}
       </div>
