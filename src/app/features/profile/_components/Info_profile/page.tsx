@@ -60,7 +60,7 @@ export default function Info_profile() {
     
   } title="My Booking"
   
-  href='/myBooking'
+  href='/features/myBookingtabs'
   
   />
  
