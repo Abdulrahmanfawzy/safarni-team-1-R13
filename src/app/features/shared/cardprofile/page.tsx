@@ -33,7 +33,7 @@ export default function CardProfile({ icon, title }: CardProfileProps) {
     </button>
     
 
-<Link href={'/personalInfo'}>
+<Link href={'/features/personalInfo'}>
       <svg
       
             xmlns="http://www.w3.org/2000/svg"

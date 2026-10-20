@@ -1,5 +1,5 @@
 
-import CardProfile from '@/app/_features/shared/cardprofile/page'
+import CardProfile from '@/app/features/shared/cardprofile/page'
 import React from 'react'
 
 export default function Info_profile() {
