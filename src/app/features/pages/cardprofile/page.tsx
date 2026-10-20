@@ -3,14 +3,15 @@ import Link from "next/link";
 import { ReactNode } from "react";
 
 type CardProfileProps = {
-  icon: ReactNode
+  icon: ReactNode;
   title: string;
+  href:string;
 };
 
 
 
 
-export default function CardProfile({ icon, title }: CardProfileProps) {
+export default function CardProfile({ icon, title , href }: CardProfileProps) {
  
   
  
@@ -33,7 +34,7 @@ export default function CardProfile({ icon, title }: CardProfileProps) {
     </button>
     
 
-<Link href={'/features/personalInfo'}>
+<Link href={href}>
       <svg
       
             xmlns="http://www.w3.org/2000/svg"

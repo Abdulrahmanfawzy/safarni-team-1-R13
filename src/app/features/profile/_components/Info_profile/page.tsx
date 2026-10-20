@@ -1,6 +1,6 @@
 
-import CardProfile from '@/app/features/shared/cardprofile/page'
-import React from 'react'
+import CardProfile from '@/app/features/pages/cardprofile/page'
+
 
 export default function Info_profile() {
   return (
@@ -30,11 +30,17 @@ export default function Info_profile() {
     </svg>
     
   } 
-  title="Personal Info" />
+  title="Personal Info" 
+  href='/features/personalInfo'
+  
+  />
  
  
  
   <CardProfile icon={
+    
+
+
      <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -50,7 +56,13 @@ export default function Info_profile() {
         d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
       />
     </svg>
-  } title="My Booking" />
+
+    
+  } title="My Booking"
+  
+  href='/myBooking'
+  
+  />
  
  
  
@@ -72,14 +84,17 @@ export default function Info_profile() {
         d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3s-4.5 4.03-4.5 9S9.515 21 12 21Zm-8.7-12h17.4M3.3 15h17.4"
       />
     </svg>
-  } title="App Language" />
+  } title="App Language"
+  
+  href='/features/myAppLang'
+  />
   
   
   
   
    
   
-  
+
   <CardProfile icon={
      <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +111,11 @@ export default function Info_profile() {
         d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
       />
     </svg>
-  } title="Account & Security" />
+  } title="Account & Security" 
+  
+  href='/features/AccountSecurity'
+  
+  />
 
 
 
