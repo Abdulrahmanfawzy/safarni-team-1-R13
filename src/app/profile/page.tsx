@@ -1,7 +1,7 @@
 
+import Info_profile from '../_features/profile/_components/Info_profile/page'
 
-import Info_profile from '../features/profile/components/Info_profile/page'
-import ProfileImage from '../features/profile/components/profileImage/page'
+import ProfileImage from '../_features/profile/_components/profileImage/page'
 
 
 export default function Profile_Image() {
@@ -13,6 +13,7 @@ export default function Profile_Image() {
 <ProfileImage/>
 
 <Info_profile/>
+
 
 
 </div>

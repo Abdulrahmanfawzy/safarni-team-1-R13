@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { ReactNode } from "react";
 
 type CardProfileProps = {
@@ -9,7 +11,10 @@ type CardProfileProps = {
 
 
 export default function CardProfile({ icon, title }: CardProfileProps) {
-  return (
+ 
+  
+ 
+    return (
     
     
 <div className="flex justify-between items-center  p-2  ">
@@ -28,8 +33,9 @@ export default function CardProfile({ icon, title }: CardProfileProps) {
     </button>
     
 
-<div>
+<Link href={'/personalInfo'}>
       <svg
+      
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -45,7 +51,7 @@ export default function CardProfile({ icon, title }: CardProfileProps) {
             />
           </svg>
 
-</div>
+</Link>
 
        
 </div>
