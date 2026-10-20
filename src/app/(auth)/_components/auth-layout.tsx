@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from "next/image";
 import logo from "@/assets/images/logo.svg"
 import type { ReactNode } from "react";
-import { BackButton } from "./BackButton";
+import { BackButton } from "../../../components/shared/BackButton";
 
 type AuthLayoutProps = {
   children: ReactNode;

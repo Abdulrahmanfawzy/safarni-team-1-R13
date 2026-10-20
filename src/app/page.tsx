@@ -255,13 +255,6 @@
 //   );
 // }
 
-import Navbar from '@/components/ui/Navbar'
-import React from 'react'
-
-export default function page() {
-  return (
-    <div>
-      <Navbar />
-    </div>
-  )
+export default function Page() {
+  return null;
 }
