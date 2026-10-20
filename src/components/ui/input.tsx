@@ -48,8 +48,8 @@ function Input({
 
       <div
         className={cn(
-          "flex h-14 w-full items-center gap-2 rounded-sm border border-input bg-background px-3 transition-colors",
-          "focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20",
+          "flex h-14 w-full items-center gap-2 rounded-lg border border-input bg-background px-3 transition-colors",
+          "focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20 placeholder:text-gray-400 placeholder:text-xl",
           error &&
             "border-destructive focus-within:border-destructive focus-within:ring-destructive/20",
           disabled && "cursor-not-allowed opacity-50",
