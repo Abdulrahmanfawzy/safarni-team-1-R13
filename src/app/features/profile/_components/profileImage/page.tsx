@@ -16,6 +16,10 @@ export default function ProfileImage() {
           <span className="block truncate text-sm text-gray-500 sm:text-base">
             Kneedue@gmail.com
           </span>
+ 
+ 
+ 
+ 
         </div>
       </div>
     </section>

@@ -125,7 +125,6 @@ export default function PersonalInfo() {
 
 
 
-
 </div>
 
 
