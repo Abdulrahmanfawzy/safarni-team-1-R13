@@ -35,11 +35,11 @@ function Input({
       .join(" ") || undefined;
 
   return (
-    <div className={cn("w-full space-y-1.5", wrapperClassName)}>
+    <div className={cn("w-full space-y-2", wrapperClassName)}>
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm font-medium text-foreground"
+          className="block text-lg font-medium text-gray-800 leading-5 "
         >
           {label}
           {props.required && (
