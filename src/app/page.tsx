@@ -1,9 +1,11 @@
-import React from 'react'
+import SearchBar from "@/features/search-filter/components/SearchBar";
 
-const page = () => {
+export default function SearchPage() {
   return (
-    <div>page</div>
-  )
+    <main className="mx-auto w-full max-w-7xl px-4 py-8">
+      <section className="space-y-6">
+        <SearchBar />
+      </section>
+    </main>
+  );
 }
-
-export default page
