@@ -41,7 +41,7 @@ export function AuthLayout({image,imageAlt, children,hasIcon,href }: AuthLayoutP
               alt="Safarni"
               width={145}
               height={104}
-              className="h-auto w-24 sm:w-28 lg:w-[135px]"
+              className="h-auto w-24 sm:w-28 lg:w-33.75"
               priority
             />
           </div>

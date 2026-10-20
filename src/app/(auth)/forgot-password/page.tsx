@@ -19,7 +19,7 @@ const forgotPasswordPage=({}:IProps)=> {
             <ForgotPasswordForm />
             
           </div>
-        </AuthLayout>
+    </AuthLayout>
   )
 }
 
