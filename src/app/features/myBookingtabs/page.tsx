@@ -12,6 +12,7 @@ import { SiTourbox } from "react-icons/si";
 import { RiHotelBedFill } from "react-icons/ri";
 import Flight from "../profile/_components/Flight/page";
 import Cars from "../profile/_components/cars/page";
+import Tours from "../profile/_components/tours/page";
 
 const tabs = [
   { id: "flight", label: "Flight", Icon: BiSolidPlaneAlt },
@@ -68,10 +69,13 @@ export default function MyBookingtabs() {
           ) : (
 
          activeTab=="cars"  ? <Cars/>
+      
 
+         : 
 
-
-         : null
+         activeTab=="tours" ? <Tours/>
+         :
+         null
 
 
           )}
