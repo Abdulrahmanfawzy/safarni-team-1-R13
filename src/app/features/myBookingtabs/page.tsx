@@ -12,14 +12,15 @@ import { SiTourbox } from "react-icons/si";
 import { RiHotelBedFill } from "react-icons/ri";
 import Flight from "../profile/_components/Flight/page";
 import Cars from "../profile/_components/cars/page";
-import Tours from "../profile/_components/tours/page";
+
+import TourandHotelCard from "../profile/_components/TourandHotelCard/page";
 
 const tabs = [
   { id: "flight", label: "Flight", Icon: BiSolidPlaneAlt },
   { id: "cars", label: "Cars", Icon: FaCarSide },
   { id: "tours", label: "Tours", Icon: SiTourbox },
   { id: "hotel", label: "Hotel", Icon: RiHotelBedFill },
-] as const;
+] ;
 
 
 
@@ -73,9 +74,44 @@ export default function MyBookingtabs() {
 
          : 
 
-         activeTab=="tours" ? <Tours/>
+         activeTab=="tours" ? 
+         <TourandHotelCard
+         showPrice={true}
+         image="/pyramids.png"
+         imageAlt="Tours"
+         category="full Day Tour"
+         location="Luxor"
+         price={120}
+         rating={3.5}
+         
+  details={
+    <>
+      From <span className="font-semibold text-blue-600">$150</span> per person
+    </>
+  }
+
+         />
+
+
          :
-         null
+
+activeTab == "hotel" ?   
+<TourandHotelCard
+showPrice={false}
+  image="/Hotel.png"
+         imageAlt="Tours"
+         category="Golden Valley"
+         location="New Yourk , USA"
+         rating={3.5}
+         percentage={"15%off"}
+
+
+
+/>
+
+
+
+:null         
 
 
           )}
