@@ -9,6 +9,7 @@ type InputProps = React.ComponentProps<typeof InputPrimitive> & {
   endIcon?: React.ReactNode;
   error?: string;
   wrapperClassName?: string;
+  containerClassName?: string;
 };
 
 function Input({
@@ -19,6 +20,7 @@ function Input({
   id,
   className,
   wrapperClassName,
+  containerClassName,
   disabled,
   type = "text",
   ...props
@@ -33,11 +35,11 @@ function Input({
       .join(" ") || undefined;
 
   return (
-    <div className={cn("w-full space-y-1.5", wrapperClassName)}>
+    <div className={cn("w-full space-y-2", wrapperClassName)}>
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm font-medium text-foreground"
+          className="block text-lg font-medium text-gray-800 leading-5 "
         >
           {label}
           {props.required && (
@@ -48,11 +50,12 @@ function Input({
 
       <div
         className={cn(
-          "flex h-10 w-full items-center gap-2 rounded-sm border border-input bg-background px-3 transition-colors",
+          "flex h-10 w-full items-center gap-2 rounded-lg border border-input bg-background px-3 transition-colors",
           "focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20",
           error &&
             "border-destructive focus-within:border-destructive focus-within:ring-destructive/20",
           disabled && "cursor-not-allowed opacity-50",
+          containerClassName,
         )}
       >
         {startIcon && (
