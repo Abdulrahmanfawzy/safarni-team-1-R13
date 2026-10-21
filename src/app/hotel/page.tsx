@@ -5,7 +5,7 @@ import NearbySection from "./_components/NearbySection"
 
 export default function HotelPage() {
   return (
-    <section className="app-container mt-3 flex flex-col gap-4 ">
+    <section className="sm:app-container my-4 flex flex-col gap-4 ">
       <SearchBar pathname="/" />
       <SectionHeader title="Recommendation" viewAllHref="/hotel" />
       <RecommendationSection />

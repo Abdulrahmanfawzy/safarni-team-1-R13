@@ -12,16 +12,16 @@ interface IProps {
 const HotelCard = ({ hotel, variant = 'default' }: IProps) => {
   const isHorizontal = variant === "horizontal";
   return (
-    <article className={cn("min-w-0 overflow-hidden rounded-2xl bg-primary-foreground p-3 ",
+    <article className={cn("min-w-0 w-full overflow-hidden rounded-2xl bg-primary-foreground p-3 ",
       isHorizontal
-        ? "flex items-center gap-3 shadow-[0px_3.39px_13.58px_0px_#838BB41F]"
-        : "overflow-hidden shadow-[0px_0px_26.37px_0px_#6F6F6F40]",
+        ? "flex items-center gap-3  shadow-[0px_3.39px_13.58px_0px_#838BB41F]"
+        : "overflow-hidden w-54.25 sm:w-full shadow-[0px_0px_20px_0px_#6F6F6F40] sm:shadow-[0px_0px_26.37px_0px_#6F6F6F40]",
 
     )}>
       <div className={cn(
         "relative shrink-0 overflow-hidden rounded-xl",
         isHorizontal
-          ? "h-37.5 w-37.5"
+          ? "w-31 h-31 sm:h-37.5 sm:w-37.5"
           : "mx-1 aspect-4/3",
       )}>
         <Image
@@ -29,7 +29,7 @@ const HotelCard = ({ hotel, variant = 'default' }: IProps) => {
           alt={hotel.name}
 
           fill
-          sizes={isHorizontal ? "150px" : "(max-width: 640px) 90vw, 25vw"}
+          sizes={isHorizontal ? "124px sm:150px" : "(max-width: 640px) 90vw, 25vw"}
           className="object-cover"
         />
       </div>

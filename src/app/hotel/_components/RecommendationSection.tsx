@@ -41,9 +41,17 @@ const dummyData: HotelDummy[] = [
 ];
 export default function RecommendationSection() {
   return (
-    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mx-5">
+    <section className="mx-5 flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+         sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-4">
+
       {dummyData.map((hotel) => (
-        <HotelCard key={hotel.id} hotel={hotel} />
+        <div key={hotel.id} className="
+            w-[calc(66.666%-6px)] shrink-0 snap-start mr-4 sm:mr-0
+            sm:w-auto sm:shrink
+          ">
+          <HotelCard hotel={hotel} />
+        </div>
+
       ))}
     </section>
   );
