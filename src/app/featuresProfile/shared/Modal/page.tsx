@@ -17,16 +17,22 @@ export default function ModalLogout() {
           <Modal.Dialog>
             <Modal.CloseTrigger />
             <Modal.Header>
-              <Modal.Heading> Logout</Modal.Heading>
+              <Modal.Heading>
+                 
+              Logout
+                 
+                 
+                 
+                 </Modal.Heading>
             </Modal.Header>
             <Modal.Body>
               <p> 
 
-  <h2 className='text-black font-semibold mx-6 text-2xl'>Do You Want To Register The Exit <br /> Already ? </h2>
+  <h2 className='text-black font-semibold mx-6 text-xl'>Do You Want To Register The <br />  Exit Already ? </h2>
 
 <div className="flex gap-2">
 
-<button className="bg-blue-600 mt-4 rounded-2xl py-2 px-8"> yes , log me out </button>
+<button className="bg-blue-600 mt-4 rounded-2xl py-2 px-8"> Yes , log me out </button>
 <button className=" mt-4 text-black border w-1/2 rounded-2xl py-2 px-12"> No </button>
 </div>
 
