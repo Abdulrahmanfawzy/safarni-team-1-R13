@@ -1,6 +1,7 @@
 import SearchBar from "@/components/shared/SearchBar"
 import SectionHeader from "./_components/SectionHeader"
 import RecommendationSection from "./_components/RecommendationSection"
+import NearbySection from "./_components/NearbySection"
 
 export default function HotelPage() {
   return (
@@ -8,6 +9,8 @@ export default function HotelPage() {
       <SearchBar pathname="/" />
       <SectionHeader title="Recommendation" viewAllHref="/hotel" />
       <RecommendationSection />
+      <SectionHeader title="Nearby Hotel" viewAllHref="/hotel" />
+      <NearbySection />
     </section>
   )
 }

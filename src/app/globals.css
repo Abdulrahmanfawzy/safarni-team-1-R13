@@ -129,3 +129,11 @@
     @apply font-sans;
   }
 }
+.app-container {
+  @apply container max-w-350 mx-auto px-5
+}
+@layer utilities {
+  .rounded-20 {
+    border-radius: 20px;
+  }
+}
