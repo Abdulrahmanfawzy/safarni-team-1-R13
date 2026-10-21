@@ -271,7 +271,6 @@ export default function page() {
 
 
 
-{/* <Link href={'/featuresProfile/favourites'}> favourites </Link> */}
 
 
 

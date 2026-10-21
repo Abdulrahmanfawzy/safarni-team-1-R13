@@ -1,11 +1,7 @@
 
-import CardProfile from '@/app/featuresProfile/pages/cardprofile/page'
-import ModalLogout from '@/app/featuresProfile/shared/Modal/page';
+import CardProfile from '@/app/profile/_components/cardprofile/page'
+import ModalLogout from '@/app/profile/shared/Modal/page';
 import { HiArrowLeftStartOnRectangle } from "react-icons/hi2";
-
-
-
-
 
 
 export default function Info_profile() {
@@ -37,7 +33,7 @@ export default function Info_profile() {
     
   } 
   title="Personal Info" 
-  href='/featuresProfile/personalInfo'
+  href='profile/personalInfo'
   
   />
  
@@ -45,8 +41,6 @@ export default function Info_profile() {
  
   <CardProfile icon={
     
-
-
      <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -63,22 +57,12 @@ export default function Info_profile() {
       />
     </svg>
 
-
-
-
-
-
-
-
     
   } title="My Booking"
   
-  href='/featuresProfile/myBookingtabs'
+  href='/profile/booking'
   
   />
- 
- 
- 
  
  
   <CardProfile icon={
@@ -99,13 +83,10 @@ export default function Info_profile() {
     </svg>
   } title="App Language"
   
-  href='/featuresProfile/myAppLang'
+  href='/profile/myAppLang'
   />
   
   
-  
-  
-   
   
 
   <CardProfile icon={
@@ -126,7 +107,7 @@ export default function Info_profile() {
     </svg>
   } title="Account & Security" 
   
-  href='/featuresProfile/AccountSecurity'
+  href='/profile/security'
   
   />
 
@@ -151,6 +132,7 @@ export default function Info_profile() {
 
   
   </h5>
+
 
 
 
