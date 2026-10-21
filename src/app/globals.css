@@ -50,6 +50,9 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  /* Solid Gray  */
+  --color-solid-gray:var(--app-solid-gray);
+  --color-light-gray:var(--app-light-gray);
 }
 
 :root {
@@ -85,6 +88,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* priamry */
+  --app-primary:#1E429F;
+
+  /* Gray  */
+  --app-solid-gray:#373737;
+  --app-light-gray:#F4F4F4 ; 
  
 }
 
