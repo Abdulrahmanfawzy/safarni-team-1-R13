@@ -1,10 +1,12 @@
+import Navbar from "@/components/ui/Navbar";
 import SearchFlight from "@/features/flights/components/SearchFlight";
 const Fight = () => {
-    return (
-        <div>
-            <h1>Flight</h1>
-            <SearchFlight />
-        </div>
-    )
-}
+  return (
+    <div>
+      <Navbar />
+
+      <SearchFlight />
+    </div>
+  );
+};
 export default Fight;

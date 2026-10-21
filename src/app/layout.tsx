@@ -26,7 +26,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${inter.className} h-full antialiased`}
     >
-      <body className="container mx-auto flex flex-col">{children}</body>
+      <body className="container mx-auto flex flex-col">
+        
+        {children}
+        </body>
     </html>
   );
 }
