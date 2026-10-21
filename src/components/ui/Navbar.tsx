@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Home", href: "/" },
   // <Link href={'/features/favourites'}> favourites </Link>
   
-  { label: "Favorite", href: "/features/favourites" },
+  { label: "Favorite", href: "/featuresProfile/favourites" },
   { label: "Compare", href: "/compare" },
   { label: "Maps", href: "/maps" },
 ];
