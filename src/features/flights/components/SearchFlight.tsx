@@ -11,7 +11,9 @@ import CalenderTicket from "./CalenderTicket";
 import { inputClass, inputContainerClass, labelClass } from "../styles/style";
 
 const SearchFlight = () => {
-  const [tripType, setTripType] = useState<"round" | "multi" | "one-way">("round");
+  const [tripType, setTripType] = useState<"round" | "multi" | "one-way">(
+    "round",
+  );
   const [departure, setDeparture] = useState<Date | undefined>();
   const [returnDate, setReturnDate] = useState<Date | undefined>();
   const [open, setOpen] = useState(false);
@@ -56,7 +58,10 @@ const SearchFlight = () => {
               ))}
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:gap-3.5">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-3 sm:gap-3.5"
+            >
               <div className="flex flex-col gap-1">
                 <label htmlFor="location" className={labelClass}>
                   Location
@@ -97,7 +102,27 @@ const SearchFlight = () => {
 
               <button
                 type="submit"
-                className="mt-2 sm:mt-3 w-full h-11 sm:h-12 rounded-xl bg-primary text-white text-sm sm:text-base font-semibold hover:bg-primary/90 active:scale-[0.99] transition-all cursor-pointer shadow-xs hover:shadow-md"
+                disabled={
+                  tripType === "round"
+                    ? departure && returnDate
+                      ? false
+                      : true
+                    : tripType === "one-way" || "multi"
+                      ? departure
+                        ? false
+                        : true
+                      : departure && returnDate
+                        ? false
+                        : true
+                }
+                className={cn(
+                  "mt-2 sm:mt-3 w-full h-11 sm:h-12 rounded-xl bg-primary text-white text-sm sm:text-base font-semibold hover:bg-primary/90 active:scale-[0.99] transition-all cursor-pointer shadow-xs hover:shadow-md",
+                  (departure && returnDate && tripType === "round") ||
+                    (departure &&
+                      (tripType === "one-way" || tripType === "multi"))
+                    ? ""
+                    : "opacity-50 cursor-not-allowed",
+                )}
               >
                 Search Flights
               </button>
