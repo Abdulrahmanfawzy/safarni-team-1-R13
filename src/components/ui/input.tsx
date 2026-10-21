@@ -48,8 +48,8 @@ function Input({
 
       <div
         className={cn(
-          "flex h-14 w-full items-center gap-2 rounded-lg border border-input bg-background px-3 transition-colors",
-          "focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20 placeholder:text-gray-400 placeholder:text-xl",
+          "group flex h-14 w-full items-center gap-2 rounded-lg border border-input bg-background px-3 transition-colors",
+          "focus-within:border-primary/50 focus-within:ring-2   focus-within:ring-primary/20 placeholder:text-gray-400 placeholder:text-xl",
           error &&
             "border-destructive focus-within:border-destructive focus-within:ring-destructive/20",
           disabled && "cursor-not-allowed opacity-50",
@@ -58,7 +58,7 @@ function Input({
         {startIcon && (
           <span
             aria-hidden="true"
-            className="flex shrink-0 items-center text-muted-foreground [&_svg]:size-4"
+            className="flex shrink-0 items-center text-gray-400 group-focus-within:text-[#1C64F2] transition-colors  [&_svg]:size-5"
           >
             {startIcon}
           </span>
@@ -73,8 +73,8 @@ function Input({
           aria-invalid={error ? true : props["aria-invalid"]}
           aria-describedby={describedBy}
           className={cn(
-            "h-full min-w-0 flex-1 border-0 bg-transparent px-0 py-0 text-sm text-foreground shadow-none outline-none",
-            "placeholder:text-muted-foreground",
+            "h-full min-w-0 flex-1 border-0 bg-transparent px-0 py-0 text-lg text-gray-500 shadow-none outline-none",
+            "placeholder:text-gray-400",
             "focus-visible:border-transparent focus-visible:ring-0",
             "disabled:cursor-not-allowed",
             className,
