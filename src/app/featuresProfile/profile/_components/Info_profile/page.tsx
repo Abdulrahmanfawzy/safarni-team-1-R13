@@ -1,6 +1,6 @@
 
-import CardProfile from '@/app/features/pages/cardprofile/page'
-import ModalLogout from '@/app/features/shared/Modal/page';
+import CardProfile from '@/app/featuresProfile/pages/cardprofile/page'
+import ModalLogout from '@/app/featuresProfile/shared/Modal/page';
 import { HiArrowLeftStartOnRectangle } from "react-icons/hi2";
 
 
@@ -37,7 +37,7 @@ export default function Info_profile() {
     
   } 
   title="Personal Info" 
-  href='/features/personalInfo'
+  href='/featuresProfile/personalInfo'
   
   />
  
@@ -73,7 +73,7 @@ export default function Info_profile() {
     
   } title="My Booking"
   
-  href='/features/myBookingtabs'
+  href='/featuresProfile/myBookingtabs'
   
   />
  
@@ -99,7 +99,7 @@ export default function Info_profile() {
     </svg>
   } title="App Language"
   
-  href='/features/myAppLang'
+  href='/featuresProfile/myAppLang'
   />
   
   
@@ -126,7 +126,7 @@ export default function Info_profile() {
     </svg>
   } title="Account & Security" 
   
-  href='/features/AccountSecurity'
+  href='/featuresProfile/AccountSecurity'
   
   />
 
@@ -142,9 +142,6 @@ export default function Info_profile() {
   <HiArrowLeftStartOnRectangle/>
   
    
-  
-
-
 <ModalLogout/>
 
 

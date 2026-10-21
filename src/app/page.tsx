@@ -1,3 +1,6 @@
+
+import Link from 'next/link';
+
 // "use client";
 
 // import { useMemo, useState } from "react";
@@ -256,12 +259,28 @@
 // }
 
 import Navbar from '@/components/ui/Navbar'
+
 import React from 'react'
 
 export default function page() {
   return (
+
+
+
+<div>
+
+
+
+{/* <Link href={'/featuresProfile/favourites'}> favourites </Link> */}
+
+
+
     <div>
       <Navbar />
+
     </div>
+
+</div>
+
   )
 }
