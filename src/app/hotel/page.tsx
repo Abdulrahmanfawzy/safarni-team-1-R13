@@ -1,22 +1,13 @@
-import { BackButton } from "@/components/shared/BackButton"
 import SearchBar from "@/components/shared/SearchBar"
-import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
 import SectionHeader from "./_components/SectionHeader"
+import RecommendationSection from "./_components/RecommendationSection"
 
-interface IProps {
-
-
-
-}
-
-const HotelPage=({}:IProps)=> {
+export default function HotelPage() {
   return (
-    <section className="container mt-3 mx-auto flex flex-col gap-4 ">
+    <section className="app-container mt-3 flex flex-col gap-4 ">
       <SearchBar pathname="/" />
-      <SectionHeader title='Recommendation' viewAllHref="" />
+      <SectionHeader title="Recommendation" viewAllHref="/hotel" />
+      <RecommendationSection />
     </section>
   )
 }
-
-export default HotelPage
