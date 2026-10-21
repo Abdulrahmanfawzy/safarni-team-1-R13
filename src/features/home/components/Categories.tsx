@@ -27,7 +27,10 @@ export default function Categories() {
           Categories
         </h2>
 
-        <div className="flex flex-wrap items-start  justify-between gap-9 sm:gap-10 lg:gap-14">
+        <div   className="
+    flex flex-col items-center gap-4 px-4 pb-4
+    sm:grid sm:grid-cols-2 sm:justify-items-center sm:gap-5
+    lg:grid-cols-4">
           {categoryImages.map((image) => (
             <div
               key={image.id}
