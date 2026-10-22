@@ -5,12 +5,12 @@ import Link from "next/link"
 interface IProps {
 
     room: RoomDummy;
-
+    hotelId: string;
 }
 
-const RoomCard = ({ room }: IProps) => {
+const RoomCard = ({ room, hotelId }: IProps) => {
     return (
-        <Link href={''} className="block w-full min-w-0">
+        <Link href={`/hotel/${hotelId}/${room.slug}`} className="block w-full min-w-0">
             <article className="w-full overflow-hidden flex flex-col gap-4 p-4 rounded-3xl bg-primary-foreground shadow-[0px_0px_26.37px_0px_#6F6F6F40]">
                 <div className="relative w-full shrink-0 overflow-hidden aspect-4/3 rounded-lg">
                     <Image src={room.image}
