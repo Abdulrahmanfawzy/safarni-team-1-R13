@@ -58,9 +58,5 @@ export default function CardProfile({ icon, title , href }: CardProfileProps) {
 </div>
 
 
-
-
-
-
   );
 }

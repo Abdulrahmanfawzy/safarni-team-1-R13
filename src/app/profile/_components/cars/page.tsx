@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function Cars() {
   return (
-    <div className='border-[#B22459] border relative py-10 my-28'>
+    <div className='border-[#B22459]  border relative py-10 my-28'>
 
 
 

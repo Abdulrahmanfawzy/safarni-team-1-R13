@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import {useForm} from "react-hook-form"
-import { personalInfoSchema, PersonalInfoValues } from '../schema/personalInfo.schema'
+import { personalInfoSchema, PersonalInfoValues } from '../../../schemas/personalInfo.schema'
 import z from 'zod'
 import { Button } from '@/components/ui/button'
 
