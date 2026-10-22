@@ -9,6 +9,7 @@ type InputProps = React.ComponentProps<typeof InputPrimitive> & {
   endIcon?: React.ReactNode;
   error?: string;
   wrapperClassName?: string;
+  containerClassName?: string;
 };
 
 function Input({
@@ -19,6 +20,7 @@ function Input({
   id,
   className,
   wrapperClassName,
+  containerClassName,
   disabled,
   type = "text",
   ...props
@@ -53,6 +55,7 @@ function Input({
           error &&
             "border-destructive focus-within:border-destructive focus-within:ring-destructive/20",
           disabled && "cursor-not-allowed opacity-50",
+          containerClassName,
         )}
       >
         {startIcon && (
