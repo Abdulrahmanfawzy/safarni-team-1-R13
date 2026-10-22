@@ -10,7 +10,9 @@ import logo from "@/assets/images/logo.svg";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Favorite", href: "/favorites" },
+
+  
+  { label: "Favorite", href: "/favourites" },
   { label: "Compare", href: "/compare" },
   { label: "Maps", href: "/maps" },
 ];
