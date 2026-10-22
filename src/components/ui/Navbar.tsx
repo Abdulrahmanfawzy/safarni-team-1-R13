@@ -15,14 +15,7 @@ const navLinks = [
   { label: "Maps", href: "/maps" },
 ];
 
-const authRoutes = [
-  "/get-started",
-  "/login",
-  "/signup",
-  "/forgot-password",
-  "/reset-password",
-  "/otp",
-];
+
 
 type NavbarUser = {
   name: string;
@@ -61,11 +54,9 @@ export default function Navbar({ user }: NavbarProps) {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  const isAuthPage = authRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
-  );
+  
 
-  if (isAuthPage) return null;
+
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur">

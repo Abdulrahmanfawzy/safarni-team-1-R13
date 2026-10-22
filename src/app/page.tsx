@@ -1,5 +1,7 @@
 // "use client";
 
+import Navbar from "@/components/ui/Navbar";
+
 // import { useMemo, useState } from "react";
 // import SearchBar from "@/features/search-filter/components/SearchBar";
 // import SearchFilters, {
@@ -256,5 +258,7 @@
 // }
 
 export default function Page() {
-  return null;
+  return <div>
+     <Navbar />
+  </div>;
 }
