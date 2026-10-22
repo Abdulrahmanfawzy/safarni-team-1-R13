@@ -1,22 +1,26 @@
 
-import Info_profile from '../featuresProfile/profile/_components/Info_profile/page'
+import React from 'react'
 
-import ProfileImage from '../featuresProfile/profile/_components/profileImage/page'
+import Infouser from './_components/infouser/page'
+import Info_profile from './_components/Info_profile/page'
 
-
-export default function Profile_Image() {
+export default function FirstprofileImage() {
   return (
-   
+    <div>
+
    
 <div className='py-20 ml-16'>
 
-<ProfileImage/>
 
+<Infouser/>
 <Info_profile/>
 
 
 
 </div>
+
+
+
+    </div>
   )
 }
-

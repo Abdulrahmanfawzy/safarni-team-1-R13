@@ -1,6 +1,4 @@
-import FavouritesCard from "../pages/FavouritesCard/page";
-
-
+import FavouritesCard from "../../components/shared/FavouritesCard/page";
 
 
 
