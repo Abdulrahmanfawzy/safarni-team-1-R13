@@ -11,9 +11,10 @@ import flight from "@/assets/images/flight.jpg";
 import car from "@/assets/images/car.jpg";
 import tours from "@/assets/images/tours.jpg";
 import hotel from "@/assets/images/hotel.jpg";
+import Link from "next/link";
 
 const categoryImages = [
-  { id: 1, label: "Flights", alt: "", src: flight },
+  { id: 1, label: "flights", alt: "", src: flight },
   { id: 2, label: "Cars", alt: "", src: car },
   { id: 3, label: "Tours", alt: "", src: tours },
   { id: 4, label: "Hotels", alt: "", src: hotel },
@@ -32,7 +33,7 @@ export default function Categories() {
     sm:grid sm:grid-cols-2 sm:justify-items-center sm:gap-5
     lg:grid-cols-4">
           {categoryImages.map((image) => (
-            <div
+            <Link href={`/${image.label}`}
               key={image.id}
               className="group flex w-50 shrink-0 flex-col items-center gap-10"
             >
@@ -50,7 +51,7 @@ export default function Categories() {
               <h2 className={`${cairo.className} text-center text-6xl font-bold text-(--primary)`}>
                 {image.label}
               </h2>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
