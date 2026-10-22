@@ -4,6 +4,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Seat from "./ButtonSeat";
+import { passengers } from "@/features/flights/constants/MockData";
 
 
 const TOTAL_SEATS = 30;
@@ -29,19 +30,75 @@ function LegendItem({ color, label }: { color: string; label: string }) {
 }
 
 
-export function SeatPicker({ onContinue }: { onContinue?: (seats: number[]) => void }) {
+export function SeatPicker({
+  maxSeats: propMaxSeats,
+  onContinue,
+}: {
+  maxSeats?: number;
+  onContinue?: (seats: number[]) => void;
+}) {
+  const [maxSeats, setMaxSeats] = React.useState<number>(propMaxSeats ?? 1);
   const [selected, setSelected] = React.useState<number[]>([]);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const toggle = (n: number) =>
-    setSelected((prev) =>
-      prev.includes(n) ? prev.filter((s) => s !== n) : [...prev, n].sort((a, b) => a - b)
-    );
+  React.useEffect(() => {
+    if (propMaxSeats && !isNaN(propMaxSeats) && propMaxSeats > 0) {
+      setMaxSeats(propMaxSeats);
+      return;
+    }
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlSeats = urlParams.get("passengers");
+      if (urlSeats && !isNaN(Number(urlSeats)) && Number(urlSeats) > 0) {
+        setMaxSeats(Number(urlSeats));
+        return;
+      }
+      const stored = localStorage.getItem("selectedPassengers");
+      if (stored && !isNaN(Number(stored)) && Number(stored) > 0) {
+        setMaxSeats(Number(stored));
+      }
+    }
+  }, [propMaxSeats]);
+
+  const toggle = (n: number) => {
+    if (selected.includes(n)) {
+      setSelected((prev) => prev.filter((s) => s !== n));
+      setError(null);
+    } else {
+      if (selected.length >= maxSeats) {
+        setError(
+          `You can only select up to ${maxSeats} ${maxSeats === 1 ? "seat" : "seats"} for ${maxSeats} ${maxSeats === 1 ? "passenger" : "passengers"}.`
+        );
+        return;
+      }
+      setError(null);
+      setSelected((prev) => [...prev, n].sort((a, b) => a - b));
+    }
+  };
 
   const total = selected.length * TICKET_PRICE;
 
   return (
     <section className="w-full max-w-7xl rounded-md bg-white px-6 py-6 font-sans shadow-sm ">
-      <h2 className="mb-4 text-center text-base font-medium text-neutral-900">Choose seat</h2>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-base font-medium text-neutral-900">Choose seat</h2>
+        <span className="text-xs font-medium text-neutral-600 bg-neutral-100 px-2.5 py-1 rounded-full">
+          Passengers: <strong className="text-primary">{maxSeats}</strong>
+        </span>
+      </div>
+
+      {error && (
+        <div className="mb-4 rounded-lg bg-red-50 p-2.5 text-xs text-red-600 border border-red-200 flex items-center justify-between">
+          <span>{error}</span>
+          <button
+            type="button"
+            onClick={() => setError(null)}
+            className="text-red-500 hover:text-red-700 ml-2 font-bold cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       <div className="mb-6 flex items-center justify-between">
         <LegendItem color="bg-[#2e3192]" label="Available" />
@@ -67,6 +124,12 @@ export function SeatPicker({ onContinue }: { onContinue?: (seats: number[]) => v
       </div>
 
       <dl className="mt-5 space-y-3 text-[13px] text-neutral-900">
+        <div className="flex items-center justify-between">
+          <dt>Passengers</dt>
+          <dd className="font-semibold text-primary">
+            {maxSeats} {maxSeats === 1 ? "Passenger" : "Passengers"}
+          </dd>
+        </div>
         <div className="flex items-center justify-between">
           <dt>Ticket price</dt>
           <dd className="font-semibold text-primary">{formatPrice(TICKET_PRICE)}</dd>

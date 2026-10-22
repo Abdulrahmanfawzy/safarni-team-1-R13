@@ -19,6 +19,7 @@ const FlightsDialog = ({
   onSelect,
   selectedDepartureFlight,
   selectedReturnFlight,
+  passengerCount = "1",
 }: PropsDepartureDate) => {
   const router = useRouter();
 
@@ -56,7 +57,10 @@ const FlightsDialog = ({
   const handleContinue = () => {
     if (!canProceed) return;
     onOpenChange(false);
-    router.push("/seats");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("selectedPassengers", String(passengerCount));
+    }
+    router.push(`/seats?passengers=${passengerCount}`);
   };
 
   const totalPrice =

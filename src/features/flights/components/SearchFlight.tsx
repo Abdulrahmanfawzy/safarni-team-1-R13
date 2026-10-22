@@ -10,6 +10,7 @@ import ImagePlane from "../shared/ImagePlane";
 import CalenderTicket from "./CalenderTicket";
 import { inputClass, inputContainerClass, labelClass } from "../styles/style";
 import { Flight } from "../types/TypesFlights";
+import Flights from "@/assets/images/1f333dd2b89d7ab8cf544bc5d5b4878e6d6f2f3c.png";
 
 const SearchFlight = () => {
   const [tripType, setTripType] = useState<"round" | "multi" | "one-way">(
@@ -19,6 +20,7 @@ const SearchFlight = () => {
   const [returnDate, setReturnDate] = useState<Date | undefined>();
   const [selectedDepartureFlight, setSelectedDepartureFlight] = useState<Flight | null>(null);
   const [selectedReturnFlight, setSelectedReturnFlight] = useState<Flight | null>(null);
+  const [passengerCount, setPassengerCount] = useState<string>("1");
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,7 +33,7 @@ const SearchFlight = () => {
       <section className="w-full flex items-start justify-center py-6 sm:py-10 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 lg:px-12">
         <main className="w-full container mx-auto flex flex-col md:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-8 lg:gap-12 xl:gap-16">
           {/* Image panel */}
-          <ImagePlane />
+          <ImagePlane image={Flights} />
 
           {/* Form side */}
           <div className="w-full max-w-md sm:max-w-lg md:max-w-none md:w-7/12 lg:w-[50%] xl:w-[45%] 2xl:w-[42%] flex flex-col gap-4 sm:gap-5">
@@ -101,7 +103,16 @@ const SearchFlight = () => {
               />
 
               <div className="flex flex-col gap-1">
-                <SelectPassenger labelClass={labelClass} />
+                <SelectPassenger
+                  labelClass={labelClass}
+                  value={passengerCount}
+                  onValueChange={(val) => {
+                    setPassengerCount(val);
+                    if (typeof window !== "undefined") {
+                      localStorage.setItem("selectedPassengers", val);
+                    }
+                  }}
+                />
               </div>
 
               <button
@@ -140,6 +151,7 @@ const SearchFlight = () => {
         onOpenChange={setOpen}
         departureDate={departure}
         returnDate={tripType === "round" ? returnDate : undefined}
+        passengerCount={passengerCount}
         selectedDepartureFlight={selectedDepartureFlight}
         selectedReturnFlight={selectedReturnFlight}
         onSelect={(flight, leg) => {

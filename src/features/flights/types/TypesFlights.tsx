@@ -41,4 +41,5 @@ export type PropsDepartureDate = {
   onSelect?: (flight: Flight, leg: "departure" | "return") => void;
   selectedDepartureFlight?: Flight | null;
   selectedReturnFlight?: Flight | null;
+  passengerCount?: string | number;
 };
