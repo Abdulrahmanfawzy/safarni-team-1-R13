@@ -39,4 +39,6 @@ export type PropsDepartureDate = {
   departureDate?: Date | string | undefined;
   returnDate?: Date | string | undefined;
   onSelect?: (flight: Flight, leg: "departure" | "return") => void;
+  selectedDepartureFlight?: Flight | null;
+  selectedReturnFlight?: Flight | null;
 };

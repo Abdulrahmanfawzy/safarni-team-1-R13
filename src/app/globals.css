@@ -49,6 +49,7 @@
   /* Solid Gray  */
   --color-solid-gray:var(--app-solid-gray);
   --color-light-gray:var(--app-light-gray);
+  --color-vivid-green:var(--app-vivid-green);
 }
 
 :root {
@@ -90,7 +91,13 @@
   /* Gray  */
   --app-solid-gray:#373737;
   --app-light-gray:#F4F4F4 ; 
+  /* Green  */
+  --app-vivid-green:#03D947 ; 
  
+}
+
+.border-vivid {
+  border-color: var(--app-vivid-green);
 }
 
 .dark {
@@ -137,4 +144,7 @@
   html {
     @apply font-sans;
   }
+
 }
+
+

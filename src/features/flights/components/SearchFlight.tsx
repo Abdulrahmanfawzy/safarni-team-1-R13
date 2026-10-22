@@ -9,6 +9,7 @@ import SelectPassenger from "./SelectPassenger";
 import ImagePlane from "../shared/ImagePlane";
 import CalenderTicket from "./CalenderTicket";
 import { inputClass, inputContainerClass, labelClass } from "../styles/style";
+import { Flight } from "../types/TypesFlights";
 
 const SearchFlight = () => {
   const [tripType, setTripType] = useState<"round" | "multi" | "one-way">(
@@ -16,6 +17,8 @@ const SearchFlight = () => {
   );
   const [departure, setDeparture] = useState<Date | undefined>();
   const [returnDate, setReturnDate] = useState<Date | undefined>();
+  const [selectedDepartureFlight, setSelectedDepartureFlight] = useState<Flight | null>(null);
+  const [selectedReturnFlight, setSelectedReturnFlight] = useState<Flight | null>(null);
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -43,6 +46,7 @@ const SearchFlight = () => {
                     setTripType(newType);
                     if (newType !== "round") {
                       setReturnDate(undefined);
+                      setSelectedReturnFlight(null);
                     }
                   }}
                   className={cn(
@@ -136,7 +140,15 @@ const SearchFlight = () => {
         onOpenChange={setOpen}
         departureDate={departure}
         returnDate={tripType === "round" ? returnDate : undefined}
-        onSelect={(flight, leg) => console.log(leg, flight)}
+        selectedDepartureFlight={selectedDepartureFlight}
+        selectedReturnFlight={selectedReturnFlight}
+        onSelect={(flight, leg) => {
+          if (leg === "departure") {
+            setSelectedDepartureFlight((prev) => (prev?.id === flight.id ? null : flight));
+          } else {
+            setSelectedReturnFlight((prev) => (prev?.id === flight.id ? null : flight));
+          }
+        }}
       />
     </>
   );
