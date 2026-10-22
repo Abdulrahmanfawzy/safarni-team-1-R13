@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Seat from "./ButtonSeat";
-import { passengers } from "@/features/flights/constants/MockData";
 
 
 const TOTAL_SEATS = 30;
@@ -37,6 +37,7 @@ export function SeatPicker({
   maxSeats?: number;
   onContinue?: (seats: number[]) => void;
 }) {
+  const router = useRouter();
   const [maxSeats, setMaxSeats] = React.useState<number>(propMaxSeats ?? 1);
   const [selected, setSelected] = React.useState<number[]>([]);
   const [error, setError] = React.useState<string | null>(null);
@@ -147,11 +148,22 @@ export function SeatPicker({
       </dl>
 
       <Button
-        className="mt-4 h-9 w-full rounded-md bg-primary text-[13px] font-semibold text-white hover:bg-primary/90"
-        disabled={selected.length === 0}
-        onClick={() => onContinue?.(selected)}
-      > 
-        Checkout
+        className="mt-4 h-10 w-full rounded-xl bg-primary text-sm font-semibold text-white hover:bg-primary/90 active:scale-[0.99] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={selected.length === 0 || selected.length < maxSeats}
+        onClick={() => {
+          if (onContinue) {
+            onContinue(selected);
+          } else {
+            const params = new URLSearchParams();
+            params.set("seats", selected.join(","));
+            params.set("passengers", String(maxSeats));
+            router.push(`/payment?${params.toString()}`);
+          }
+        }}
+      >
+        {selected.length < maxSeats
+          ? `Select ${maxSeats - selected.length} more seat${maxSeats - selected.length !== 1 ? "s" : ""}`
+          : "Continue to Payment →"}
       </Button>
     </section>
   );
