@@ -57,10 +57,10 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "group relative inline-flex h-full flex-1 items-center justify-start rounded-none border-0 border-transparent px-3 py-2 text-sm font-medium whitespace-nowrap text-black shadow-none transition-colors",
+        "group relative inline-flex h-full flex-1 items-center justify-start rounded-none border-none  px-3 py-2 text-sm font-medium whitespace-nowrap text-black shadow-none transition-colors",
         "hover:text-primary",
         "data-active:bg-transparent data-active:text-primary data-active:shadow-none",
-        // "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-fit after:bg-blue-700 after:opacity-0 after:content-['']",
+    
         "data-active:after:opacity-100",
         "focus-visible:outline-none focus-visible:ring-0",
         "disabled:pointer-events-none disabled:opacity-50",

@@ -7,7 +7,7 @@ import RoomDetailsTabs from "./RoomDetailsTabs";
 
 export default function RoomDetailsInfo() {
   return (
-    <section className="flex w-full flex-1 flex-col justify-start gap-6  mt-18 pl-8 mr-8">
+    <section className="flex w-full flex-1 flex-col justify-start gap-6  mt-18 ml-8 mr-8 ">
       <div className="flex items-start justify-between gap-4">
         <DiscountBadge discount={20} />
 
