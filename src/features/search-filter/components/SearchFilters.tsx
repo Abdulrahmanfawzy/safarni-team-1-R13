@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
+<<<<<<< HEAD
 const sortOptions = [
   "Price (Low to High)",
   "Price (High to Low)",
@@ -24,6 +25,16 @@ const sortOptions = [
   "Most Reviewed",
   "Most Popular",
 ];
+=======
+import {
+  INITIAL_FILTERS,
+  MIN_PRICE,
+  MAX_PRICE,
+  PRICE_STEP,
+  priceBuckets,
+  type Filters,
+} from "./filter-data";
+>>>>>>> 02b54b3 (feat: add FiltersDialog)
 
 const adventureStyles: { label: string; icon: LucideIcon }[] = [
   { label: "Adventure Travel", icon: Tent },
@@ -173,6 +184,23 @@ export const INITIAL_FILTERS: Filters = {
   ratings: [],
 };
 
+const BRAND = "#1E429F";
+const sortOptions = [
+  "Recommended",
+  "Price: Low to High",
+  "Price: High to Low",
+  "Top Rated",
+  "Newest",
+] as const;
+const adventureStyles = [
+  { label: "Beach", icon: Map },
+  { label: "Adventure", icon: Search },
+  { label: "Culture", icon: Star },
+  { label: "Wildlife", icon: Map },
+  { label: "City", icon: Search },
+] as const;
+const ratings = [5, 4, 3, 2, 1];
+
 type SearchFiltersProps = {
   filters: Filters;
   onChange: (filters: Filters) => void;
@@ -248,8 +276,17 @@ export default function SearchFilters({
       <section className="space-y-4">
         <FilterHeading title="Budget Range" />
 
+<<<<<<< HEAD
         <div className="relative">
           <PriceHistogram buckets={priceBuckets} range={budget} />
+=======
+        <div className="relative pb-2">
+          <PriceHistogram
+            buckets={priceBuckets.map((bucket) => bucket.count)}
+            range={budget}
+          />
+
+>>>>>>> 02b54b3 (feat: add FiltersDialog)
           <Slider
             min={MIN_PRICE}
             max={MAX_PRICE}
