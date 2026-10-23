@@ -19,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${poppins.className} h-full antialiased`}
+      className={`h-full antialiased`}
     >
       <body className="container mx-auto flex flex-col">
 
