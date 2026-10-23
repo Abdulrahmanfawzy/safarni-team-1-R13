@@ -15,7 +15,7 @@ import Link from "next/link";
 
 const categoryImages = [
   { id: 1, label: "flights", alt: "", src: flight },
-  { id: 2, label: "Cars", alt: "", src: car },
+  { id: 2, label: "cars", alt: "", src: car },
   { id: 3, label: "Tours", alt: "", src: tours },
   { id: 4, label: "Hotels", alt: "", src: hotel },
 ];

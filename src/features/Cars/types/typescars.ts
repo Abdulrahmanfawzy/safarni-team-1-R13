@@ -16,3 +16,11 @@ interface CarPopularTypes {
     Turn:string;
 }
 export type {CarPopularTypes}
+export type Spec = { label: string; value: string };
+export type Plan = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  icon: React.ElementType;
+};
