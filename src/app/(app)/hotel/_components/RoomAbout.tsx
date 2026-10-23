@@ -6,7 +6,7 @@ interface IProps {
 
 const RoomAbout=({}:IProps)=> {
   return (
-    <div>
+    <div className='text-blue-700'>
 about
 
     </div>
