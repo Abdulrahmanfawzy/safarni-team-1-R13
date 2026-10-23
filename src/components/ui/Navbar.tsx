@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, Search, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/images/logo.svg";
-import SearchFilterDialog from "@/features/search-filter/components/SearchFilterDialog";
+import SearchFilterDialog from "@/features/search-filter/components/SearchDialog";
 
 const navLinks = [
   { label: "Home", href: "/" },

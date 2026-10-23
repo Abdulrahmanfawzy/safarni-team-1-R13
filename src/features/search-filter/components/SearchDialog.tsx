@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-type SearchFilterDialogProps = {
+type SearchDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
@@ -47,10 +47,10 @@ const fakeDestinations: Destination[] = [
   { id: 10, name: "Siwa Oasis", country: "Egypt", category: "Nature" },
 ];
 
-export default function SearchFilterDialog({
+export default function SearchDialog({
   open,
   onOpenChange,
-}: SearchFilterDialogProps) {
+}: SearchDialogProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
