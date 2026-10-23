@@ -12,7 +12,6 @@ function Slider({
   max = 100,
   ...props
 }: React.ComponentProps<typeof SliderPrimitive.Root>) {
-<<<<<<< HEAD
   // One thumb per value, so the same component works for single and range sliders.
   const values = React.useMemo(
     () =>
@@ -24,73 +23,42 @@ function Slider({
     [value, defaultValue, min, max],
   );
 
-  const thumbLabel = (i: number) =>
-    values.length === 2 ? (i === 0 ? "Minimum value" : "Maximum value") : undefined;
-=======
-  const values = value ?? defaultValue ?? [min, max];
->>>>>>> 02b54b3 (feat: add FiltersDialog)
+  const thumbLabel = (index: number) =>
+    values.length === 2
+      ? index === 0
+        ? "Minimum value"
+        : "Maximum value"
+      : undefined;
 
   return (
     <SliderPrimitive.Root
       data-slot="slider"
-<<<<<<< HEAD
-      defaultValue={defaultValue}
       value={value}
+      defaultValue={defaultValue}
       min={min}
       max={max}
       className={cn(
         "relative flex w-full touch-none select-none items-center data-[disabled]:opacity-50",
-=======
-      value={value}
-      defaultValue={defaultValue}
-      min={min}
-      max={max}
-      className={cn(
-        "relative flex w-full touch-none select-none items-center",
-        "data-[disabled]:opacity-50",
->>>>>>> 02b54b3 (feat: add FiltersDialog)
         className,
       )}
       {...props}
     >
-      {/* Thin light track across the whole width */}
       <SliderPrimitive.Track
         data-slot="slider-track"
         className="relative h-[3px] w-full grow overflow-hidden rounded-full bg-blue-200"
       >
-<<<<<<< HEAD
-        {/* Thicker blue line between the thumbs */}
         <SliderPrimitive.Range
           data-slot="slider-range"
           className="absolute h-full bg-blue-500"
         />
-=======
-        <SliderPrimitive.Range className="absolute h-full bg-blue-500" />
->>>>>>> 02b54b3 (feat: add FiltersDialog)
       </SliderPrimitive.Track>
 
-      {values.map((_, i) => (
+      {values.map((_, index) => (
         <SliderPrimitive.Thumb
-          key={i}
+          key={index}
           data-slot="slider-thumb"
-<<<<<<< HEAD
-          aria-label={thumbLabel(i)}
+          aria-label={thumbLabel(index)}
           className="block size-4 shrink-0 rounded-full bg-blue-500 shadow-sm ring-offset-background transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-200 disabled:pointer-events-none"
-=======
-          aria-label={
-            values.length === 2
-              ? index === 0
-                ? "Minimum value"
-                : "Maximum value"
-              : "Value"
-          }
-          className={cn(
-            "block size-4 shrink-0 rounded-full bg-blue-500",
-            "shadow-sm ring-offset-background transition-transform",
-            "hover:scale-110 focus-visible:outline-none",
-            "focus-visible:ring-4 focus-visible:ring-blue-200",
-          )}
->>>>>>> 02b54b3 (feat: add FiltersDialog)
         />
       ))}
     </SliderPrimitive.Root>

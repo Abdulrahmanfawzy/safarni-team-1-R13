@@ -1,13 +1,17 @@
+
+*{
+  font-family:Verdana, Geneva, Tahoma, sans-serif
+}
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
+@import "@heroui/styles/css";
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-poppins);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -46,6 +50,10 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  /* Solid Gray  */
+  --color-solid-gray:var(--app-solid-gray);
+  --color-light-gray:var(--app-light-gray);
+  --color-vivid-green:var(--app-vivid-green);
 }
 
 :root {
@@ -83,6 +91,17 @@
   --sidebar-ring: oklch(0.708 0 0);
   /* priamry */
   --app-primary:#1E429F;
+
+  /* Gray  */
+  --app-solid-gray:#373737;
+  --app-light-gray:#F4F4F4 ; 
+  /* Green  */
+  --app-vivid-green:#03D947 ; 
+ 
+}
+
+.border-vivid {
+  border-color: var(--app-vivid-green);
 }
 
 .dark {
@@ -129,4 +148,7 @@
   html {
     @apply font-sans;
   }
+
 }
+
+

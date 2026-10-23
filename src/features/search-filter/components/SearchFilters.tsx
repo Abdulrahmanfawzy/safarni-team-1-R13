@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import {
   Building2,
   Car,
@@ -12,31 +12,21 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
-<<<<<<< HEAD
-const sortOptions = [
+export const sortOptions = [
   "Price (Low to High)",
   "Price (High to Low)",
   "Biggest Deals (Highest Saving)",
   "Most Reviewed",
   "Most Popular",
-];
-=======
-import {
-  INITIAL_FILTERS,
-  MIN_PRICE,
-  MAX_PRICE,
-  PRICE_STEP,
-  priceBuckets,
-  type Filters,
-} from "./filter-data";
->>>>>>> 02b54b3 (feat: add FiltersDialog)
+] as const;
 
-const adventureStyles: { label: string; icon: LucideIcon }[] = [
+export const adventureStyles: { label: string; icon: LucideIcon }[] = [
   { label: "Adventure Travel", icon: Tent },
   { label: "City Breaks", icon: Building2 },
   { label: "Water Activity", icon: Waves },
@@ -45,8 +35,9 @@ const adventureStyles: { label: string; icon: LucideIcon }[] = [
 
 const ratings = [1, 2, 3, 4, 5];
 
-const MIN_PRICE = 0;
-const MAX_PRICE = 8500;
+export const MIN_PRICE = 0;
+export const MAX_PRICE = 8500;
+const PRICE_STEP = 100;
 
 /** Tours per price bucket. Replace with real data from your API. */
 const priceBuckets = [
@@ -56,8 +47,23 @@ const priceBuckets = [
 
 const BRAND = "#1E429F";
 
-/* ------------------------- defined OUTSIDE the component ------------------------- */
-/* (Defining components inside another component remounts them on every render.)    */
+export type Filters = {
+  sort: string | null;
+  price: [number, number];
+  styles: string[];
+  locations: string[];
+  ratings: number[];
+};
+
+export const INITIAL_FILTERS: Filters = {
+  sort: null,
+  price: [MIN_PRICE, MAX_PRICE],
+  styles: [],
+  locations: [],
+  ratings: [],
+};
+
+/* ---------------------- helpers (outside the component) ---------------------- */
 
 function FilterHeading({
   title,
@@ -120,25 +126,33 @@ function PriceHistogram({
 }) {
   const W = 100;
   const H = 40;
+  const clipId = useId();
 
   const { line, area } = useMemo(() => {
+    if (buckets.length < 2) return { line: "", area: "" };
+
     const max = Math.max(...buckets, 1);
     const pts = buckets.map((v, i) => ({
       x: (i / (buckets.length - 1)) * W,
       y: H - (v / max) * (H - 4),
     }));
+
     let d = `M ${pts[0].x} ${pts[0].y}`;
     for (let i = 1; i < pts.length; i++) {
-      const mx = (pts[i - 1].x + pts[i].x) / 2;
-      const my = (pts[i - 1].y + pts[i].y) / 2;
-      d += ` Q ${pts[i - 1].x} ${pts[i - 1].y} ${mx} ${my}`;
+      const prev = pts[i - 1];
+      const curr = pts[i];
+      const midX = (prev.x + curr.x) / 2;
+      d += ` C ${midX} ${prev.y}, ${midX} ${curr.y}, ${curr.x} ${curr.y}`;
     }
-    d += ` T ${pts[pts.length - 1].x} ${pts[pts.length - 1].y}`;
+
     return { line: d, area: `${d} L ${W} ${H} L 0 ${H} Z` };
   }, [buckets]);
 
-  const x1 = ((range[0] - MIN_PRICE) / (MAX_PRICE - MIN_PRICE)) * W;
-  const x2 = ((range[1] - MIN_PRICE) / (MAX_PRICE - MIN_PRICE)) * W;
+  const span = Math.max(MAX_PRICE - MIN_PRICE, 1);
+  const x1 = ((range[0] - MIN_PRICE) / span) * W;
+  const x2 = ((range[1] - MIN_PRICE) / span) * W;
+
+  if (!area) return null;
 
   return (
     <svg
@@ -149,12 +163,12 @@ function PriceHistogram({
       aria-label="Price distribution of available tours"
     >
       <defs>
-        <clipPath id="selected-range">
+        <clipPath id={clipId}>
           <rect x={x1} y={0} width={Math.max(x2 - x1, 0)} height={H} />
         </clipPath>
       </defs>
       <path d={area} className="fill-blue-100" />
-      <path d={area} className="fill-blue-200" clipPath="url(#selected-range)" />
+      <path d={area} className="fill-blue-200" clipPath={`url(#${clipId})`} />
       <path
         d={line}
         fill="none"
@@ -166,40 +180,7 @@ function PriceHistogram({
   );
 }
 
-/* --------------------------------- component --------------------------------- */
-
-export type Filters = {
-  sort: string | null;
-  price: [number, number];
-  styles: string[];
-  locations: string[];
-  ratings: number[];
-};
-
-export const INITIAL_FILTERS: Filters = {
-  sort: null,
-  price: [MIN_PRICE, MAX_PRICE],
-  styles: [],
-  locations: [],
-  ratings: [],
-};
-
-const BRAND = "#1E429F";
-const sortOptions = [
-  "Recommended",
-  "Price: Low to High",
-  "Price: High to Low",
-  "Top Rated",
-  "Newest",
-] as const;
-const adventureStyles = [
-  { label: "Beach", icon: Map },
-  { label: "Adventure", icon: Search },
-  { label: "Culture", icon: Star },
-  { label: "Wildlife", icon: Map },
-  { label: "City", icon: Search },
-] as const;
-const ratings = [5, 4, 3, 2, 1];
+/* -------------------------------- component -------------------------------- */
 
 type SearchFiltersProps = {
   filters: Filters;
@@ -214,19 +195,22 @@ export default function SearchFilters({
 }: SearchFiltersProps) {
   const [locationQuery, setLocationQuery] = useState("");
 
-  // Read from props, write through onChange, so the JSX below stays the same.
   const selectedSort = filters.sort;
   const budget = filters.price;
   const selectedStyles = filters.styles;
   const locations = filters.locations;
   const selectedRatings = filters.ratings;
 
-  const setSelectedSort = (sort: string | null) => onChange({ ...filters, sort });
-  const setBudget = (price: [number, number]) => onChange({ ...filters, price });
-  const setSelectedStyles = (styles: string[]) => onChange({ ...filters, styles });
-  const setLocations = (locations: string[]) => onChange({ ...filters, locations });
-  const setSelectedRatings = (ratings: number[]) =>
-    onChange({ ...filters, ratings });
+  const setSelectedSort = (sort: string | null) =>
+    onChange({ ...filters, sort });
+  const setBudget = (price: [number, number]) =>
+    onChange({ ...filters, price });
+  const setSelectedStyles = (styles: string[]) =>
+    onChange({ ...filters, styles });
+  const setLocations = (next: string[]) =>
+    onChange({ ...filters, locations: next });
+  const setSelectedRatings = (next: number[]) =>
+    onChange({ ...filters, ratings: next });
 
   function toggleSelection<T>(
     value: T,
@@ -242,14 +226,17 @@ export default function SearchFilters({
 
   function addLocation() {
     const value = locationQuery.trim();
-    if (value && !locations.includes(value)) {
+    if (
+      value &&
+      !locations.some((l) => l.toLowerCase() === value.toLowerCase())
+    ) {
       setLocations([...locations, value]);
     }
     setLocationQuery("");
   }
 
   function clearAll() {
-    onChange(INITIAL_FILTERS);
+    onChange({ ...INITIAL_FILTERS });
     setLocationQuery("");
   }
 
@@ -276,24 +263,17 @@ export default function SearchFilters({
       <section className="space-y-4">
         <FilterHeading title="Budget Range" />
 
-<<<<<<< HEAD
-        <div className="relative">
-          <PriceHistogram buckets={priceBuckets} range={budget} />
-=======
         <div className="relative pb-2">
-          <PriceHistogram
-            buckets={priceBuckets.map((bucket) => bucket.count)}
-            range={budget}
-          />
-
->>>>>>> 02b54b3 (feat: add FiltersDialog)
+          <PriceHistogram buckets={priceBuckets} range={budget} />
           <Slider
             min={MIN_PRICE}
             max={MAX_PRICE}
-            step={50}
+            step={PRICE_STEP}
             minStepsBetweenThumbs={1}
             value={budget}
-            onValueChange={(v) => setBudget([v[0], v[1]])}
+            onValueChange={(value) => {
+              if (value.length === 2) setBudget([value[0], value[1]]);
+            }}
             aria-label="Budget range"
             className="absolute inset-x-0 bottom-0 translate-y-1/2"
           />
@@ -316,7 +296,6 @@ export default function SearchFilters({
       {/* Adventure style */}
       <section className="space-y-4">
         <FilterHeading title="Adventure Style" hint="Multi Select" />
-
         <div className="flex flex-wrap gap-3">
           {adventureStyles.map(({ label, icon: Icon }) => (
             <Pill
@@ -353,8 +332,8 @@ export default function SearchFilters({
         <form
           role="search"
           className="relative"
-          onSubmit={(e) => {
-            e.preventDefault();
+          onSubmit={(event) => {
+            event.preventDefault();
             addLocation();
           }}
         >
@@ -364,7 +343,7 @@ export default function SearchFilters({
           />
           <Input
             type="search"
-            placeholder="Search ..."
+            placeholder="Type a place and press Enter"
             aria-label="Search locations"
             value={locationQuery}
             onChange={(event) => setLocationQuery(event.target.value)}
@@ -374,18 +353,18 @@ export default function SearchFilters({
 
         {locations.length > 0 && (
           <ul className="flex flex-wrap gap-2">
-            {locations.map((loc) => (
-              <li key={loc}>
+            {locations.map((location) => (
+              <li key={location}>
                 <button
                   type="button"
-                  aria-label={`Remove ${loc}`}
+                  aria-label={`Remove ${location}`}
                   onClick={() =>
-                    setLocations(locations.filter((l) => l !== loc))
+                    setLocations(locations.filter((item) => item !== location))
                   }
                   className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground hover:border-[#1E429F]/50"
                 >
                   <X className="size-3" aria-hidden="true" />
-                  {loc}
+                  {location}
                 </button>
               </li>
             ))}
@@ -398,7 +377,6 @@ export default function SearchFilters({
       {/* Rating */}
       <section className="space-y-4">
         <FilterHeading title="Rating" hint="Multi Select" />
-
         <div className="flex flex-wrap gap-3">
           {ratings.map((rating) => (
             <Pill
