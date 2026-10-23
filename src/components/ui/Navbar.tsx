@@ -7,7 +7,8 @@ import { usePathname } from "next/navigation";
 import { Menu, Search, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/images/logo.svg";
-import SearchFilterDialog from "@/features/search-filter/components/SearchDialog";
+import SearchDialog from "@/features/search-filter/components/SearchDialog";
+// import SearchFilters from "@/features/search-filter/components/SearchFilters";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -47,6 +48,7 @@ function Avatar({ user }: { user: NavbarUser }) {
 export default function Navbar({ user }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const pathname = usePathname();
 
@@ -57,6 +59,10 @@ export default function Navbar({ user }: NavbarProps) {
     setIsMenuOpen(false);
     setIsSearchOpen(true);
   };
+const openFilterDialog = () => {
+  setIsMenuOpen(false);
+  setIsFilterOpen(true);
+};
 
   return (
     <>
@@ -90,9 +96,7 @@ export default function Navbar({ user }: NavbarProps) {
                   aria-current={isActive(link.href) ? "page" : undefined}
                   className={cn(
                     "text-sm font-medium transition-colors hover:text-[#1E429F]",
-                    isActive(link.href)
-                      ? "text-[#1E429F]"
-                      : "text-gray-800",
+                    isActive(link.href) ? "text-[#1E429F]" : "text-gray-800",
                   )}
                 >
                   {link.label}
@@ -114,14 +118,11 @@ export default function Navbar({ user }: NavbarProps) {
 
             <button
               type="button"
-              onClick={openSearchDialog}
+              onClick={openFilterDialog}
               aria-label="Filters"
               className="text-gray-600 transition-colors hover:text-[#1E429F]"
             >
-              <SlidersHorizontal
-                className="size-[18px]"
-                aria-hidden="true"
-              />
+              <SlidersHorizontal className="size-[18px]" aria-hidden="true" />
             </button>
 
             {user ? (
@@ -179,9 +180,7 @@ export default function Navbar({ user }: NavbarProps) {
                   aria-current={isActive(link.href) ? "page" : undefined}
                   className={cn(
                     "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-gray-50",
-                    isActive(link.href)
-                      ? "text-[#1E429F]"
-                      : "text-gray-700",
+                    isActive(link.href) ? "text-[#1E429F]" : "text-gray-700",
                   )}
                 >
                   {link.label}
@@ -232,13 +231,48 @@ export default function Navbar({ user }: NavbarProps) {
         )}
       </header>
 
-      {/* Search dialog outside the header */}
-      <Suspense fallback={null}>
-        <SearchFilterDialog
-          open={isSearchOpen}
-          onOpenChange={setIsSearchOpen}
-        />
-      </Suspense>
+    {/* Search dialog */}
+<Suspense fallback={null}>
+  <SearchDialog
+    open={isSearchOpen}
+    onOpenChange={setIsSearchOpen}
+  />
+</Suspense>
+
+{/* Filters dialog */}
+<Suspense fallback={null}>
+  {isFilterOpen && (
+    <div className="fixed inset-0 z-[60] overflow-y-auto bg-black/50 p-4">
+      <div className="mx-auto my-8 max-w-5xl rounded-2xl bg-white p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-xl font-bold">Filters</h2>
+          <button
+            type="button"
+            onClick={() => setIsFilterOpen(false)}
+            aria-label="Close filters"
+            className="rounded-lg p-2 hover:bg-gray-100"
+          >
+            <X className="size-5" />
+          </button>
+        </div>
+
+        {/* <SearchFilters
+          filters={{
+            sort: null,
+            price: [0, 8500],
+            styles: [],
+            locations: [],
+            ratings: [],
+          }}
+          onChange={(filters) => {
+            console.log("Updated filters:", filters);
+          }}
+          resultCount={0}
+        /> */}
+      </div>
+    </div>
+  )}
+</Suspense>
     </>
   );
 }
