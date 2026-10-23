@@ -4,7 +4,7 @@ const RentNow =()=> {
     return (
         <div>
             <h1>Rent Now</h1>
-            <RentCar/>
+            <RentCar />
         </div>
     )
 }   
