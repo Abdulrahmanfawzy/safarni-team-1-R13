@@ -8,7 +8,7 @@ import { Menu, Search, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/images/logo.svg";
 import SearchDialog from "@/features/search-filter/components/SearchDialog";
-// import SearchFilters from "@/features/search-filter/components/SearchFilters";
+import FiltersDialog from "@/features/search-filter/components/FiltersDialog";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -59,10 +59,11 @@ export default function Navbar({ user }: NavbarProps) {
     setIsMenuOpen(false);
     setIsSearchOpen(true);
   };
-const openFilterDialog = () => {
-  setIsMenuOpen(false);
-  setIsFilterOpen(true);
-};
+
+  const openFilterDialog = () => {
+    setIsMenuOpen(false);
+    setIsFilterOpen(true);
+  };
 
   return (
     <>
@@ -137,7 +138,6 @@ const openFilterDialog = () => {
                 >
                   Log in
                 </Link>
-
                 <Link
                   href="/signup"
                   className="rounded-lg bg-[#1E429F] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1E429F]/90"
@@ -193,7 +193,16 @@ const openFilterDialog = () => {
                 className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
                 <Search className="size-4" aria-hidden="true" />
-                Search &amp; filters
+                Search
+              </button>
+
+              <button
+                type="button"
+                onClick={openFilterDialog}
+                className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                <SlidersHorizontal className="size-4" aria-hidden="true" />
+                Filters
               </button>
 
               <div className="my-2 border-t border-gray-100" />
@@ -216,7 +225,6 @@ const openFilterDialog = () => {
                   >
                     Log in
                   </Link>
-
                   <Link
                     href="/signup"
                     onClick={() => setIsMenuOpen(false)}
@@ -231,48 +239,12 @@ const openFilterDialog = () => {
         )}
       </header>
 
-    {/* Search dialog */}
-<Suspense fallback={null}>
-  <SearchDialog
-    open={isSearchOpen}
-    onOpenChange={setIsSearchOpen}
-  />
-</Suspense>
+      {/* Dialogs: خارج الـ header عشان backdrop-blur ميحصرش الـ overlay */}
+      <Suspense fallback={null}>
+        <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
+      </Suspense>
 
-{/* Filters dialog */}
-<Suspense fallback={null}>
-  {isFilterOpen && (
-    <div className="fixed inset-0 z-[60] overflow-y-auto bg-black/50 p-4">
-      <div className="mx-auto my-8 max-w-5xl rounded-2xl bg-white p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold">Filters</h2>
-          <button
-            type="button"
-            onClick={() => setIsFilterOpen(false)}
-            aria-label="Close filters"
-            className="rounded-lg p-2 hover:bg-gray-100"
-          >
-            <X className="size-5" />
-          </button>
-        </div>
-
-        {/* <SearchFilters
-          filters={{
-            sort: null,
-            price: [0, 8500],
-            styles: [],
-            locations: [],
-            ratings: [],
-          }}
-          onChange={(filters) => {
-            console.log("Updated filters:", filters);
-          }}
-          resultCount={0}
-        /> */}
-      </div>
-    </div>
-  )}
-</Suspense>
+      <FiltersDialog open={isFilterOpen} onOpenChange={setIsFilterOpen} />
     </>
   );
 }

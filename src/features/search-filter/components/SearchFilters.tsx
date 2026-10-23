@@ -15,21 +15,33 @@ import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
 import {
-  adventureStyles,
-  BRAND,
-  fakeTours,
-  Filters,
   INITIAL_FILTERS,
   MIN_PRICE,
   MAX_PRICE,
   PRICE_STEP,
   priceBuckets,
-  ratings,
-  sortOptions,
+  type Filters,
 } from "./filter-data";
 
 import { FilterHeading, Pill } from "./FilterUI";
 import PriceHistogram from "./PriceHistogram";
+
+const BRAND = "#1E429F";
+const sortOptions = [
+  "Recommended",
+  "Price: Low to High",
+  "Price: High to Low",
+  "Top Rated",
+  "Newest",
+] as const;
+const adventureStyles = [
+  { label: "Beach", icon: Map },
+  { label: "Adventure", icon: Search },
+  { label: "Culture", icon: Star },
+  { label: "Wildlife", icon: Map },
+  { label: "City", icon: Search },
+] as const;
+const ratings = [5, 4, 3, 2, 1];
 
 type SearchFiltersProps = {
   filters: Filters;
@@ -125,7 +137,7 @@ export default function SearchFilters({
 
         <div className="relative pb-2">
           <PriceHistogram
-            buckets={priceBuckets}
+            buckets={priceBuckets.map((bucket) => bucket.count)}
             range={budget}
           />
 
