@@ -5,11 +5,11 @@ import RoomReview from "./RoomReview"
 
 interface IProps {
 
-
+  onAddReview: () => void;
 
 }
 
-const RoomDetailsTabs = ({ }: IProps) => {
+const RoomDetailsTabs = ({onAddReview }: IProps) => {
     return (
         <Tabs defaultValue="About" className="w-full ">
             <TabsList className="relative inline-flex h-auto w-full items-start justify-start gap-6 rounded-none bg-transparent p-0 
@@ -39,7 +39,7 @@ const RoomDetailsTabs = ({ }: IProps) => {
                 <RoomGallery />
             </TabsContent>
             <TabsContent value="Review">
-                <RoomReview />
+                <RoomReview onAddReview={onAddReview} />
             </TabsContent>
         </Tabs>
 

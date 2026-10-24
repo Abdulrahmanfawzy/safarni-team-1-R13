@@ -2,21 +2,26 @@ import { Input } from "@/components/ui/input"
 import { Search, SquarePen, Star } from "lucide-react"
 import man from '@/assets/images/man.jpg'
 import Image from "next/image"
+import { Button } from "@/components/ui/button";
 interface IProps {
-
+onAddReview: () => void;
 
 
 }
 const rating = 4.5;
-const RoomReview = ({ }: IProps) => {
+const RoomReview = ({onAddReview }: IProps) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between mt-4">
         <h3 className="text-gray-900 text-xl font-medium">Review</h3>
-        <div className="flex items-center justify-between gap-1.5 ">
-          <SquarePen className="text-primary" />
-          <h5 className="text-primary text-lg font-medium ">add review</h5>
-        </div>
+        <Button
+  variant="ghost"
+  onClick={onAddReview}
+  className="flex items-center gap-1.5 p-0 text-lg font-medium text-primary hover:bg-transparent"
+>
+  <SquarePen />
+  Add review
+</Button>
       </div>
       <Input placeholder="Search..." startIcon={<Search />} className='h-14!' />
 
