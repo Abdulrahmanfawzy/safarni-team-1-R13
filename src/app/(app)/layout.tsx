@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
-import "./globals.css";
+import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import "@/app/globals.css"
+import Navbar from "@/components/ui/Navbar";
 
-const inter = Inter({
-  subsets:["latin"]
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 })
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,9 +28,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${inter.className} h-full antialiased`}
+      className={`${poppins.className} h-full antialiased`}
     >
-      <body className="container mx-auto flex flex-col">{children}</body>
+      <body className="container mx-auto flex flex-col">
+        <Navbar />
+
+        {children}
+      </body>
     </html>
   );
 }
