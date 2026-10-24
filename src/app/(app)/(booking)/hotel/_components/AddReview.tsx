@@ -21,15 +21,15 @@ export default function AddReview({ onBack }: IProps) {
             
            
 
-            <div className="flex w-full flex-col items-center gap-2 mt-3">
+            <div className="mt-3 flex w-full flex-col items-center gap-2">
                 <Button
                     type="button"
                     variant="ghost"
                     onClick={onBack}
-                    className="flex items-center gap-1.5 self-center p-0 text-lg font-medium text-primary hover:bg-transparent"
+                    className="relative flex w-full items-center justify-center gap-1.5 self-center p-0 text-lg font-medium text-primary hover:bg-transparent"
                 >
-                    <ChevronLeft />
-                   <span className="w-full text-center text-xl text-gray-500 capitalize">Your Overall Rating Of This Product</span>
+                    <ChevronLeft className="absolute left-0 size-4 sm:size-5" />
+                   <span className="w-full px-8 text-center text-xs text-gray-500 capitalize sm:text-sm lg:text-xl">Your Overall Rating Of This Product</span>
                 </Button>
                 
                 <div
@@ -53,7 +53,7 @@ export default function AddReview({ onBack }: IProps) {
                                 className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                             >
                                 <Star
-                                    size={24}
+                                    size={20}
                                     className={isActive ? "fill-[#FCBA42] text-[#FCBA42]" : "text-gray-300"}
                                 />
                             </button>
@@ -63,11 +63,11 @@ export default function AddReview({ onBack }: IProps) {
             </div>
 
             <div className="flex w-full flex-col items-start gap-2">
-                <p className="text-lg text-gray-900">Add detailed review</p>
+                <p className="text-sm font-medium text-gray-900 lg:text-lg">Add detailed review</p>
                 <Textarea
                     aria-label="Add detailed review"
                     placeholder="Enter here"
-                    className="min-h-32 w-full resize-y"
+                    className="min-h-24 w-full resize-y sm:min-h-28 lg:min-h-32"
                 />
                 <input
                     ref={photoInputRef}
@@ -88,7 +88,7 @@ export default function AddReview({ onBack }: IProps) {
                 {photoName && <p className="text-sm text-gray-600">{photoName}</p>}
             </div>
 
-            <Button className="h-14! w-full">Submit</Button>
+            <Button className="h-12! w-full lg:h-14!">Submit</Button>
 
         </div>
     );

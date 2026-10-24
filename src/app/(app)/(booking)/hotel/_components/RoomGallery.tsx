@@ -26,11 +26,11 @@ const galleryImages = [
 ];
 const RoomGallery = ({ }: IProps) => {
   return (
-    <div className="mt-5 space-y-3">
-      <span className='text-gray-900 font-medium text-xl  '>Gallery<span className="text-primary">(200)</span></span>
+    <div className="mt-5 min-w-0 space-y-3">
+      <span className='text-base font-medium text-gray-900 lg:text-xl'>Gallery<span className="text-primary">(200)</span></span>
       
        {/* first row gallery------------------------------ */}
-        <div className="mt-5 grid grid-cols-4 gap-4">
+        <div className="mt-5 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4 lg:gap-4">
           {galleryImages.slice(0,4).map((image, index) => (
             <div key={index}
               className="relative aspect-square overflow-hidden rounded-lg"
@@ -53,14 +53,14 @@ const RoomGallery = ({ }: IProps) => {
           align: "start",
           loop: true,
         }}
-        className="my-5 w-full"
+        className="my-5 w-full min-w-0 px-1"
       >
        
-        <CarouselContent className="-ml-4">
+        <CarouselContent className="-ml-2 lg:-ml-4">
           {galleryImages.slice(4).map((image, index) => (
             <CarouselItem
               key={index}
-              className="basis-1/4 pl-4"
+              className="basis-[72%] pl-2 sm:basis-1/2 lg:basis-1/4 lg:pl-4"
             >
               <div className="relative aspect-square overflow-hidden rounded-lg">
                 <Image
@@ -75,8 +75,8 @@ const RoomGallery = ({ }: IProps) => {
           ))}
         </CarouselContent>
 
-        <CarouselPrevious className="-left-11 size-10 text-black bg-gray-100 border-none cursor-pointer" />
-        <CarouselNext className="-right-11 size-10 text-black bg-gray-100 border-none  cursor-pointer" />
+        <CarouselPrevious className="-left-11 hidden size-10 cursor-pointer border-none bg-gray-100 text-black lg:flex" />
+        <CarouselNext className="-right-11 hidden size-10 cursor-pointer border-none bg-gray-100 text-black lg:flex" />
       </Carousel>
       
 
