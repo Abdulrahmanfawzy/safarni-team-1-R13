@@ -14,7 +14,7 @@ export default function RoomDetailsInfo() {
         <div className="flex items-center gap-2">
           <HotelRating rating={4.5} />
           <span className="text-sm font-semibold text-[#4B4F63]">
-            (345) reviews
+            (345Reviews)
           </span>
         </div>
       </div>
