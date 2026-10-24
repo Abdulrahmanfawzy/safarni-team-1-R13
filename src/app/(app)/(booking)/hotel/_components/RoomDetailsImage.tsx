@@ -61,50 +61,6 @@ export default function RoomDetailsImage({ images }: IProps) {
           })}
         </div>
       )}
-
-
-
-      {/* <div className="absolute bottom-2.5 z-10 bg-white flex items-center justify-between gap-2 rounded-20 p-4 shadow-[0px_2px_8px_0px_#838BB41F] ">
-        <Image
-          src={smallImg}
-          alt=''
-          width={85}
-          height={85}
-          priority
-          className="object-contain w-21.25 h-21.25 cursor-pointer"
-
-        
-        />
-        <Image
-          src={roomImg}
-          alt=''
-          width={85}
-          height={85}
-          priority
-          className="object-contain w-21.25 h-21.25 cursor-pointer"
-          
-        
-        />
-        <Image
-          src={smallImg}
-          alt=''
-          width={85}
-          height={85}
-          priority
-          className="object-contain w-21.25 h-21.25 cursor-pointer"
-          
-        
-        />
-        <Image
-          src={roomImg}
-          alt=''
-          width={85}
-          height={85}
-          priority
-          className="object-contain w-21.25 h-21.25 cursor-pointer"
-        
-        />
-      </div> */}
     </section>
   );
 }
