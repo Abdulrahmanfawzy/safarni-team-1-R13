@@ -1,5 +1,7 @@
 
 
+
+import { Button } from "@/components/ui/button";
 import DiscountBadge from "./DiscountBadge";
 import HotelRating from "./HotelRating";
 import RoomDetailsTabs from "./RoomDetailsTabs";
@@ -30,6 +32,14 @@ export default function RoomDetailsInfo() {
       </div>
 
       <RoomDetailsTabs />
+      {/* price & button----------------------------------------------- */}
+      <div className="flex flex-col gap-4 mt-4">
+        <h4 className='text-[#111928] text-xl'>Total Price :
+          <span className="text-[#1E429F] text-2xl font-semibold ">$ 150</span>
+          <span className="text-[#606369] text-base ">/night</span>
+        </h4>
+        <Button className='h-14!'>Book Now</Button>
+      </div>
     </section>
   );
 }
