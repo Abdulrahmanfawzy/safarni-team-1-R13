@@ -13,7 +13,7 @@ export default function RoomDetailsImage({ images }: IProps) {
   const selectedImage = images[selectedIndex] || roomImg;
   const remainingImages = Math.max(images.length - 4, 0);
   return (
-    <section className="relative hidden items-center justify-center  lg:flex lg:flex-col lg:pr-0">
+    <section className="relative hidden items-center justify-center lg:flex lg:w-fit lg:shrink-0 lg:flex-col lg:pr-0">
       <div className="absolute left-9 top-3 cursor-pointer">
         <BackButton />
       </div>

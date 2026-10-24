@@ -16,7 +16,7 @@ const images = [
 const RoomDetailsPage = () => {
   return (
 
-    <main className="app-container my-3.5 flex w-full flex-col gap-8 lg:flex-row lg:justify-between ">
+    <main className="app-container my-3.5 flex w-full flex-col gap-8 lg:items-start lg:flex-row lg:justify-between ">
       <RoomDetailsImage images={images} />
       <RoomDetailsInfo />
     </main>
