@@ -2,9 +2,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import GuestDialog from "./GuestDialog";
+import { ChevronLeft } from "lucide-react";
 
 interface IProps {
     onBack: () => void;
@@ -25,6 +27,7 @@ const checkOutDates = [
 ];
 
 export default function RoomBooking({ onBack }: IProps) {
+    const router = useRouter();
     const [checkIn, setCheckIn] = useState(0);
     const [checkOut, setCheckOut] = useState(0);
     const [note, setNote] = useState("");
@@ -35,18 +38,25 @@ export default function RoomBooking({ onBack }: IProps) {
     const [infants, setInfants] = useState(1);
 
     const handleBooking = () => {
-       
         setOpenDialog(false);
+        router.push("/payment");
     };
 
     return (
         <>
             <div className="space-y-4">
                 {/* Header */}
-                <div className="border-t border-gray-200 pt-3 text-center">
-                    <h2 className="text-lg font-medium text-primary">
-                        Book Room
-                    </h2>
+                <div className="border-t border-gray-200 pt-3 flex items-center justify-center">
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={onBack}
+                        className="flex items-center gap-1.5 self-center p-0 text-lg font-medium text-primary hover:bg-transparent"
+                    >
+                        <ChevronLeft />
+                        <span className="w-full text-center text-lg font-medium text-primary capitalize">Book Room</span>
+                    </Button>
+
                 </div>
 
                 {/* Check In */}
@@ -62,8 +72,8 @@ export default function RoomBooking({ onBack }: IProps) {
                                 type="button"
                                 onClick={() => setCheckIn(index)}
                                 className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-md border px-1 py-2 transition ${checkIn === index
-                                        ? "border-[#E1EFFE] bg-[#E1EFFE] text-primary"
-                                        : "border-gray-200 bg-white text-gray-900 hover:bg-gray-50"
+                                    ? "border-[#E1EFFE] bg-[#E1EFFE] text-primary"
+                                    : "border-gray-200 bg-white text-gray-900 hover:bg-gray-50"
                                     }`}
                             >
                                 <span className="text-[10px]">{item.day}</span>
@@ -88,8 +98,8 @@ export default function RoomBooking({ onBack }: IProps) {
                                 type="button"
                                 onClick={() => setCheckOut(index)}
                                 className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-md border px-1 py-2 transition ${checkOut === index
-                                        ? "border-[#E1EFFE] bg-[#E1EFFE] text-primary"
-                                        : "border-gray-200 bg-white text-gray-900 hover:bg-gray-50"
+                                    ? "border-[#E1EFFE] bg-[#E1EFFE] text-primary"
+                                    : "border-gray-200 bg-white text-gray-900 hover:bg-gray-50"
                                     }`}
                             >
                                 <span className="text-[10px]">{item.day}</span>
@@ -128,7 +138,7 @@ export default function RoomBooking({ onBack }: IProps) {
                     Submit
                 </Button>
 
-               
+
             </div>
 
             {/* Guests Dialog */}

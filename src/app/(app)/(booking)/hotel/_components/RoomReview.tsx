@@ -14,14 +14,11 @@ const RoomReview = ({onAddReview }: IProps) => {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between mt-4">
         <h3 className="text-gray-900 text-xl font-medium">Review</h3>
-        <Button
-  variant="ghost"
-  onClick={onAddReview}
-  className="flex items-center gap-1.5 p-0 text-lg font-medium text-primary hover:bg-transparent"
->
-  <SquarePen />
-  Add review
-</Button>
+        <Button variant="ghost" onClick={onAddReview}
+          className="flex items-center gap-1.5 p-0 text-lg font-medium text-primary hover:bg-transparent">
+           <SquarePen />
+            Add review
+        </Button>
       </div>
       <Input placeholder="Search..." startIcon={<Search />} className='h-14!' />
 
