@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 
 function Slider({
   className,
-  defaultValue,
   value,
+  defaultValue,
   min = 0,
   max = 100,
   ...props
@@ -23,14 +23,18 @@ function Slider({
     [value, defaultValue, min, max],
   );
 
-  const thumbLabel = (i: number) =>
-    values.length === 2 ? (i === 0 ? "Minimum value" : "Maximum value") : undefined;
+  const thumbLabel = (index: number) =>
+    values.length === 2
+      ? index === 0
+        ? "Minimum value"
+        : "Maximum value"
+      : undefined;
 
   return (
     <SliderPrimitive.Root
       data-slot="slider"
-      defaultValue={defaultValue}
       value={value}
+      defaultValue={defaultValue}
       min={min}
       max={max}
       className={cn(
@@ -39,23 +43,21 @@ function Slider({
       )}
       {...props}
     >
-      {/* Thin light track across the whole width */}
       <SliderPrimitive.Track
         data-slot="slider-track"
         className="relative h-[3px] w-full grow overflow-hidden rounded-full bg-blue-200"
       >
-        {/* Thicker blue line between the thumbs */}
         <SliderPrimitive.Range
           data-slot="slider-range"
           className="absolute h-full bg-blue-500"
         />
       </SliderPrimitive.Track>
 
-      {values.map((_, i) => (
+      {values.map((_, index) => (
         <SliderPrimitive.Thumb
-          key={i}
+          key={index}
           data-slot="slider-thumb"
-          aria-label={thumbLabel(i)}
+          aria-label={thumbLabel(index)}
           className="block size-4 shrink-0 rounded-full bg-blue-500 shadow-sm ring-offset-background transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-200 disabled:pointer-events-none"
         />
       ))}
