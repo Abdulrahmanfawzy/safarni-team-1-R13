@@ -1,8 +1,21 @@
 
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { compareItems } from "./compare-data";
 import ComparisonCard from "./ComparisonCard";
 
 export default function ComparisonGrid() {
+  const router = useRouter();
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+
+  const handleCheckout = () => {
+    if (!selectedItemId) return;
+    router.push(`/payment?itemId=${encodeURIComponent(selectedItemId)}`);
+  };
+
   return (
     <section className="app-container flex flex-col gap-4">
       <h2 className=" text-xl font-medium text-gray-900">
@@ -11,17 +24,24 @@ export default function ComparisonGrid() {
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {compareItems.map((item) => (
-          <ComparisonCard key={item.id} item={item} />
+          <ComparisonCard
+            key={item.id}
+            item={item}
+            selected={selectedItemId === item.id}
+            onSelect={setSelectedItemId}
+          />
         ))}
       </div>
 
       <div className="mt-5 flex justify-center">
-        <button
+        <Button
           type="button"
-          className="w-full max-w-xs rounded bg-[#24489B] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-[#1d397c]"
+          disabled={!selectedItemId}
+          onClick={handleCheckout}
+          className="w-[50%] h-14!"
         >
           Check Out
-        </button>
+        </Button>
       </div>
     </section>
   );
