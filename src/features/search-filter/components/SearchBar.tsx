@@ -1,43 +1,75 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChevronLeft, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 type SearchBarProps = {
-  /** Called on every keystroke, so results filter as the user types. */
-  onSearch?: (query: string) => void;
-  /** Defaults to router.back(). */
-  onBack?: () => void;
+  showBackButton?: boolean;
 };
 
-export default function SearchBar({ onSearch, onBack }: SearchBarProps) {
+export default function SearchBar({ showBackButton = true }: SearchBarProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // stop the page reload; filtering already happens live
-    const query = new FormData(e.currentTarget).get("q")?.toString() ?? "";
-    onSearch?.(query);
-  };
+  const urlValue = searchParams.get("destination") ?? "";
+  const [value, setValue] = useState(urlValue);
+  const lastPushed = useRef(urlValue);
+
+  // لو الـ URL اتغير من بره (مثلًا من الـ Dialog)، حدّث الحقل
+  useEffect(() => {
+    if (urlValue !== lastPushed.current) {
+      lastPushed.current = urlValue;
+      setValue(urlValue);
+    }
+  }, [urlValue]);
+
+  // حدّث الـ URL بعد ما المستخدم يوقف كتابة 300ms
+  useEffect(() => {
+    const trimmed = value.trim();
+    if (trimmed === lastPushed.current) return;
+
+    const t = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (trimmed) params.set("destination", trimmed);
+      else params.delete("destination");
+
+      lastPushed.current = trimmed;
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, {
+        scroll: false,
+      });
+    }, 300);
+
+    return () => clearTimeout(t);
+  }, [value, pathname, router, searchParams]);
+
+  function handleBack() {
+    if (window.history.length > 1) router.back();
+    else router.push("/");
+  }
 
   return (
     <form
       role="search"
-      onSubmit={handleSubmit}
+      onSubmit={(e) => e.preventDefault()}
       className="flex w-full items-center gap-3"
     >
-      <Button
-        type="button"
-        variant="secondary"
-        size="icon"
-        onClick={onBack ?? (() => router.back())}
-        aria-label="Go back"
-        className="size-10 shrink-0 rounded-full"
-      >
-        <ChevronLeft className="size-5" aria-hidden="true" />
-      </Button>
+      {showBackButton && (
+        <Button
+          type="button"
+          variant="secondary"
+          size="icon"
+          onClick={handleBack}
+          aria-label="Go back"
+          className="size-10 shrink-0 rounded-full"
+        >
+          <ChevronLeft className="size-5" aria-hidden="true" />
+        </Button>
+      )}
 
       <div className="relative flex-1">
         <Search
@@ -47,9 +79,10 @@ export default function SearchBar({ onSearch, onBack }: SearchBarProps) {
         <Input
           type="search"
           name="q"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           placeholder="Search destinations..."
           aria-label="Search destinations"
-          onChange={(e) => onSearch?.(e.target.value)}
           className="h-10 rounded-full border-blue-200 pl-10 focus-visible:border-blue-400 focus-visible:ring-blue-200"
         />
       </div>

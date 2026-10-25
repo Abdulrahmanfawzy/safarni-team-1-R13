@@ -5,7 +5,7 @@ import Navbar from "@/components/ui/Navbar";
 
 
 const poppins = Poppins({
-  variable: "--font-poppins",
+  variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${poppins.className} h-full antialiased`}
+      className={`${poppins.className}  h-full antialiased`}
     >
       <body className="container mx-auto flex flex-col">
         <Navbar />
