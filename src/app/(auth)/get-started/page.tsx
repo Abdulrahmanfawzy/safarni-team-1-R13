@@ -16,28 +16,28 @@ const getStartedPage = ({ }: IProps) => {
       imageAlt="Safari travel illustration"
     >
       <div className="flex flex-col justify-between gap-6">
-       
-        
-          <h1 className="text-2xl font-medium text-gray-900 leading-[100%] text-center">
-            Welcome!
-          </h1>
 
-          <p className="text-[21px] text-gray-600 leading-[150%] text-center">
-            Safari is your all-in-one travel guide.
-            Discover destinations, compare prices, and book your next adventure.
-          </p>
 
-          <div className="flex flex-col gap-3">
-            <Link href="/signup" className={buttonVariants({ className: "h-12 w-full" })}>
-              Sign Up
-            </Link>
+        <h1 className="text-2xl font-medium text-gray-900 leading-[100%] text-center">
+          Welcome!
+        </h1>
 
-            <Link href="/login" className={buttonVariants({ variant: "outline", className: "h-12 w-full" })}>
-              Log In
-            </Link>
-          </div>
+        <p className="text-[21px] text-gray-600 leading-[150%] text-center">
+          Safari is your all-in-one travel guide.
+          Discover destinations, compare prices, and book your next adventure.
+        </p>
+
+        <div className="flex flex-col gap-3">
+          <Link href="/signup" className={buttonVariants({ className: "h-12 w-full" })}>
+            Sign Up
+          </Link>
+
+          <Link href="/login" className={buttonVariants({ variant: "outline", className: "h-12 w-full" })}>
+            Log In
+          </Link>
         </div>
-      
+      </div>
+
     </AuthLayout>
   )
 }
