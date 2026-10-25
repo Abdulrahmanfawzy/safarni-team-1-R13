@@ -60,7 +60,7 @@ const FlightsDialog = ({
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedPassengers", String(passengerCount));
     }
-    router.push(`/seats?passengers=${passengerCount}`);
+    router.push(`/flights/seats?passengers=${passengerCount}`);
   };
 
   const totalPrice =
