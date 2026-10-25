@@ -9,7 +9,7 @@ interface Props {
 
 export default function SelectedItemCard({ item }: Props) {
   return (
-    <article className="flex min-w-0 items-center gap-4 rounded-[24px] border border-gray-100 bg-white p-4 shadow-[0px_0px_25px_0px_#D1D5DB8F]">
+    <article className="flex min-w-0 items-center gap-4 rounded-[24px] border border-gray-100 bg-[#FAFAFA] p-4 shadow-[0px_0px_25px_0px_#D1D5DB8F]">
       <div className="relative  w-40 h-40 shrink-0 overflow-hidden rounded-md ">
         <Image
           src={selectImg}
@@ -34,13 +34,7 @@ export default function SelectedItemCard({ item }: Props) {
         </p>
       </div>
 
-      <button
-        type="button"
-        aria-label={`Remove ${item.title}`}
-        className="self-start rounded-full p-1 text-gray-400 hover:bg-gray-100"
-      >
-        <X size={14} />
-      </button>
+      
     </article>
   );
 }
