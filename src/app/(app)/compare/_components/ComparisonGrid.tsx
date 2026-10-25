@@ -17,12 +17,12 @@ export default function ComparisonGrid() {
   };
 
   return (
-    <section className="app-container flex flex-col gap-4">
-      <h2 className=" text-xl font-medium text-gray-900">
+    <section className="app-container flex min-w-0 flex-col gap-4 sm:gap-5">
+      <h2 className="text-lg font-medium text-gray-900 sm:text-xl">
         Compare
       </h2>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3">
         {compareItems.map((item) => (
           <ComparisonCard
             key={item.id}
@@ -33,12 +33,12 @@ export default function ComparisonGrid() {
         ))}
       </div>
 
-      <div className="mt-5 flex justify-center">
+      <div className="sticky bottom-0 z-20 -mx-5 mt-2 flex justify-center border-t border-gray-100 bg-white/95 px-5 py-3 backdrop-blur sm:static sm:mx-0 sm:mt-5 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
         <Button
           type="button"
           disabled={!selectedItemId}
           onClick={handleCheckout}
-          className="w-[50%] h-14!"
+          className="h-12 w-full max-w-md text-sm sm:h-14"
         >
           Check Out
         </Button>

@@ -10,10 +10,12 @@ interface IProps {
 
 const ComparePage = ({ }: IProps) => {
     return (
-        <main className="app-container my-3">
+        <main className="w-full py-3 sm:py-5">
             <SearchBar pathname="" />
-            <SelectedItems />
-             <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
+                <SelectedItems />
+            </div>
+            <div className="mt-6 sm:mt-8">
                 <ComparisonGrid />
             </div>
             
