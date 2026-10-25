@@ -18,7 +18,7 @@ const loginPage = ({ }: IProps) => {
  
 
   return (
-    <AuthLayout image={loginImg} imageAlt="Safari " hasIcon={true} href="/get-start">
+    <AuthLayout image={loginImg} imageAlt="Safari " hasIcon={true} href="/get-started">
       <div className="flex flex-col gap-5 sm:gap-6">
         <AuthFormHeading
           title="Welcome Again"
