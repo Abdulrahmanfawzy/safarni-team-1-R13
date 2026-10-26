@@ -6,8 +6,8 @@ import { Suspense } from "react"
 
 const Payment = () => {
   return (
-    <div className="w-full flex flex-col min-h-screen">
-
+    <div className="w-full flex flex-col min-h-screen"> 
+      {/* <Navbar /> */}
       <main className="flex flex-col w-full max-w-7xl mx-auto items-center justify-evenly p-4 md:flex-row gap-8">
         <ImagePlane image={creditcard} />
         <Suspense
