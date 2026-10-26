@@ -54,4 +54,14 @@ export interface VerifyOtpResponse {
     token: string;
   };
 }
-// --------------------------------------------------------------------------------
+// ---- forgot pass ----------------------------------------------------------------------------
+export interface ForgotPasswordPayload {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  success: boolean;
+  message: string;
+  errors: string[];
+  data: string;
+}

@@ -10,14 +10,13 @@ import {
 import { AuthAccountPrompt } from "./auth-account-prompt"
 import { useVerifyOtp } from "@/hooks/auth/use-verify-otp"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 interface IProps {
 email:string;
 
-
 }
 
-const OtpForm = ({ email}: IProps) => {
+const OtpForm = ({ email }: IProps) => {
   //---counter->>-----------------------------------------------
   const [timeRemaining, setTimeRemaining] = useState(30)
   useEffect(() => {
@@ -40,7 +39,9 @@ const OtpForm = ({ email}: IProps) => {
 // -------------------------------------------------------------
 const [otp, setOtp] = useState("");
 const router = useRouter();
- const {mutate,isPending,isError} = useVerifyOtp();
+const searchParams = useSearchParams();
+const isResetPassword = searchParams.get("type") === "reset-password";
+ const {mutate,isPending} = useVerifyOtp();
  const handleVerify = (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
 
@@ -54,7 +55,7 @@ const router = useRouter();
     {
       onSuccess: (result) => {
         toast.success(result.message);
-        router.push("/login");
+        router.push(isResetPassword ? "/reset-password" : "/login");
       },
       onError: (error) => {
         toast.error(error.message);

@@ -45,7 +45,7 @@ const SignUpForm = () => {
       onSuccess: (result) => {
         toast.success(result.message)
         router.push(
-          `/otp?email=${encodeURIComponent(data.email)}`
+          `/otp?email=${encodeURIComponent(data.email)}&type=register`
         );
       },
        onError: (error) => {
