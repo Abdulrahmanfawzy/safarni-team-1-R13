@@ -8,8 +8,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpFormValues, signUpSchema } from "@/schemas/auth.schema";
 import { PasswordRequirements } from "./password-requirements";
+import { useRegister } from "@/hooks/auth/use-register";
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
+  const { mutate, isPending, error } = useRegister();
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -28,9 +32,23 @@ const SignUpForm = () => {
 
   const password = watch("password");
 
-  const onSubmit = async (data: SignUpFormValues) => {
-    console.log("Valid form data:", data);
-  };
+ const onSubmit = (data: SignUpFormValues) => {
+  mutate(
+    {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    },
+    {
+      onSuccess: () => {
+        console.log('resgisterd successfully!')
+        router.push(
+          `/otp?email=${encodeURIComponent(data.email)}`
+        );
+      },
+    }
+  );
+};
 
   return (
     <form
@@ -46,7 +64,7 @@ const SignUpForm = () => {
           type="text"
         />
         {errors.name && (
-          <p className="text-sm text-red-500">{errors.name.message}</p>
+          <p className="text-sm text-destructive">{errors.name.message}</p>
         )}
       </div>
 
@@ -59,7 +77,7 @@ const SignUpForm = () => {
           type="email"
         />
         {errors.email && (
-          <p className="text-sm text-red-500">{errors.email.message}</p>
+          <p className="text-sm text-destructive">{errors.email.message}</p>
         )}
       </div>
 
@@ -86,7 +104,7 @@ const SignUpForm = () => {
           <PasswordRequirements password={password} />
         </div>
         {errors.password && (
-          <p className="text-sm text-red-500">{errors.password.message}</p>
+          <p className="text-sm text-destructive">{errors.password.message}</p>
         )}
       </div>
 
@@ -94,8 +112,9 @@ const SignUpForm = () => {
         className="h-12 w-full"
         type="submit"
         disabled={isSubmitting}
+        loading={isPending}
       >
-        {isSubmitting ? "Signing up..." : "Sign Up"}
+         Sign Up
       </Button>
     </form>
   );
