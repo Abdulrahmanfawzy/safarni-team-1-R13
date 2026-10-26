@@ -9,7 +9,7 @@ const PopularCar = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
                 {PopularCarData.map((item) => {
                     return (
-                        <div className="w-full flex flex-col  px-4 py-2   gap-4 shadow-2xs" key={item.id}>
+                        <div className="w-full flex flex-col  px-4 py-2 border border-gray-200 rounded-md   gap-4 shadow-2xs" key={item.id}>
                             <div className="flex flex-row-reverse items-end justify-between">
                                 <Image src={item.image} alt={item.name} width={233} height={187} className="rotate-y-180" />
                                 <h2 className="text-[20px] font-medium pl-3 text-gray-800">{item.name}</h2>
