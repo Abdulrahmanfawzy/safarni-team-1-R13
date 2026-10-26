@@ -1,16 +1,8 @@
 "use server";
 
-import { RegisterResponse } from "@/types/auth.types";
+import { RegisterPayload, RegisterResponse, VerifyOtpPayload, VerifyOtpResponse } from "@/types/auth.types";
 
 // ----- Register Api -------------------------------------------------------------------------
-export interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-  
-}
-
-
 
 export async function RegisterAction(
   payload: RegisterPayload
@@ -36,3 +28,29 @@ export async function RegisterAction(
 
   return result;
 }
+// ----- Otp Api -------------------------------------------------------------------------
+export async function verifyOtpAction(
+  payload: VerifyOtpPayload
+): Promise<VerifyOtpResponse> {
+  const response = await fetch(
+    `${process.env.API}api/auth/verify-otp`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+      cache: "no-store",
+    }
+  );
+
+  const result: VerifyOtpResponse = await response.json();
+
+  if (!response.ok || !result.success) {
+    throw new Error(result.message || "OTP verification failed");
+  }
+
+  return result;
+}
+// -----  -------------------------------------------------------------------------

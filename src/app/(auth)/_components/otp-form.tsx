@@ -8,15 +8,18 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { AuthAccountPrompt } from "./auth-account-prompt"
+import { useVerifyOtp } from "@/hooks/auth/use-verify-otp"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 interface IProps {
-
+email:string;
 
 
 }
 
-const OtpForm = ({ }: IProps) => {
+const OtpForm = ({ email}: IProps) => {
+  //---counter->>-----------------------------------------------
   const [timeRemaining, setTimeRemaining] = useState(30)
-
   useEffect(() => {
     const interval = window.setInterval(() => {
       setTimeRemaining((remaining) => {
@@ -34,15 +37,39 @@ const OtpForm = ({ }: IProps) => {
 
   const minutes = Math.floor(timeRemaining / 60)
   const seconds = timeRemaining % 60
+// -------------------------------------------------------------
+const [otp, setOtp] = useState("");
+const router = useRouter();
+ const {mutate,isPending,isError} = useVerifyOtp();
+ const handleVerify = (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
 
+  if (otp.length !== 4) {
+    toast.error("Please enter the 4-digit verification code");
+    return;
+  }
+
+  mutate(
+    { email,code: otp },
+    {
+      onSuccess: (result) => {
+        toast.success(result.message);
+        router.push("/login");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    }
+  );
+};
   return (
-    <form className="w-full space-y-3 sm:space-y-4">
+    <form className="w-full space-y-3 sm:space-y-4" onSubmit={handleVerify}>
       <div className="flex flex-col justify-center items-center gap-2">
         <p className="text-base text-gray-900" aria-live="polite">
           {String(minutes).padStart(2, "0")}:
           {String(seconds).padStart(2, "0")}
         </p>
-        <InputOTP maxLength={4}>
+        <InputOTP maxLength={4} value={otp} onChange={setOtp} disabled={isPending}>
           <InputOTPGroup>
             <InputOTPSlot index={0} />
             <InputOTPSlot index={1} />
@@ -56,7 +83,7 @@ const OtpForm = ({ }: IProps) => {
           href=""
         />
       </div>
-      <Button className="h-12 w-full mt-1.5" type="submit" >
+      <Button className="h-12 w-full mt-1.5" type="submit" loading={isPending} >
         Verify
       </Button>
     

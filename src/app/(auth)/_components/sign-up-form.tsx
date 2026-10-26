@@ -10,6 +10,7 @@ import { SignUpFormValues, signUpSchema } from "@/schemas/auth.schema";
 import { PasswordRequirements } from "./password-requirements";
 import { useRegister } from "@/hooks/auth/use-register";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const SignUpForm = () => {
   const { mutate, isPending, error } = useRegister();
@@ -39,14 +40,21 @@ const SignUpForm = () => {
       email: data.email,
       password: data.password,
     },
+    
     {
-      onSuccess: () => {
-        console.log('resgisterd successfully!')
+      onSuccess: (result) => {
+        toast.success(result.message)
         router.push(
           `/otp?email=${encodeURIComponent(data.email)}`
         );
       },
-    }
+       onError: (error) => {
+        toast.error(error.message);
+      },
+    },
+     
+     
+    
   );
 };
 
