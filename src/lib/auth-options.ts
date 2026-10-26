@@ -22,9 +22,14 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
+        const apiUrl = process.env.API?.replace(/\/$/, "");
 
+        if (!apiUrl) {
+          console.error("Login: API environment variable is missing");
+          return null;
+        }
         const response = await fetch(
-          `${process.env.API}/api/auth/login`,
+          `${apiUrl}/api/auth/login`,
           {
             method: "POST",
             headers: {
