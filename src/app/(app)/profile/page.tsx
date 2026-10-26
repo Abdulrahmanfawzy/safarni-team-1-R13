@@ -1,5 +1,5 @@
 
-import React from 'react'
+
 
 import Infouser from './_components/infouser/page'
 import Info_profile from './_components/Info_profile/page'

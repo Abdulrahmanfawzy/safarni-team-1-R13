@@ -8,7 +8,7 @@ async function Favorites() {
   const { data } = await getFavorites();
 
 
-console.log(data);
+// console.log(data);
 
 
   return (

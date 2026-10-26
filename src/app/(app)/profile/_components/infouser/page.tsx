@@ -1,8 +1,19 @@
+import { getAvatar } from "../../service/infouser.service";
 
-export default function Infouser() {
+
+
+export default async function Infouser() {
+
+const data=await getAvatar()
+console.log(data);
+
+
   return (
-    <section className="mt-5 rounded-xl border border-[#3F52B4] p-4 sm:p-6">
+    <section className="mt-5 h-[20%] rounded-xl border border-[#3F52B4] p-4 sm:p-6">
       <div className="flex min-w-0 items-center gap-4">
+      
+    
+      
         <img
           src="/profileImage.png"
           alt="Knee Due"
@@ -11,10 +22,10 @@ export default function Infouser() {
 
         <div className="min-w-0">
           <h2 className="truncate text-lg font-semibold sm:text-xl">
-            Knee Due
+            {/* Knee Due */}   {data.name} 
           </h2>
-          <span className="block truncate text-sm text-gray-500 sm:text-base">
-            Kneedue@gmail.com
+          <span className="block truncate text-sm mt-2 text-gray-500 sm:text-base">
+            {/* Kneedue@gmail.com    */}    {data.email}
           </span>
  
  
