@@ -5,15 +5,17 @@
 "use client";
 
 import { useState } from "react";
-import GoBack from "../../../components/shared/GoBack/page";
+
 import { BiSolidPlaneAlt } from "react-icons/bi";
 import { FaCarSide } from "react-icons/fa";
 import { SiTourbox } from "react-icons/si";
 import { RiHotelBedFill } from "react-icons/ri";
 import Flight from "../_components/Flight/page";
 import Cars from "../_components/cars/page";
+import GoBack from "@/components/shared/GoBack/page";
+import TourandHotelCard from "@/components/shared/tourcard/page";
 
-import TourandHotelCard from "../../../components/shared/tourcard/page";
+
 
 const tabs = [
   { id: "flight", label: "Flight", Icon: BiSolidPlaneAlt },

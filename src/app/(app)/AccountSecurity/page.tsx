@@ -1,10 +1,9 @@
+import GoBack from "@/components/shared/GoBack/page";
+import SecurityToggleRow from "../profile/_components/SecurityToggleRow/page";
+import SecurityActionCard from "../profile/_components/SecurityCard/page";
 
 
 
-
-import SecurityActionCard from "../pages/SecurityActionCard/page";
-import SecurityToggleRow from "../pages/SecurityToggleRow/page";
-import GoBack from "../shared/GoBack/page";
 
 
 export default function AccountSecurity() {
