@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getAvatar } from "../../service/infouser.service";
 
 
@@ -14,8 +15,11 @@ console.log(data);
       
     
       
-        <img
-          src="/profileImage.png"
+        <Image
+          // src="/profileImage.png"
+          src={data.avatar_url}
+          width={80}
+          height={80}
           alt="Knee Due"
           className="size-16 shrink-0 rounded-full object-cover sm:size-20"
         />
