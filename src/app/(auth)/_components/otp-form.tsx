@@ -7,7 +7,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
-import { AuthAccountPrompt } from "./AuthAccountPrompt"
+import { AuthAccountPrompt } from "./auth-account-prompt"
 interface IProps {
 
 

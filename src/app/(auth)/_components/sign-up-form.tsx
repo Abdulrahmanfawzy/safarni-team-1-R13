@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpFormValues, signUpSchema } from "@/schemas/auth.schema";
-import { PasswordRequirements } from "./PasswordRequirements";
+import { PasswordRequirements } from "./password-requirements";
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);

@@ -1,9 +1,9 @@
 import { AuthLayout } from "../_components/auth-layout"
 import signupImg from "@/assets/images/sign-up.svg"
-import SignUpForm from "../_components/SignUpForm"
-import { AuthAccountPrompt } from "../_components/AuthAccountPrompt"
-import { AuthFormHeading } from "../_components/AuthFormHeading"
-import { SocialLoginOptions } from "../_components/SocialLoginOptions"
+import SignUpForm from "../_components/sign-up-form"
+import { AuthAccountPrompt } from "../_components/auth-account-prompt"
+import { AuthFormHeading } from "../_components/auth-form-heading"
+import { SocialLoginOptions } from "../_components/social-login-options"
 
 const signUpPage = () => {
   return (

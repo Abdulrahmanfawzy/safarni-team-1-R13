@@ -1,9 +1,9 @@
 'use client'
 import loginImg from "@/assets/images/login.svg"
 import { AuthLayout } from "../_components/auth-layout"
-import { AuthFormHeading } from "../_components/AuthFormHeading"
+import { AuthFormHeading } from "../_components/auth-form-heading"
 import { Mail } from "lucide-react"
-import OtpForm from "../_components/OtpForm"
+import OtpForm from "../_components/otp-form"
 interface IProps {
 }
 
