@@ -17,8 +17,6 @@ const navLinks = [
   { label: "Maps", href: "/maps" },
 ];
 
-
-
 type NavbarUser = {
   name: string;
   avatar?: string;
@@ -53,31 +51,10 @@ export default function Navbar({ user }: NavbarProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const pathname = usePathname();
-  const isHotelRoomDetailsPage = /^\/hotel\/[^/]+\/[^/]+$/.test(pathname);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  
-
-
-
-  return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur",
-        isHotelRoomDetailsPage && "max-md:hidden",
-      )}
-    >
-      <nav
-        className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 sm:px-6 lg:px-8"
-        aria-label="Main navigation"
-      >
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex shrink-0 items-center gap-2 justify-self-start"
-          aria-label="Safarni Home"
   const openSearchDialog = () => {
     setIsMenuOpen(false);
     setIsSearchOpen(true);
