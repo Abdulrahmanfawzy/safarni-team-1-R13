@@ -14,10 +14,10 @@ import hotel from "@/assets/images/hotel.jpg";
 import Link from "next/link";
 
 const categoryImages = [
-  { id: 1, label: "flights", alt: "", src: flight },
-  { id: 2, label: "cars", alt: "", src: car },
-  { id: 3, label: "Tours", alt: "", src: tours },
-  { id: 4, label: "Hotels", alt: "", src: hotel },
+  { id: 1, label: "Flights", alt: "", src: flight, path :"flights" },
+  { id: 2, label: "Cars", alt: "", src: car, path :"cars"},
+  { id: 3, label: "Tours", alt: "", src: tours, path :"tour"},
+  { id: 4, label: "Hotels", alt: "", src: hotel, path :"hotel"},
 ];
 
 export default function Categories() {
@@ -33,7 +33,7 @@ export default function Categories() {
     sm:grid sm:grid-cols-2 sm:justify-items-center sm:gap-5
     lg:grid-cols-4">
           {categoryImages.map((image) => (
-            <Link href={`/${image.label}`}
+            <Link href={`/${image.path}`}
               key={image.id}
               className="group flex w-50 shrink-0 flex-col items-center gap-10"
             >
