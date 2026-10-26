@@ -1,20 +1,15 @@
+
+import axios from "axios";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export async function apiFetch<T>(
-     endpoint: string,
-  options?: RequestInit
-): Promise<T>{
-    if(!API_BASE_URL){
-        throw new Error("API base URL is not configured");
-    }
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  timeout: 10000,
+});
 
-    const response = await fetch(
-        `${API_BASE_URL.replace(/\/$/, "")}/${endpoint.replace(/^\//, "")}`,
-        options
-    );
-      if (!response.ok) {
-    throw new Error(`API request failed: ${response.status}`);
-  }
-
-  return response.json() as Promise<T>;
-}
+export default apiClient;
