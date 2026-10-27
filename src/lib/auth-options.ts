@@ -22,14 +22,9 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-        const apiUrl = process.env.API?.replace(/\/$/, "");
-
-        if (!apiUrl) {
-          console.error("Login: API environment variable is missing");
-          return null;
-        }
+       
         const response = await fetch(
-          `${apiUrl}/api/auth/login`,
+          `${process.env.API}api/auth/login`,
           {
             method: "POST",
             headers: {
@@ -64,11 +59,30 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
-  ],
 
+
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.accessToken = user.accessToken;
+        token.role = user.role;
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      session.accessToken = token.accessToken as string;
+      session.user.role = token.role as string;
+
+      return session;
+    },
+  },
   session: {
     strategy: "jwt",
   },
+
 
   secret: process.env.NEXTAUTH_SECRET,
 };
