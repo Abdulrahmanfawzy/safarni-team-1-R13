@@ -1,4 +1,3 @@
-
 import apiClient from "@/api/client";
 import { toursResponseSchema } from "@/features/home/schemas/home.schema";
 
@@ -15,5 +14,11 @@ export const homeApi = {
     }
 
     return result.data.items;
+  },
+
+  async getHomeFeed() {
+    const response = await apiClient.get<unknown>("/home");
+
+    return response.data;
   },
 };
