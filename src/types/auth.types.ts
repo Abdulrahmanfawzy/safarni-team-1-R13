@@ -65,3 +65,17 @@ export interface ForgotPasswordResponse {
   errors: string[];
   data: string;
 }
+// ---- reset pass ----------------------------------------------------------------------------
+export interface ResetPasswordPayload {
+  email: string;
+  password: string;
+  password_confirmation: string;
+  code: string;
+}
+
+export interface ResetPasswordResponse {
+  success: boolean;
+  message: string;
+  errors: string[];
+  data: null;
+}

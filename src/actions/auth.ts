@@ -1,6 +1,6 @@
 "use server";
 
-import { ForgotPasswordPayload, ForgotPasswordResponse, RegisterPayload, RegisterResponse, VerifyOtpPayload, VerifyOtpResponse } from "@/types/auth.types";
+import { ForgotPasswordPayload, ForgotPasswordResponse, RegisterPayload, RegisterResponse, ResetPasswordPayload, ResetPasswordResponse, VerifyOtpPayload, VerifyOtpResponse } from "@/types/auth.types";
 
 // ----- Register Api -------------------------------------------------------------------------
 
@@ -77,6 +77,35 @@ export async function forgotPasswordAction(
   if (!response.ok || !result.success) {
     throw new Error(
       result.message || "Failed to send password reset OTP",
+    );
+  }
+
+  return result;
+}
+// -----reset pass  -------------------------------------------------------------------------
+export async function resetPasswordAction(
+  payload: ResetPasswordPayload,
+): Promise<ResetPasswordResponse> {
+
+
+  const response = await fetch(
+    `${process.env.API}api/auth/reset-password`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+      cache: "no-store",
+    },
+  );
+
+  const result: ResetPasswordResponse = await response.json();
+
+  if (!response.ok || !result.success) {
+    throw new Error(
+      result.message || "Failed to reset password",
     );
   }
 

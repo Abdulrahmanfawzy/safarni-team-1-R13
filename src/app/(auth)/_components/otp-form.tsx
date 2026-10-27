@@ -12,7 +12,7 @@ import { useVerifyOtp } from "@/hooks/auth/use-verify-otp"
 import { toast } from "sonner"
 import { useRouter, useSearchParams } from "next/navigation"
 interface IProps {
-email:string;
+  email: string;
 
 }
 
@@ -36,33 +36,41 @@ const OtpForm = ({ email }: IProps) => {
 
   const minutes = Math.floor(timeRemaining / 60)
   const seconds = timeRemaining % 60
-// -------------------------------------------------------------
-const [otp, setOtp] = useState("");
-const router = useRouter();
-const searchParams = useSearchParams();
-const isResetPassword = searchParams.get("type") === "reset-password";
- const {mutate,isPending} = useVerifyOtp();
- const handleVerify = (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
+  // -------------------------------------------------------------
+  const [otp, setOtp] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const isResetPassword = searchParams.get("type") === "reset-password";
+  const { mutate, isPending } = useVerifyOtp();
+  const handleVerify = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  if (otp.length !== 4) {
-    toast.error("Please enter the 4-digit verification code");
-    return;
-  }
-
-  mutate(
-    { email,code: otp },
-    {
-      onSuccess: (result) => {
-        toast.success(result.message);
-        router.push(isResetPassword ? "/reset-password" : "/login");
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
+    if (otp.length !== 4) {
+      toast.error("Please enter the 4-digit verification code");
+      return;
     }
-  );
-};
+    // Reset password flow
+    if (isResetPassword) {
+      router.push(
+        `/reset-password?email=${encodeURIComponent(email)}&code=${encodeURIComponent(otp)}`
+      );
+      return;
+    }
+    mutate(
+      { email, code: otp },
+      {
+        onSuccess: (result) => {
+          toast.success(result.message);
+
+          router.push("/login");
+
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      }
+    );
+  };
   return (
     <form className="w-full space-y-3 sm:space-y-4" onSubmit={handleVerify}>
       <div className="flex flex-col justify-center items-center gap-2">
@@ -87,7 +95,7 @@ const isResetPassword = searchParams.get("type") === "reset-password";
       <Button className="h-12 w-full mt-1.5" type="submit" loading={isPending} >
         Verify
       </Button>
-    
+
     </form>
   )
 }
