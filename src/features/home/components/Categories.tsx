@@ -1,26 +1,31 @@
+
+"use client";
+
 import Image from "next/image";
-// import Link from "next/link";
+import Link from "next/link";
 import { Cairo } from "next/font/google";
+import { useQuery } from "@tanstack/react-query";
+import { homeApi } from "@/api/home.api";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-cairo",
 });
-import flight from "@/assets/images/flight.jpg";
-import car from "@/assets/images/car.jpg";
-import tours from "@/assets/images/tours.jpg";
-import hotel from "@/assets/images/hotel.jpg";
-import Link from "next/link";
-
-const categoryImages = [
-  { id: 1, label: "Flights", alt: "", src: flight, path :"flights" },
-  { id: 2, label: "Cars", alt: "", src: car, path :"cars"},
-  { id: 3, label: "Tours", alt: "", src: tours, path :"tour"},
-  { id: 4, label: "Hotels", alt: "", src: hotel, path :"hotel"},
-];
 
 export default function Categories() {
+  const {
+    data: categories = [],
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["home", "categories"],
+    queryFn: async () => {
+      const response = await homeApi.getHomeFeed();
+      return response.categories ?? [];
+    },
+  });
+
   return (
     <section className="px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -28,32 +33,81 @@ export default function Categories() {
           Categories
         </h2>
 
-        <div   className="
-    flex flex-col items-center gap-4 px-4 pb-4
-    sm:grid sm:grid-cols-2 sm:justify-items-center sm:gap-5
-    lg:grid-cols-4">
-          {categoryImages.map((image) => (
-            <Link href={`/${image.path}`}
-              key={image.id}
-              className="group flex w-50 shrink-0 flex-col items-center gap-10"
-            >
-              <div className="size-70 overflow-hidden rounded-full shadow-sm mx-5 ring-2 ring-transparent transition group-focus-visible:ring-(--primary)">
-                <Image
-                  src={image.src}
-                  alt={image.alt || image.label}
-                  width={320}
-                //   height={40}
-                  sizes="150px"
-                  className="size-full rounded-full h-70 object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
+        {isPending && (
+          <p className="py-8 text-center text-muted-foreground">
+            Loading categories...
+          </p>
+        )}
 
-              <h2 className={`${cairo.className} text-center text-6xl font-bold text-(--primary)`}>
-                {image.label}
-              </h2>
-            </Link>
-          ))}
-        </div>
+        {isError && (
+          <p className="py-8 text-center text-red-600" role="alert">
+            Failed to load categories.
+          </p>
+        )}
+
+        {!isPending && !isError && categories.length === 0 && (
+          <p className="py-8 text-center text-muted-foreground">
+            No categories available.
+          </p>
+        )}
+
+        {!isPending && !isError && categories.length > 0 && (
+          <div
+            className="
+              grid grid-cols-1 justify-items-center gap-8 px-4 pb-4
+              sm:grid-cols-2 sm:gap-5
+              lg:grid-cols-4
+            "
+          >
+            {categories.map((category) => (
+              <Link
+                href={`/${category.slug ?? category.name.toLowerCase()}`}
+                key={category.id}
+                className="group flex w-full flex-col items-center gap-6"
+              >
+                <div
+                  className="
+                    size-56 overflow-hidden rounded-full shadow-sm
+                    ring-2 ring-transparent transition
+                    group-focus-visible:ring-(--primary)
+                    sm:size-60 lg:size-64
+                  "
+                >
+                  {category.icon_url ? (
+                    <Image
+                      src={category.icon_url}
+                      alt={category.name}
+                      width={320}
+                      height={320}
+                      sizes="(max-width: 640px) 224px, (max-width: 1024px) 240px, 256px"
+                      className="
+                        size-full rounded-full object-cover
+                        transition-transform duration-500
+                        group-hover:scale-105
+                      "
+                    />
+                  ) : (
+                    <div className="flex size-full items-center justify-center rounded-full bg-muted">
+                      <span className="text-5xl font-bold text-muted-foreground">
+                        {category.name.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <h3
+                  className={`
+                    ${cairo.className}
+                    text-center text-3xl font-bold text-(--primary)
+                    transition-opacity group-hover:opacity-75
+                  `}
+                >
+                  {category.name}
+                </h3>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
