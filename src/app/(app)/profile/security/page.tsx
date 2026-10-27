@@ -2,9 +2,10 @@
 
 
 
+import GoBack from "@/components/shared/GoBack/page";
 import SecurityActionCard from "../_components/SecurityCard/page";
 import SecurityToggleRow from "../_components/SecurityToggleRow/page";
-import GoBack from "../../../components/shared/GoBack/page";
+
 
 
 export default function AccountSecurity() {
@@ -42,4 +43,5 @@ export default function AccountSecurity() {
     </main>
   );
 }
+
 

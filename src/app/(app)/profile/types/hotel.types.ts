@@ -1,12 +1,6 @@
 
 
 
-export interface Data {
-  hotel: Hotel
-  rooms: Room[]
-  links: Links
-  meta: Meta
-}
 
 export interface Hotel {
   id: number
@@ -36,27 +30,3 @@ export interface Room {
   thumbnail_url: string
 }
 
-export interface Links {
-  first: string
-  last: string
-  prev: any
-  next: any
-}
-
-export interface Meta {
-  current_page: number
-  from: number
-  last_page: number
-  links: Link[]
-  path: string
-  per_page: number
-  to: number
-  total: number
-}
-
-export interface Link {
-  url?: string
-  label: string
-  page?: number
-  active: boolean
-}
