@@ -10,7 +10,7 @@ export default async function Cars() {
   const image = data.images[0];
 
   return (
-    <div className="relative mx-14 rounded-2xl my-8 border border-[#B22459] py-8">
+    <div className="relative mx-14 rounded-2xl my-12 border border-[#B22459] py-8">
       <div className="mx-6 my-2 flex items-center justify-between">
         <h2 className="font-semibold">
           {data.brand.name} {data.model}
@@ -19,7 +19,7 @@ export default async function Cars() {
         {image && (
           <Image
           unoptimized
-            className="absolute rounded-2xl -top-16 right-5 object-contain"
+            className="absolute rounded-2xl -top-9 right-5 object-contain"
             width={150}
             height={150}
             src={image}
