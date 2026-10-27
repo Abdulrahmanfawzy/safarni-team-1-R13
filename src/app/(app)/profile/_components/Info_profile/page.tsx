@@ -2,7 +2,7 @@
 
 import { HiArrowLeftStartOnRectangle } from "react-icons/hi2";
 import CardProfile from "../cardprofile/page";
-import ModalLogout from "../../shared/Modal/page";
+import ModalLogout from "../../shared/modal/page";
 
 
 export default function Info_profile() {
