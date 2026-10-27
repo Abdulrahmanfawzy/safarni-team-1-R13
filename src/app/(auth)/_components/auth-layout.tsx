@@ -9,9 +9,10 @@ type AuthLayoutProps = {
   imageAlt?: string;
   hasIcon?:boolean;
   href?:string;
+  className?:string;
 };
 
-export function AuthLayout({image,imageAlt, children,hasIcon,href }: AuthLayoutProps) {
+export function AuthLayout({image,imageAlt, children,hasIcon,href ,className}: AuthLayoutProps) {
   return (
     <main className="min-h-screen bg-background ">
       {hasIcon && href && (
@@ -27,7 +28,7 @@ export function AuthLayout({image,imageAlt, children,hasIcon,href }: AuthLayoutP
             alt={imageAlt ?? ''}
             width={608}
             height={672}
-            className="h-full w-full object-contain"
+            className={`h-full w-full object-contain ${className}`}
             priority
           />}
         </section>

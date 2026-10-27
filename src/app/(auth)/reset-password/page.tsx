@@ -1,5 +1,5 @@
 import { AuthLayout } from "../_components/auth-layout"
-import { AuthFormHeading } from "../_components/AuthFormHeading"
+import { AuthFormHeading } from "../_components/auth-form-heading"
 import forgotImg from "@/assets/images/forgot.svg"
 import ResetPasswordForm from "../_components/ResetPasswordForm"
 import { Lock } from "lucide-react"
