@@ -77,7 +77,7 @@ export async function getFavorites(): Promise<FavoritesResponse> {
     throw new Error("TOKEN is missing from .env.local");
   }
 
-  const url = `${baseUrl.replace(/\/+$/, "")}/v1/favorites`;
+  const url = `${baseUrl}/favorites`;
   console.log("Favorites URL:", url);
 console.log("Favorites URL:", url);
   const response = await fetch(url, {
