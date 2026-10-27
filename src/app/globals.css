@@ -1,5 +1,7 @@
 
-
+/* *{
+  font-family:Verdana, Geneva, Tahoma, sans-serif
+} */
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -148,5 +150,11 @@
   }
 
 }
-
-
+.app-container {
+  @apply container max-w-350 mx-auto px-5
+}
+@layer utilities {
+  .rounded-20 {
+    border-radius: 20px;
+  }
+}
