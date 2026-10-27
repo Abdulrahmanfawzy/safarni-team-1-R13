@@ -33,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="container mx-auto flex flex-col">
         <Navbar />
 
+
         {children}
       </body>
     </html>
