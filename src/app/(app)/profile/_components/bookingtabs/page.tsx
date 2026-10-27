@@ -34,8 +34,8 @@ export default function BookingTabs({
   const content = { flight, cars, tours, hotel };
 
   return (
-    <>
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-7">
+    <div>
+      <div className="mx-14 mt-10 grid max-w-350 grid-cols-2 gap-4 px-5 sm:grid-cols-4 sm:gap-7">
         {tabs.map(({ id, label, Icon }) => {
           const isActive = activeTab === id;
 
@@ -60,6 +60,6 @@ export default function BookingTabs({
       <section id="booking-panel" className="mt-5">
         {content[activeTab]}
       </section>
-    </>
+    </div>
   );
 }

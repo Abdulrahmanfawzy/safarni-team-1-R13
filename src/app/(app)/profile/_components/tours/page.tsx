@@ -8,7 +8,7 @@ export default async function Tour() {
   const data = await getTours();
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 mx-10">
       {data.items.map((tour) => (
         <article
           key={tour.id}

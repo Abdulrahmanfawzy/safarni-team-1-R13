@@ -24,7 +24,7 @@ export default async function Hotel() {
   const { hotel, rooms } = data;
 
   return (
-    <article className="rounded-xl border border-[#B22459] bg-white p-4 shadow-sm">
+    <article className="rounded-xl border border-[#B22459] bg-white p-4 mx-10 shadow-sm">
       <div className="flex items-center gap-4">
         <Image
           src={hotel.cover_photo}
