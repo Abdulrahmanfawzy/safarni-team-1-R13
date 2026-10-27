@@ -2,12 +2,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-// import { homeApi } from "@/api/home.api";
+import { homeApi } from "@/api/home.api";
 
 export function useHomeData() {
   const toursQuery = useQuery({
     queryKey: ["home", "tours"],
-    // queryFn: homeApi.getTours,
+    queryFn: homeApi.getTours,
   });
 
   return {
