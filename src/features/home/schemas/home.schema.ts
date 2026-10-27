@@ -1,9 +1,8 @@
-
-import { z } from "zod";
-
-export const tourSchema = z.object({
-  id: z.number(),
-  title: z.string(),
+import {z} from "zod";
+export const tourSchema = z.object(
+    {
+        id:z.number(),
+         title: z.string(),
   slug: z.string(),
   duration: z.number(),
   duration_text: z.string(),
@@ -12,7 +11,8 @@ export const tourSchema = z.object({
   rating: z.number().nullable(),
   reviews_count: z.number(),
   adventure_style: z.string(),
-});
+    }
+);
 
 export const toursResponseSchema = z.object({
   success: z.boolean(),
@@ -23,5 +23,3 @@ export const toursResponseSchema = z.object({
   }),
 });
 
-export type Tour = z.infer<typeof tourSchema>;
-export type ToursResponse = z.infer<typeof toursResponseSchema>;

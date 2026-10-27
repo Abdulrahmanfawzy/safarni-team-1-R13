@@ -67,7 +67,10 @@ export default function AvailableToursSection() {
       {!isPending && !isError && tours.length > 0 && (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-5">
           {visibleTours.map((tour) => (
-            <TourCard key={tour.id} tour={tour} />
+            <TourCard
+              key={tour.id}
+              tour={{ ...tour, price: Number(tour.price) }}
+            />
           ))}
         </div>
       )}

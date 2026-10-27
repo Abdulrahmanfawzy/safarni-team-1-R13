@@ -3,7 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
 import crank from "@/assets/images/crank.jpg";
-import type { Tour } from "@/features/home/schemas/home.schema";
+
+type Tour = {
+  slug: string;
+  image?: string | null;
+  title: string;
+  adventure_style: string;
+  rating: number | null;
+  duration_text: string;
+  price: number;
+};
 
 type TourCardProps = {
   tour: Tour;
