@@ -1,7 +1,8 @@
 
-import CardProfile from '@/app/profile/_components/cardprofile/page'
-import ModalLogout from '@/app/profile/shared/Modal/page';
+
 import { HiArrowLeftStartOnRectangle } from "react-icons/hi2";
+import CardProfile from "../cardprofile/page";
+import ModalLogout from "../../shared/modal/page";
 
 
 export default function Info_profile() {
@@ -124,8 +125,6 @@ export default function Info_profile() {
   
    
 <ModalLogout/>
-
-
 
 
 

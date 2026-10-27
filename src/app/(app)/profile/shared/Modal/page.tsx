@@ -2,55 +2,88 @@
 
 
 
-import { ButtonDataAttributes } from "@base-ui/react";
-import { Modal, Button } from "@heroui/react";
 
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Modal, Button, toast } from "@heroui/react";
+import { logout } from "../../service/logout.service";
 
 
 export default function ModalLogout() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleLogout(close: () => void) {
+    try {
+      setLoading(true);
+      setError("");
+
+      await logout();
+      close();
+      router.replace("/login");
+      router.refresh();
+     alert("logout successfully")
+    } catch (error) {
+  console.error("Logout failed:", error);
+  setError(error instanceof Error ? error.message : "Unknown logout error");
+} 
+    
+    
+    finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div>
-         <Modal>
-      <Button variant="primary"> Logout</Button>
+    <Modal>
+      <Button variant="primary">Logout</Button>
+
       <Modal.Backdrop>
         <Modal.Container>
           <Modal.Dialog>
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Heading>
-                 
-              Logout
-                 
-                 
-                 
-                 </Modal.Heading>
-            </Modal.Header>
-            <Modal.Body>
-              <p> 
+            {({ close }) => (
+              <>
+                <Modal.CloseTrigger />
 
-  <h2 className='text-black font-semibold mx-6 text-xl'>Do You Want To Register The <br />  Exit Already ? </h2>
+                <Modal.Header>
+                  <Modal.Heading>Logout</Modal.Heading>
+                </Modal.Header>
 
-<div className="flex gap-2">
+                <Modal.Body>
+                  <h2 className="mx-6 text-xl font-semibold text-black">
+                    Do you want to log out?
+                  </h2>
 
-<button className="bg-blue-600 mt-4 rounded-2xl py-2 px-8"> Yes , log me out </button>
-<button className=" mt-4 text-black border w-1/2 rounded-2xl py-2 px-12"> No </button>
-</div>
+                  {error && (
+                    <p className="mt-3 text-sm text-red-600">{error}</p>
+                  )}
+                </Modal.Body>
 
+                <Modal.Footer>
+                  <Button
+                    className="bg-blue-600 text-white"
+                    isDisabled={loading}
+                    onPress={() => handleLogout(close)}
+                  >
+                    {loading ? "Logging out..." : "Yes, log me out"}
+                  </Button>
 
-
-              </p>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button className={"text-red-600 font-semibold"} slot="close" variant="secondary">
-                close
-              </Button>
-            </Modal.Footer>
+                  <Button
+                    variant="secondary"
+                    slot="close"
+                    isDisabled={loading}
+                  >
+                    No
+                  </Button>
+                </Modal.Footer>
+              </>
+            )}
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>
     </Modal>
-
-
-    </div>
-  )
+  );
 }

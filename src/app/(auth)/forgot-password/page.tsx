@@ -1,8 +1,8 @@
 'use client'
 import forgotImg from "@/assets/images/forgot.svg"
 import { AuthLayout } from "../_components/auth-layout"
-import { AuthFormHeading } from "../_components/AuthFormHeading"
-import ForgotPasswordForm from "../_components/ForgotPasswordForm"
+import { AuthFormHeading } from "../_components/auth-form-heading"
+import ForgotPasswordForm from "../_components/forgot-password-form"
 import { KeyRound } from "lucide-react"
 interface IProps {
 }

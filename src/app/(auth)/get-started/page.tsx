@@ -14,8 +14,9 @@ const getStartedPage = ({ }: IProps) => {
     <AuthLayout
       image={getStarted}
       imageAlt="Safari travel illustration"
+      className="max-h-136!"
     >
-      <div className="flex flex-col justify-between gap-6">
+      <div className="flex flex-col justify-between gap-6 ">
 
 
         <h1 className="text-2xl font-medium text-gray-900 leading-[100%] text-center">
