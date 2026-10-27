@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ArrowRight } from "lucide-react";
 import { format } from "date-fns";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { getFlights } from "../constants/MockData";
-import { Flight, PropsDepartureDate } from "../types/TypesFlights";
+import { PropsDepartureDate } from "../types/TypesFlights";
 import { DateHeader } from "./DateHeader";
 import FlightCard from "./FlightCard";
 import { cn } from "@/lib/utils";
+
+const toDateKey = (date: Date | string | undefined) =>
+  date instanceof Date ? format(date, "yyyy-MM-dd") : String(date ?? "default");
 
 const FlightsDialog = ({
   open,
@@ -17,54 +19,45 @@ const FlightsDialog = ({
   departureDate,
   returnDate,
   onSelect,
-  selectedDepartureFlight,
-  selectedReturnFlight,
+  selectedDepartureFlightId,
+  selectedReturnFlightId,
   passengerCount = "1",
 }: PropsDepartureDate) => {
   const router = useRouter();
 
-  const [internalDeparture, setInternalDeparture] = useState<Flight | null>(null);
-  const [internalReturn, setInternalReturn] = useState<Flight | null>(null);
-
-  const selectedDeparture =
-    selectedDepartureFlight !== undefined ? selectedDepartureFlight : internalDeparture;
-  const selectedReturn =
-    selectedReturnFlight !== undefined ? selectedReturnFlight : internalReturn;
-
   const legs = [
-    ...(departureDate
-      ? [{ key: "departure" as const, date: departureDate }]
-      : []),
+    ...(departureDate ? [{ key: "departure" as const, date: departureDate }] : []),
     ...(returnDate ? [{ key: "return" as const, date: returnDate }] : []),
   ];
 
   const hasReturnLeg = legs.some((leg) => leg.key === "return");
   const canProceed = hasReturnLeg
-    ? Boolean(selectedDeparture && selectedReturn)
-    : Boolean(selectedDeparture);
-
-  const handleSelect = (flight: Flight, leg: "departure" | "return") => {
-    if (leg === "departure") {
-      const next = selectedDeparture?.id === flight.id ? null : flight;
-      setInternalDeparture(next);
-    } else {
-      const next = selectedReturn?.id === flight.id ? null : flight;
-      setInternalReturn(next);
-    }
-    onSelect?.(flight, leg);
-  };
+    ? Boolean(selectedDepartureFlightId && selectedReturnFlightId)
+    : Boolean(selectedDepartureFlightId);
 
   const handleContinue = () => {
     if (!canProceed) return;
     onOpenChange(false);
+
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedPassengers", String(passengerCount));
     }
-    router.push(`/flights/seats?passengers=${passengerCount}`);
+
+    const params = new URLSearchParams({ passengers: String(passengerCount) });
+    if (selectedDepartureFlightId) params.set("departureFlight", selectedDepartureFlightId);
+    if (selectedReturnFlightId) params.set("returnFlight", selectedReturnFlightId);
+
+    router.push(`/flights/seats?${params.toString()}`);
+  };
+
+  const getPrice = (date: Date | undefined, id: string | null | undefined) => {
+    if (!date || !id) return 0;
+    return getFlights(toDateKey(date)).find((f) => f.id === id)?.price ?? 0;
   };
 
   const totalPrice =
-    (selectedDeparture?.price ?? 0) + (selectedReturn?.price ?? 0);
+    getPrice(departureDate, selectedDepartureFlightId) +
+    getPrice(returnDate, selectedReturnFlightId);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -89,38 +82,30 @@ const FlightsDialog = ({
             }
           >
             {legs.map((leg) => {
-              const dateKey =
-                leg.date instanceof Date
-                  ? format(leg.date, "yyyy-MM-dd")
-                  : String(leg.date ?? "default");
+              const selectedId =
+                leg.key === "departure" ? selectedDepartureFlightId : selectedReturnFlightId;
+
               return (
                 <div key={leg.key} className="flex flex-col gap-4">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
                       {leg.key === "departure" ? "Departure Flight" : "Return Flight"}
                     </span>
-                    {(leg.key === "departure" ? selectedDeparture : selectedReturn) && (
+                    {selectedId && (
                       <span className="text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                         Selected
                       </span>
                     )}
                   </div>
                   <DateHeader date={leg.date} />
-                  {getFlights(dateKey).map((flight) => {
-                    const isSelected =
-                      leg.key === "departure"
-                        ? selectedDeparture?.id === flight.id
-                        : selectedReturn?.id === flight.id;
-
-                    return (
-                      <FlightCard
-                        key={flight.id}
-                        flight={flight}
-                        isSelected={isSelected}
-                        onSelect={(f) => handleSelect(f, leg.key)}
-                      />
-                    );
-                  })}
+                  {getFlights(toDateKey(leg.date)).map((flight) => (
+                    <FlightCard
+                      key={flight.id}
+                      flight={flight}
+                      isSelected={selectedId === flight.id}
+                      onSelect={(f) => onSelect?.(f.id, leg.key)}
+                    />
+                  ))}
                 </div>
               );
             })}
@@ -138,16 +123,20 @@ const FlightsDialog = ({
                 </span>
                 {totalPrice > 0 && (
                   <span className="text-gray-500 text-xs ml-1">
-                    (Total: <span className="font-semibold text-primary">${totalPrice.toLocaleString()}</span>)
+                    (Total:{" "}
+                    <span className="font-semibold text-primary">
+                      ${totalPrice.toLocaleString()}
+                    </span>
+                    )
                   </span>
                 )}
               </div>
             ) : (
               <span className="text-gray-500 text-xs sm:text-sm">
                 {hasReturnLeg
-                  ? !selectedDeparture && !selectedReturn
+                  ? !selectedDepartureFlightId && !selectedReturnFlightId
                     ? "Please select departure and return flights to proceed"
-                    : !selectedDeparture
+                    : !selectedDepartureFlightId
                       ? "Please select a departure flight"
                       : "Please select a return flight"
                   : "Please select a departure flight to proceed"}
@@ -163,7 +152,7 @@ const FlightsDialog = ({
               "w-full sm:w-auto px-8 h-11 rounded-xl bg-primary text-white font-semibold text-sm transition-all shadow-xs flex items-center justify-center gap-2",
               canProceed
                 ? "cursor-pointer hover:bg-primary/90 hover:shadow-md active:scale-[0.99]"
-                : "opacity-50 cursor-not-allowed"
+                : "opacity-50 cursor-not-allowed",
             )}
           >
             <span>Continue to Seats</span>
