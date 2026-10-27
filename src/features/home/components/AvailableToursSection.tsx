@@ -19,7 +19,11 @@ export default function AvailableToursSection() {
     queryFn: homeApi.getTours,
   });
 
-  const tours = data ?? [];
+  const tours = Array.isArray(data)
+    ? data
+    : data && Array.isArray(data.items)
+      ? data.items
+      : [];
 
   const visibleTours = isExpanded
     ? tours
