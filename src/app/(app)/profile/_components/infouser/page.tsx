@@ -10,7 +10,7 @@ console.log(data);
 
 
   return (
-    <section className="mt-5 h-[20%] rounded-xl border border-[#3F52B4] p-4 sm:p-6">
+    <section className=" h-[20%] rounded-xl border border-[#3F52B4] p-4 sm:p-6">
       <div className="flex min-w-0 items-center gap-4">
       
     

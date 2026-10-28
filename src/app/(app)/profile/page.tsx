@@ -18,8 +18,12 @@ export default function FirstprofileImage() {
       </Suspense>
 
 
-
+<div className="h-[80%]">
 <Info_profile/>
+
+</div>
+
+
 
 
 

@@ -10,7 +10,7 @@ export default function Info_profile() {
   
   <div>
 
-<div className="mt-8 rounded-md  border border-[#b9c4ff]">
+<div className="mt-4 rounded-md  border border-[#b9c4ff]">
  
  
   <CardProfile 
