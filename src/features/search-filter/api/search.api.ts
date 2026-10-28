@@ -1,5 +1,6 @@
 
 import apiClient from "@/api/client";
+import { searchResponseSchema } from "@/features/search-filter/schemas/search.schema";
 
 export const searchApi = {
   async searchTours(query: string, perPage = 1) {
@@ -10,17 +11,11 @@ export const searchApi = {
       },
     });
 
-    const result = response.data as {
-      success?: unknown;
-      message?: unknown;
-      data?: unknown;
-    };
+    const result = searchResponseSchema.parse(response.data);
 
-    if (result.success !== true) {
+    if (!result.success || !result.data) {
       throw new Error(
-        typeof result.message === "string"
-          ? result.message
-          : "Failed to search tours."
+        result.message || "Failed to search tours."
       );
     }
 
