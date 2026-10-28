@@ -43,15 +43,17 @@ const LoginForm = ({ }: IProps) => {
         redirect: false,
 
       });
+       console.log("NextAuth login result:", result);
       if (!result || result.error) {
-        toast.error("Invalid email or password");
+          toast.error(`Login failed: ${result?.error ?? "Unknown error"}`);
         return;
 
       }
       toast.success("Login successful");
       router.push("/");
       router.refresh();
-    } catch {
+    } catch(error) {
+       console.error("Login exception:", error);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoggingIn(false)
