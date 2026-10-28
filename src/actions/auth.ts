@@ -1,6 +1,7 @@
 "use server";
 
 import { ForgotPasswordPayload, ForgotPasswordResponse, RegisterPayload, RegisterResponse, ResetPasswordPayload, ResetPasswordResponse, VerifyOtpPayload, VerifyOtpResponse } from "@/types/auth.types";
+import { getApiBaseUrl } from "@/lib/api-url";
 
 // ----- Register Api -------------------------------------------------------------------------
 
@@ -8,7 +9,7 @@ export async function RegisterAction(
   payload: RegisterPayload
 ): Promise<RegisterResponse> {
   const response = await fetch(
-    `${process.env.API}api/auth/register`,
+    `${getApiBaseUrl()}/api/auth/register`,
     {
       method: "POST",
       headers: {
@@ -33,7 +34,7 @@ export async function verifyOtpAction(
   payload: VerifyOtpPayload
 ): Promise<VerifyOtpResponse> {
   const response = await fetch(
-    `${process.env.API}api/auth/verify-otp`,
+    `${getApiBaseUrl()}/api/auth/verify-otp`,
     {
       method: "POST",
       headers: {
@@ -60,7 +61,7 @@ export async function forgotPasswordAction(
 ): Promise<ForgotPasswordResponse> {
   
   const response = await fetch(
-    `${process.env.API}api/auth/forgot-password`,
+    `${getApiBaseUrl()}/api/auth/forgot-password`,
     {
       method: "POST",
       headers: {
@@ -89,7 +90,7 @@ export async function resetPasswordAction(
 
 
   const response = await fetch(
-    `${process.env.API}api/auth/reset-password`,
+    `${getApiBaseUrl()}/api/auth/reset-password`,
     {
       method: "POST",
       headers: {

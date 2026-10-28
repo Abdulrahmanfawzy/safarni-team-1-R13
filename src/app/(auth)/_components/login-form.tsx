@@ -41,7 +41,7 @@ const LoginForm = ({}: IProps) => {
         redirect: false,
       });
       if (!result || result.error) {
-        toast.error("Invalid email or password");
+        toast.error(`${result?.error}`);
         return;
       }
       toast.success("Login successful");
