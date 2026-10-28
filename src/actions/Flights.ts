@@ -22,6 +22,12 @@ export type FlightBookingPayload = {
     }>;
 };
 
+const getApiAuthorizationHeader = (): Record<string, string> | null => {
+    const rawToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhZmFybmktcm91bmQtMTMuaHVtYS12b2x2ZS5jb20vYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3OTMxOTkwNTUsImV4cCI6MTc5MzIwMjY1NSwibmJmIjoxNzkzMTk5MDU1LCJqdGkiOiJ1VllJeE9ENFNGQzVTaU5PIiwic3ViIjoiNTUiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.DiI5sYFfX6CeiqPFLRu7bVapXVAQOdTKUD88pGTiTvw";
+    const token = rawToken?.replace(/^Bearer\s+/i, "");
+    return token ? { Authorization: `Bearer ${token}` } : null;
+};
+
 const formatDateForApi = (value?: string | Date): string => {
     if (!value) return "";
 
@@ -39,7 +45,7 @@ const formatDateForApi = (value?: string | Date): string => {
 
 const getApiBaseUrl = () => {
     const rawApi =
-        process.env.NEXT_PUBLIC_API || "https://safarni-round-13.huma-volve.com";
+        process.env.API || "https://safarni-round-13.huma-volve.com";
 
     return rawApi.trim().replace(/^["']|["']$/g, "").trim().replace(/\/+$/, "");
 };
@@ -138,11 +144,17 @@ export const GetFlightSeatsAction = async (id: string | number) => {
 export const CreateFlightBookingAction = async (payload: FlightBookingPayload) => {
     try {
         const apiBaseUrl = getApiBaseUrl();
+        const authorization = getApiAuthorizationHeader();
+        if (!authorization) {
+            return { error: "Booking requires a backend access token. Set SAFARNI_API_TOKEN on the server." };
+        }
+
         const requestOptions: RequestInit = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
+                ...authorization,
             },
             body: JSON.stringify(payload),
             cache: "no-store",
@@ -164,5 +176,43 @@ export const CreateFlightBookingAction = async (payload: FlightBookingPayload) =
     } catch (error) {
         console.error("Flight booking API fetch error:", error);
         return { error: "Unable to connect to the bookings service." };
+    }
+};
+export const FlightPayment = async (id: string | number) => {
+    try {
+        const apiBaseUrl = getApiBaseUrl();
+        const authorization = getApiAuthorizationHeader();
+        if (!authorization) {
+            return { error: "Payment requires a backend access token. Set SAFARNI_API_TOKEN on the server." };
+        }
+
+        const requestOptions: RequestInit = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                ...authorization,
+            },
+            body: JSON.stringify({}),
+            cache: "no-store",
+        };
+
+        const bookingId = encodeURIComponent(String(id));
+        let response = await fetch(`${apiBaseUrl}/api/bookings/${bookingId}/payment/checkout`, requestOptions);
+        if (response.status === 404) {
+            response = await fetch(`${apiBaseUrl}/bookings/${bookingId}/payment/checkout`, requestOptions);
+        }
+
+        const result = await response.json().catch(() => null);
+        if (!response.ok || result?.success === false) {
+            const message = result?.message || `${response.status} ${response.statusText}`;
+            console.error("Flight checkout API error:", message, result?.errors);
+            return { error: `Payment checkout failed: ${message}` };
+        }
+
+        return result ?? { success: true };
+    } catch (error) {
+        console.error("Flight checkout API fetch error:", error);
+        return { error: "Unable to connect to the payment service." };
     }
 };
