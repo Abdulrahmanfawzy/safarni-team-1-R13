@@ -16,7 +16,7 @@ interface FavoritesResponse {
 
 export async function getFavorites(): Promise<FavoritesResponse> {
   const baseUrl = process.env.API_BASE_URL;
-  const token = process.env.TOKEN;
+const token =await getAccessToken();
 
   if (!baseUrl) {
     throw new Error("API_BASE_URL is missing from .env.local");
@@ -55,7 +55,7 @@ export async function toggleFavorite(
   serviceItemId: number,
 ) {
   const baseUrl = process.env.API;
-  const token = getAccessToken();
+  const token =await getAccessToken();
 // const token = process.env.TOKEN
 
   if (!baseUrl || !token) {

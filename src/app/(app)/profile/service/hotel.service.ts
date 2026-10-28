@@ -16,7 +16,7 @@ interface HotelResponse {
 
 export async function getHotels(): Promise<HotelRoomsData> {
   const baseUrl = process.env.API;
- const token = getAccessToken();
+ const token = await getAccessToken();
 // const token = process.env.TOKEN
 
   if (!baseUrl) {

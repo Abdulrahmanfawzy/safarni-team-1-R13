@@ -12,7 +12,7 @@ interface ProfileResponse {
 
 export async function getAvatar(): Promise<Iavatar> {
   const baseUrl = process.env.API;
- const token = getAccessToken();
+ const token =await getAccessToken();
 
 // const token = process.env.TOKEN
 

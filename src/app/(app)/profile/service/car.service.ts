@@ -14,7 +14,7 @@ interface CarResponse {
 
 export async function getCarDetails(carId: number): Promise<ICar> {
   const baseUrl = process.env.API;
-   const token = getAccessToken();
+   const token =await getAccessToken();
 // const token = process.env.TOKEN
 
 

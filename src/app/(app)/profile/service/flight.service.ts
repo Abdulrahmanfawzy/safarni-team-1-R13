@@ -12,7 +12,7 @@ interface FlightResponse {
 
 export async function getFlights(): Promise<Iflight[]> {
   const baseUrl = process.env.API;
- const token = getAccessToken();
+ const token = await getAccessToken();
 // const token = process.env.TOKEN
 
   if (!baseUrl) {
