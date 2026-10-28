@@ -3,6 +3,7 @@
 
 
 
+import { getAccessToken } from "@/lib/auth";
 
 import type { FavoritesData } from "../types/favourite.types";
 
@@ -53,8 +54,9 @@ export async function toggleFavorite(
   serviceType: string,
   serviceItemId: number,
 ) {
-  const baseUrl = process.env.API_BASE_URL;
-  const token = process.env.TOKEN;
+  const baseUrl = process.env.API;
+  const token = getAccessToken();
+// const token = process.env.TOKEN
 
   if (!baseUrl || !token) {
     throw new Error("API_BASE_URL or TOKEN is missing from .env.local");

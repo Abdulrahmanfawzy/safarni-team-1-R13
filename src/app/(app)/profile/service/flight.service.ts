@@ -1,6 +1,8 @@
 
 import type { Iflight } from "../types/flight.types";
 
+import { getAccessToken } from "@/lib/auth";
+
 interface FlightResponse {
   success: boolean;
   message: string;
@@ -9,8 +11,9 @@ interface FlightResponse {
 }
 
 export async function getFlights(): Promise<Iflight[]> {
-  const baseUrl = process.env.API_BASE_URL;
-  const token = process.env.TOKEN;
+  const baseUrl = process.env.API;
+ const token = getAccessToken();
+// const token = process.env.TOKEN
 
   if (!baseUrl) {
     throw new Error("API_BASE_URL is missing from .env.local");

@@ -4,8 +4,10 @@
 import Infouser from './_components/infouser/page'
 import Info_profile from './_components/Info_profile/page'
 import { Suspense } from 'react'
+import { connection } from 'next/server';
 
-export default function FirstprofileImage() {
+export default async function FirstprofileImage() {
+    await connection();
   return (
     <div>
 

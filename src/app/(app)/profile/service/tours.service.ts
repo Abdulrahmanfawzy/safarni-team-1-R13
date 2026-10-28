@@ -1,5 +1,6 @@
 
 
+import { getAccessToken } from "@/lib/auth";
 import type { Hotel, Room } from "../types/hotel.types";
 import { Itours } from "../types/tours.types";
 
@@ -15,8 +16,9 @@ interface ToursResponse {
 }
 
 export async function getTours(): Promise<ToursData> {
-  const baseUrl = process.env.API_BASE_URL;
-  const token = process.env.TOKEN;
+  const baseUrl = process.env.API;
+ const token = getAccessToken();
+// const token = process.env.TOKEN
 
   if (!baseUrl) {
     throw new Error("API_BASE_URL is missing from .env.local");
