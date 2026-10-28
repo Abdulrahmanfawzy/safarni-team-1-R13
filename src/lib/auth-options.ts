@@ -44,7 +44,8 @@ export const authOptions: NextAuthOptions = {
 
         
         if (!response.ok) {
-          return null;
+            const error = await response.json();
+          throw new Error(error.message || "حدث خطأ أثناء تسجيل الدخول");
         }
 
         const result = await response.json().catch(() => null);
