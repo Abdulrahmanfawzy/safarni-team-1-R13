@@ -1,4 +1,3 @@
-'use client'
 
 import loginImg from "@/assets/images/login.svg"
 import { AuthLayout } from "../_components/auth-layout";
@@ -17,6 +16,7 @@ const loginPage = ({ }: IProps) => {
  
 
   return (
+   
     <AuthLayout image={loginImg} imageAlt="Safari " hasIcon={true} href="/get-started">
       <div className="flex flex-col gap-5 sm:gap-6">
         <AuthFormHeading

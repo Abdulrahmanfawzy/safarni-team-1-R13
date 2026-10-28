@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { LoginFormValues, loginSchema, SignUpFormValues, signUpSchema } from "@/schemas/auth.schema";
@@ -9,6 +10,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
+
 interface IProps {
 
 
@@ -44,6 +46,8 @@ const LoginForm = ({ }: IProps) => {
 
       });
        console.log("NextAuth login result:", result);
+      
+
       if (!result || result.error) {
           toast.error(`Login failed: ${result?.error ?? "Unknown error"}`);
         return;

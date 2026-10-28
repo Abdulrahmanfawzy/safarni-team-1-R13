@@ -49,6 +49,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const { user, token } = result.data;
+       
 
         return {
           id: String(user.id),
