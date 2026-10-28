@@ -69,7 +69,7 @@ export default function Navbar({ user }: NavbarProps) {
     <>
       <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur">
         <nav
-          className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 sm:px-6 lg:px-8"
+          className="grid grid-cols-[1fr_auto_1fr] items-center py-3"
           aria-label="Main navigation"
         >
           {/* Logo */}
