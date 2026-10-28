@@ -11,7 +11,10 @@ import { ArrowLeft, Eye, EyeOff, Lock } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { PasswordRequirements } from "./PasswordRequirements";
+import { PasswordRequirements } from "./password-requirements";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useResetPassword } from "@/hooks/auth/useResetPassword";
+import { toast } from "sonner";
 
 const ResetPasswordForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,18 +27,41 @@ const ResetPasswordForm = () => {
   } = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
     mode: "onChange",
-    defaultValues: {
-      password: "",
-      confirmPassword: "",
-    },
   });
 
-  const password = watch("password");
+  const password = watch("password")??"";
+// ----------------------------------------------------------------
+const router = useRouter();
+const searchParams = useSearchParams();
 
-  const onSubmit = async (data: ResetPasswordFormValues) => {
-    console.log("Valid form data:", data);
-  };
+const email = searchParams.get("email") ?? "";
+const code = searchParams.get("code") ?? "";
 
+const { mutateAsync, isPending } = useResetPassword();
+const onSubmit = async (data: ResetPasswordFormValues) => {
+  if (!email || !code) {
+    toast.error("Email or verification code is missing");
+    return;
+  }
+
+  try {
+    const result = await mutateAsync({
+      email,
+      code,
+      password: data.password,
+      password_confirmation: data.confirmPassword,
+    });
+
+    toast.success(result.message);
+    router.push("/login");
+  } catch (error) {
+    toast.error(
+      error instanceof Error
+        ? error.message
+        : "Failed to reset password",
+    );
+  }
+};
   return (
     <form
       className="w-full space-y-3 sm:space-y-4"
@@ -101,9 +127,9 @@ const ResetPasswordForm = () => {
       <Button
         className="h-12 w-full"
         type="submit"
-        disabled={isSubmitting}
+        loading={isPending}
       >
-        {isSubmitting ? "Resetting ..." : "Reset Password"}
+       Reset Password
       </Button>
       <Link
         href="/login"

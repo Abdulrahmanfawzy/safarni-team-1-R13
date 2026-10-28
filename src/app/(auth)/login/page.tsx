@@ -3,10 +3,10 @@
 import loginImg from "@/assets/images/login.svg"
 import { useState } from "react";
 import { AuthLayout } from "../_components/auth-layout";
-import { AuthFormHeading } from "../_components/AuthFormHeading";
-import { SocialLoginOptions } from "../_components/SocialLoginOptions";
-import { AuthAccountPrompt } from "../_components/AuthAccountPrompt";
-import LoginForm from "../_components/LoginForm";
+import { AuthFormHeading } from "../_components/auth-form-heading";
+import { SocialLoginOptions } from "../_components/social-login-options";
+import { AuthAccountPrompt } from "../_components/auth-account-prompt";
+import LoginForm from "../_components/login-form";
 
 interface IProps {
 

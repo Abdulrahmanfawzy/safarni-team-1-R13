@@ -1,62 +1,100 @@
 
 
-import Image from "next/image";
-import { FaRegHeart, FaStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import { IoMdHeart } from "react-icons/io";
 
-export type FavouritesProps = {
-  image: string;
+
+
+interface FavoriteCardProps {
+  imageUrl?: string;
+  
   title: string;
-  description: string;
-  price: number;
-  rating: number;
-  days: number;
-};
+  rating?: string;
+  duration?: string;
+  model?:string;
+  price?: string;
+  pickup_available?: boolean;
+  adventure_style?: string;
+}
 
-export default function FavouritesCard({
-  image,
+export default function FavoriteCard({
+  imageUrl,
+  
   title,
-  description,
   rating,
-  days,
-  price,
-}: FavouritesProps) {
-  return (
-    <article className="w-full relative max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
-      <Image
-        src={image}
-        width={400}
-        height={280}
-        alt={title}
-        className="h-52 w-full object-cover"
-      />
+  duration,
 
-      <div className="icon">
-        <IoMdHeart  className="absolute top-10 right-3  bg-white text-red-600 rounded-full w-6 h-6 p-1" />
+  price,
+
+  pickup_available,
+  adventure_style,
+}: FavoriteCardProps) {
+  return (
+    <article className="overflow-hidden  rounded-2xl bg-white p-2 shadow-md transition hover:-translate-y-1 hover:shadow-lg">
+      <div className="relative h-36 overflow-hidden rounded-xl bg-gray-100 sm:h-40">
+        {imageUrl ? (
+         
+          <img
+            src={imageUrl}
+            alt={title}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="grid h-full place-items-center text-xs text-gray-400">
+            Image unavailable
+          </div>
+        )}
+
+        <IoMdHeart
+          className="absolute right-3 top-3 size-7 rounded-full bg-white p-1 text-red-600 shadow"
+          aria-label="Favorite"
+        />
       </div>
 
-      <div className="space-y-3 p-4">
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="font-semibold text-slate-900">{title}</h3>
+      <div className="space-y-2 p-3">
+        <div className="flex items-center justify-between gap-2">
+          {/* <p className="truncate text-xs text-gray-400">{category}</p> */}
 
-          <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-slate-700">
-            <FaStar className="text-amber-400" aria-hidden="true" />
-            {rating}
-          </span>
+          {rating && (
+            <span className="flex shrink-0 items-center gap-1 text-xs text-gray-700">
+              <FaStar className="text-amber-400" aria-hidden="true" />
+              {rating}
+            </span>
+          )}
         </div>
 
-        <div className="flex items-center justify-between gap-3">
-          <p className="line-clamp-2 text-sm text-slate-500">{description}</p>
-          <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">
-            {days} days
-          </span>
+        <h3 className="truncate text-sm font-semibold text-slate-900">
+          {title}
+        </h3>
+
+        <div className="flex justify-between  flex-wrap items-center gap-2 text-xs text-slate-500">
+      
+
+
+          {pickup_available !== undefined && (
+            <span>{pickup_available ? "Pickup available" : "No pickup"}</span>
+          )}
+          {duration && (
+            <span className="rounded-full bg-slate-100 px-2.5 py-1">
+              {duration} 
+            </span>
+          )}
+
+     
         </div>
 
-        <p className="border-t border-slate-100 pt-3 text-sm text-slate-600">
-          From <span className="font-semibold text-blue-600">${price}</span> per
-          person
-        </p>
+
+    {adventure_style && <span>  type : {adventure_style}</span>}
+
+        {price && (
+          <p className="border-t border-slate-100 pt-2 text-xs text-slate-600">
+            From  
+            <span className="font-semibold text-blue-600"> ${price}</span>
+            {" "}per person
+          </p>
+        )}
       </div>
     </article>
   );
 }
+
