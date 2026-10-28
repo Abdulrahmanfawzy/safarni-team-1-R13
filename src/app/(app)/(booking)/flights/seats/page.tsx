@@ -1,27 +1,45 @@
-import Navbar from "@/components/ui/Navbar";
 import ImagePlane from "@/features/flights/shared/ImagePlane";
 import { SeatPicker } from "@/features/Seats/Components/SeatPicker";
+import { GetFlightSeatsAction } from "@/actions/Flights";
 import { Suspense } from "react";
 import Flight from "@/assets/images/1f333dd2b89d7ab8cf544bc5d5b4878e6d6f2f3c.png";
 
-async function SeatPickerWrapper({
+type SeatsSearchParams = {
+  [key: string]: string | string[] | undefined;
+};
+
+async function SeatsContent({
   searchParams,
 }: {
-  searchParams?: Promise<{ passengers?: string }>;
+  searchParams?: Promise<SeatsSearchParams>;
 }) {
   const resolvedParams = searchParams ? await searchParams : {};
-  const maxSeats = resolvedParams?.passengers ? Number(resolvedParams.passengers) : undefined;
+  const flightId = resolvedParams.id;
 
-  return <SeatPicker maxSeats={maxSeats} />;
+  let apiSeats: any = null;
+  if (flightId) {
+    try {
+      apiSeats = await GetFlightSeatsAction(String(flightId));
+    } catch (error) {
+      console.error("Failed to fetch flight seats from API:", error);
+    }
+  }
+
+  return (
+    <SeatPicker
+      apiSeats={apiSeats}
+      requestError={!flightId ? "Flight ID is missing." : undefined}
+    />
+  );
 }
 
-export default function Page({
+export default function SeatsPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ passengers?: string }>;
+  searchParams?: Promise<SeatsSearchParams>;
 }) {
   return (
-    <div className="w-full flex flex-col min-h-screen"> 
+    <div className="w-full flex flex-col min-h-screen">
       <main className="flex flex-col w-full max-w-7xl mx-auto items-center justify-evenly p-4 md:flex-row">
         <ImagePlane image={Flight} />
         <Suspense
@@ -30,8 +48,8 @@ export default function Page({
               Loading seat picker...
             </div>
           }
-        > 
-          <SeatPickerWrapper searchParams={searchParams} />
+        >
+          <SeatsContent searchParams={searchParams} />
         </Suspense>
       </main>
     </div>
