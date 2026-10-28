@@ -6,7 +6,6 @@ const RentNow = () => {
         <div className="w-full">
             <main className="container mx-auto max-w-7xl flex">
                 <ImagePlane className="rotate-y-180" image={Merc} />
-
                 <RentCar />
             </main>
         </div>

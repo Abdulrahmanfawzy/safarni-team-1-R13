@@ -1,14 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
-import "@/app/globals.css"
-
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-})
-;
 
 export const metadata: Metadata = {
   title: "Safarni",
@@ -17,14 +7,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${poppins.variable} h-full antialiased`}
-    >
-      <body className="container mx-auto flex flex-col">
-
-        {children}
-      </body>
-    </html>
+    <div className="container mx-auto flex min-h-full flex-col">
+      {children}
+    </div>
   );
 }

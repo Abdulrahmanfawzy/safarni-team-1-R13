@@ -1,5 +1,7 @@
 "use server";
 
+import { getAccessToken } from "@/lib/auth";
+
 type SearchFlightsData = {
     type?: string;
     tripType?: string;
@@ -22,11 +24,17 @@ export type FlightBookingPayload = {
     }>;
 };
 
-const getApiAuthorizationHeader = (): Record<string, string> | null => {
-    const rawToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhZmFybmktcm91bmQtMTMuaHVtYS12b2x2ZS5jb20vYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3OTMxOTkwNTUsImV4cCI6MTc5MzIwMjY1NSwibmJmIjoxNzkzMTk5MDU1LCJqdGkiOiJ1VllJeE9ENFNGQzVTaU5PIiwic3ViIjoiNTUiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.DiI5sYFfX6CeiqPFLRu7bVapXVAQOdTKUD88pGTiTvw";
-    const token = rawToken?.replace(/^Bearer\s+/i, "");
-    return token ? { Authorization: `Bearer ${token}` } : null;
+const getApiAuthorizationHeader = async (): Promise<
+    Record<string, string> | null
+> => {
+    try {
+        const accessToken = await getAccessToken();
+        return { Authorization: `Bearer ${accessToken}` };
+    } catch {
+        return null;
+    }
 };
+
 
 const formatDateForApi = (value?: string | Date): string => {
     if (!value) return "";
@@ -144,9 +152,9 @@ export const GetFlightSeatsAction = async (id: string | number) => {
 export const CreateFlightBookingAction = async (payload: FlightBookingPayload) => {
     try {
         const apiBaseUrl = getApiBaseUrl();
-        const authorization = getApiAuthorizationHeader();
+        const authorization = await getApiAuthorizationHeader();
         if (!authorization) {
-            return { error: "Booking requires a backend access token. Set SAFARNI_API_TOKEN on the server." };
+            return { error: "You must be logged in to create a booking." };
         }
 
         const requestOptions: RequestInit = {
@@ -181,9 +189,11 @@ export const CreateFlightBookingAction = async (payload: FlightBookingPayload) =
 export const FlightPayment = async (id: string | number) => {
     try {
         const apiBaseUrl = getApiBaseUrl();
-        const authorization = getApiAuthorizationHeader();
+        const authorization = await getApiAuthorizationHeader();
+        console.log(authorization);
+        
         if (!authorization) {
-            return { error: "Payment requires a backend access token. Set SAFARNI_API_TOKEN on the server." };
+            return { error: "You must be logged in to start payment." };
         }
 
         const requestOptions: RequestInit = {
