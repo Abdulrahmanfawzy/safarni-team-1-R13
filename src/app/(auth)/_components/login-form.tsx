@@ -41,13 +41,18 @@ const LoginForm = ({}: IProps) => {
         redirect: false,
       });
       if (!result || result.error) {
-        toast.error("Invalid email or password");
+        console.log("result", result);
+
+        // toast.error("Invalid email or password");
+        toast.error(result?.error);
         return;
       }
       toast.success("Login successful");
       router.push("/");
       router.refresh();
-    } catch {
+    } catch (err) {
+      console.log("err", err);
+
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoggingIn(false);
