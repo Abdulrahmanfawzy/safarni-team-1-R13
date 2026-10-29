@@ -27,7 +27,7 @@ export function TourHeader({
         <div className="flex shrink-0 items-center gap-1.5">
           <StarRating rating={rating} />
           <span className="text-xs font-medium text-foreground">
-            {rating.toFixed(1)}
+            {rating?.toFixed(1)}
           </span>
           <span className="text-xs text-muted-foreground">
             ({reviews_count})
@@ -39,7 +39,7 @@ export function TourHeader({
         <span className="capitalize">{adventure_style}</span>
         <span className="text-center">{duration_text}</span>
         <span className="text-right">
-          {location.city}, {location.country}
+          {location?.city}, {location?.country}
         </span>
       </div>
     </header>

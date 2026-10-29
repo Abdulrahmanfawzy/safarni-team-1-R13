@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/format";
+import { formatPrice } from "./Format";
+
 
 type BookingBarProps = {
   slug: string;
@@ -19,7 +20,7 @@ export function BookingBar({ slug, price }: BookingBarProps) {
           <span className="text-xs">/person</span>
         </p>
 
-        <Button asChild size="lg" className="min-w-40 sm:min-w-64">
+        <Button  size="lg" className="min-w-40 sm:min-w-64">
           <Link href={`/tours/${slug}/book`}>Book Now</Link>
         </Button>
       </div>

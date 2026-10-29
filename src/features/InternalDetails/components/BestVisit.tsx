@@ -1,4 +1,4 @@
-import { SectionTitle } from "./section-title";
+import { SectionTitle } from "./SectionTitle";
 
 type BestTimeToVisitProps = {
   text: string | null;

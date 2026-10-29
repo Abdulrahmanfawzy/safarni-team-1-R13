@@ -49,7 +49,7 @@ export const GetTourById = async (id: number) => {
 
         }
         
-        return await response.json();
+        return await response.json() ;
 
     } catch (error) {
         console.error("Tours  API fetch error:", error);
@@ -57,4 +57,4 @@ export const GetTourById = async (id: number) => {
 
     }
 }
-}
+

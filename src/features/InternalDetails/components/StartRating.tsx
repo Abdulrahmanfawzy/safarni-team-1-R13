@@ -18,7 +18,7 @@ export function StarRating({
     <div
       className={cn("flex items-center gap-0.5", className)}
       role="img"
-      aria-label={`Rated ${rating.toFixed(1)} out of 5`}
+      aria-label={`Rated ${rating?.toFixed(1)} out of 5`}
     >
       {Array.from({ length: 5 }, (_, i) => (
         <Star

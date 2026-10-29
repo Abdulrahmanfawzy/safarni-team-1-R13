@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MapPin } from "lucide-react";
-import type { TopActivity } from "@/types/tour";
+import { TopActivity } from "../types/types";
 
 type ActivityCardProps = {
   activity: TopActivity;

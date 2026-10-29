@@ -19,19 +19,19 @@ export function ReviewsSection({ reviews }: ReviewsSectionProps) {
     <section className="space-y-3">
       <SectionTitle>Reviews</SectionTitle>
 
-      {reviews.length === 0 ? (
+      {reviews?.length === 0 ? (
         <p className="rounded-lg border border-dashed p-6 text-center text-sm text-muted-foreground">
           No reviews yet. Be the first to share your experience.
         </p>
       ) : (
         <>
           <div className="grid gap-3 sm:grid-cols-2">
-            {reviews.slice(0, visible).map((review) => (
+            {reviews?.slice(0, visible).map((review) => (
               <ReviewCard key={review.id} review={review} />
             ))}
           </div>
 
-          {visible < reviews.length && (
+          {visible < reviews?.length && (
             <div className="flex justify-center">
               <Button
                 variant="outline"

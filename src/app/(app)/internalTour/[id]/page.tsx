@@ -22,11 +22,11 @@ export async function generateMetadata({
 
 export default async function TourDetailsPage({ params }: PageProps) {
   const { id } = await params;
-  const tour = await GetTourById(id);
+  const {data:tour} = await GetTourById(id);
 
   return (
     <>
-      <main className="mx-auto max-w-5xl space-y-6 px-4 pb-28 pt-4">
+      <main className=" space-y-6 px-4 pb-28 pt-4">
         <TourHero image={tour.image} title={tour.title} />
 
         <TourHeader

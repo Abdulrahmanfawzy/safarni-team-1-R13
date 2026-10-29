@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 import crank from "@/assets/images/crank.jpg";
 
 type Tour = {
-  slug: string;
+  id: number;
   image?: string | null;
   title: string;
   adventure_style: string;
@@ -20,7 +20,7 @@ type TourCardProps = {
 export default function TourCard({ tour }: TourCardProps) {
   return (
     <Link
-      href={`/tours/${tour.slug}`}
+      href={`/internaltour/${tour.id}`}
       className="group flex w-full flex-col gap-3 rounded-3xl bg-white p-2.5 shadow-sm ring-1 ring-black/5 transition hover:shadow-md"
     >
       {/* Image on top, full width */}

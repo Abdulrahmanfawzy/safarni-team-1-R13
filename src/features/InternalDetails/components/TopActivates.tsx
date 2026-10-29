@@ -7,13 +7,13 @@ type TopActivitiesProps = {
 };
 
 export function TopActivities({ activities }: TopActivitiesProps) {
-  if (activities.length === 0) return null;
+  if (activities?.length === 0) return null;
 
   return (
     <section className="space-y-3">
       <SectionTitle>Top Activities</SectionTitle>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {activities.map((activity) => (
+        {activities?.map((activity) => (
           <ActivityCard key={activity.id} activity={activity} />
         ))}
       </div>

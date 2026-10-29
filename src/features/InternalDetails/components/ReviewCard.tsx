@@ -1,3 +1,7 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { timeAgo } from "./Format";
+import { StarRating } from "./StartRating";
+import { TourReview } from "../types/types";
 
 
 type ReviewCardProps = {
