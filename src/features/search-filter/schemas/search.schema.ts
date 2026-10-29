@@ -8,7 +8,7 @@ const searchTourSchema = z.object({
   duration: z.number(),
   duration_text: z.string(),
   price: z.string(),
-  image: z.string().url(),
+  image: z.string().nullable(),
   rating: z.number(),
   reviews_count: z.number(),
   adventure_style: z.string(),

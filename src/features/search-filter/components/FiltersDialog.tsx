@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import SearchFilters from "@/features/search-filter/components/SearchFilters";
-import TourCard from "@/features/search-filter/components/TourCard";
+import TourCard from "@/components/ui/tourCard";
 import { fakeTours, INITIAL_FILTERS, type Filters } from "@/features/search-filter/components/filter-data";
 
 type FiltersDialogProps = {
