@@ -1,7 +1,10 @@
 import "server-only";
 
+import { getAccessToken } from "@/lib/auth";
 import type { HotelsResponse } from "@/types/hotel.types";
+import { HotelRoomsResponse } from "@/types/room.types";
 
+// ---get all hotels-------------------------------------------
 export async function getHotels(
   section: "recommended" | "nearby" = "recommended"
 ): Promise<HotelsResponse> {
@@ -24,6 +27,28 @@ export async function getHotels(
 
   if (!response.ok) {
     throw new Error("Failed to fetch hotels");
+  }
+
+  return response.json();
+}
+// ---get all rooms for hotel-------------------------------------------
+
+export async function getHotelRooms(hotelId: number): Promise<HotelRoomsResponse> {
+  const accessToken = await getAccessToken();
+  const response = await fetch(
+    `${process.env.API}api/hotels/${hotelId}/rooms`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch hotel rooms");
   }
 
   return response.json();
