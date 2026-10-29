@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
@@ -22,28 +21,30 @@ export default function TourCard({ tour }: TourCardProps) {
   return (
     <Link
       href={`/tours/${tour.slug}`}
-      className="group flex items-center gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-black/5 transition hover:shadow-md sm:gap-4"
+      className="group flex w-full flex-col gap-3 rounded-3xl bg-white p-2.5 shadow-sm ring-1 ring-black/5 transition hover:shadow-md"
     >
-      <div className="relative size-20 shrink-0 overflow-hidden rounded-xl sm:size-24">
+      {/* Image on top, full width */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
         <Image
           src={tour.image || crank}
           alt={tour.title}
           fill
-          sizes="(min-width: 640px) 96px, 80px"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
-      <div className="min-w-0 flex-1">
+      {/* Content below */}
+      <div className="flex min-w-0 flex-col px-2 pb-2">
         <div className="flex items-center justify-between gap-2">
-          <p className="truncate text-xs font-medium capitalize text-slate-500 sm:text-sm">
+          <p className="truncate text-sm font-medium capitalize text-slate-400">
             {tour.adventure_style}
           </p>
 
-          <span className="flex shrink-0 items-center gap-1 text-xs font-semibold text-slate-800 sm:text-sm">
+          <span className="flex shrink-0 items-center gap-1 text-sm font-semibold text-slate-800">
             {tour.rating !== null ? (
               <>
-                <Star className="size-3.5 fill-amber-400 text-amber-400 sm:size-4" />
+                <Star className="size-4 fill-amber-400 text-amber-400" />
                 {tour.rating.toFixed(1)}
               </>
             ) : (
@@ -52,20 +53,16 @@ export default function TourCard({ tour }: TourCardProps) {
           </span>
         </div>
 
-        <h3 className="mt-0.5 truncate text-base font-semibold text-slate-900 sm:text-lg">
+        <h3 className="mt-2 truncate text-lg font-semibold text-slate-900">
           {tour.title}
         </h3>
 
-        <p className="mt-1 text-xs text-slate-500 sm:text-sm">
-          {tour.duration_text}
-        </p>
+        <p className="mt-1 text-sm text-slate-500">{tour.duration_text}</p>
 
-        <p className="mt-1 text-xs text-slate-500 sm:text-sm">
+        <p className="mt-2 text-sm text-slate-500">
           From{" "}
-          <span className="font-semibold text-(--primary)">
-            ${tour.price}
-          </span>{" "}
-          / person
+          <span className="font-bold text-(--primary)">${tour.price}</span>{" "}
+          Per Person
         </p>
       </div>
     </Link>
