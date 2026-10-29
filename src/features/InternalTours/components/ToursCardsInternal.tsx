@@ -1,13 +1,16 @@
 "use client";
  
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import crank from "@/assets/images/crank.jpg";
  
 type TourCardProps = {
-  image: string;
+  id: number;
+  image: string | null;
   category?: string;
   title: string;
-  rating: number;
+  rating: number | null;
   price: number;
   currency?: string;
   perLabel?: string;
@@ -16,6 +19,7 @@ type TourCardProps = {
 };
  
 export default function ToursCardsInternal({
+  id,
   image,
   category = "Full Day Tours",
   title,
@@ -35,15 +39,16 @@ export default function ToursCardsInternal({
   };
  
   return (
-    <article className="w-65 rounded-3xl bg-white p-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+    <article className="w-full rounded-3xl bg-white p-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
       {/* Image + favorite button */}
       <div className="relative h-50 w-full overflow-hidden rounded-2xl">
         <Image
-          src={image}
+          src={image || crank}
           alt={title}
           fill
           sizes="260px"
           className="object-cover"
+          unoptimized={Boolean(image)}
         />
  
         <button
@@ -81,11 +86,15 @@ export default function ToursCardsInternal({
             >
               <path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z" />
             </svg>
-            {rating.toFixed(1)}
+            {rating === null ? "New" : rating.toFixed(1)}
           </span>
         </div>
  
-        <h3 className="mt-2 text-lg font-semibold text-gray-900">{title}</h3>
+        <h3 className="mt-2 text-lg font-semibold text-gray-900">
+          <Link href={`/internaltour/${id}`} className="hover:text-blue-700">
+            {title}
+          </Link>
+        </h3>
  
         <p className="mt-2 text-sm text-gray-500">
           From{" "}

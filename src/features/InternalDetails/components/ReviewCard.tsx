@@ -18,7 +18,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
               <AvatarImage src={review.user_avatar} alt={review.user_name} />
             )}
             <AvatarFallback className="text-xs">
-              {review.user_name.charAt(0).toUpperCase()}
+              {review.user_name?.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <span className="truncate text-sm font-medium text-foreground">
