@@ -37,7 +37,7 @@ const RoomGallery = ({ images }: IProps) => {
                     fill
                     unoptimized
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 25vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
             ))}
