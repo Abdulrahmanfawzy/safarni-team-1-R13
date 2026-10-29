@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useEffect } from "react";
 import L from "leaflet";
 import { LocateFixed } from "lucide-react";
@@ -62,27 +63,60 @@ function LocateButton({ route }: { route: LatLng[] }) {
 export default function MapView({ route, etaLabel = "5 min", className }: MapViewProps) {
   const origin = route[0];
   const destination = route[route.length - 1];
+  const [roadRoute, setRoadRoute] = React.useState<LatLng[]>(route);
+  const [eta, setEta] = React.useState(etaLabel);
+
+  React.useEffect(() => {
+    const controller = new AbortController();
+    const url = `https://router.project-osrm.org/route/v1/driving/${origin[1]},${origin[0]};${destination[1]},${destination[0]}?overview=full&geometries=geojson`;
+
+    fetch(url, { signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Route request failed");
+        return response.json();
+      })
+      .then((result: { routes?: Array<{ geometry?: { coordinates?: number[][] }; duration?: number }> }) => {
+        const selectedRoute = result.routes?.[0];
+        const coordinates = selectedRoute?.geometry?.coordinates;
+        if (!coordinates?.length) return;
+        setRoadRoute(coordinates.map(([longitude, latitude]) => [latitude, longitude] as LatLng));
+        if (typeof selectedRoute.duration === "number") {
+          setEta(`${Math.max(1, Math.round(selectedRoute.duration / 60))} min`);
+        }
+      })
+      .catch((error: unknown) => {
+        if (error instanceof Error && error.name === "AbortError") return;
+        setEta("Route unavailable");
+      });
+
+    return () => controller.abort();
+  }, [origin[0], origin[1], destination[0], destination[1]]);
 
   return (
-    <MapContainer
-      center={origin}
-      zoom={16}
-      zoomControl={false}
-      scrollWheelZoom
-      className={className ?? "h-full w-full"}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-      />
-      <Polyline
-        positions={route}
-        pathOptions={{ color: "#f97316", weight: 5, lineJoin: "round", lineCap: "round" }}
-      />
-      <Marker position={origin} icon={originIcon} />
-      <Marker position={destination} icon={destinationIcon(etaLabel)} />
-      <FitRoute route={route} />
-      <LocateButton route={route} />
-    </MapContainer>
+    <div className="relative h-full w-full">
+      <MapContainer
+        center={origin}
+        zoom={16}
+        zoomControl={false}
+        scrollWheelZoom
+        className={className ?? "h-full w-full"}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Polyline
+          positions={roadRoute}
+          pathOptions={{ color: "#f97316", weight: 5, lineJoin: "round", lineCap: "round" }}
+        />
+        <Marker position={origin} icon={originIcon} />
+        <Marker position={destination} icon={destinationIcon("Car")} />
+        <FitRoute route={roadRoute} />
+        <LocateButton route={roadRoute} />
+      </MapContainer>
+      <div className="pointer-events-none absolute left-1/2 top-24 z-[1000] -translate-x-1/2 rounded-lg bg-[#4b4bf0] px-4 py-2 text-sm font-semibold text-white shadow-md">
+        {eta}
+      </div>
+    </div>
   );
 }
