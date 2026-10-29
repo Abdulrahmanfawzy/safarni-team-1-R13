@@ -51,7 +51,7 @@ const formatDateForApi = (value?: string | Date): string => {
     return value.slice(0, 10);
 };
 
-const getApiBaseUrl = () => {
+ const getApiBaseUrl = () => {
     const rawApi =
         process.env.API || "https://safarni-round-13.huma-volve.com";
 
@@ -82,11 +82,11 @@ export const SearchFlightsAction = async (data: SearchFlightsData) => {
         const apiBaseUrl = getApiBaseUrl();
 
         let response = await fetch(`${apiBaseUrl}/api/flights`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
             body: JSON.stringify(payload),
             cache: "no-store",
         });
@@ -137,9 +137,9 @@ export const GetFlightSeatsAction = async (id: string | number) => {
                 `Flight seats API error: ${response.status} ${response.statusText}`,
                 responseDetails,
             );
-            return {
-                error: `Seat request failed (${response.status} ${response.statusText}).`,
-            };
+                return {
+                    error: `Seat request failed (${response.status} ${response.statusText}).`,
+                };
         }
 
         return await response.json();

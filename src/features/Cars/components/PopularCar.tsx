@@ -11,6 +11,7 @@ export default function PopularCar({
   cars: CarListItem[];
   errorMessage?: string;
 }) {
+
   return (
     <section className="mt-6">
       <h1 className="mb-4 text-[23px] font-medium text-gray-800">Popular Cars</h1>
@@ -25,8 +26,9 @@ export default function PopularCar({
         </p>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+
           {cars.map((car) => {
-            const image = car.image || car.images?.[0] || CarFallbackImage;
+            const image = car.brand.image || car.brand.image?.[0] || CarFallbackImage;
             const carName = [car.brand?.name, car.model].filter(Boolean).join(" ");
 
             return (
@@ -59,12 +61,12 @@ export default function PopularCar({
                 </div>
 
                 <div className="flex w-full gap-4">
-                  <Link href={`/cars/rent-now?carId=${encodeURIComponent(String(car.id))}`} className="w-1/2">
+                  <Link href={`/cars/${car.id}`} className="w-1/2">
                     <Button variant="primary" size="lg" className="w-full">
                       Rent Now
                     </Button>
                   </Link>
-                  <Link href={`/cars/rent-now?carId=${encodeURIComponent(String(car.id))}`} className="w-1/2">
+                  <Link href={`/cars/${car.id}}`} className="w-1/2">
                     <Button
                       variant="default"
                       className="w-full border border-primary bg-transparent text-primary hover:bg-gray-200"

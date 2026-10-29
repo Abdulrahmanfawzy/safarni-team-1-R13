@@ -1,18 +1,19 @@
 "use client";
 
 import * as React from "react";
-import { Car, LocateFixed, MapPin } from "lucide-react";
+import { CalendarDays, Car, Clock, LocateFixed, MapPin } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup } from "@/components/ui/radio-group";
 import SpecItem from "./SpecItem";
-import { plans, specs } from "../constants/DataCars";
 import PlanOption from "./Plan";
 import Map from "./Maps/Map";
+import { carDetails, Plan, Spec } from "../types/typescars";
+import Image from "next/image";
 
-export default function CarRentalCard() {
+export default function CarRentalCard({ car }: { car: carDetails }) {
   const [plan, setPlan] = React.useState<string>("hourly");
   const [location, setLocation] = React.useState<string>("");
 
@@ -21,7 +22,27 @@ export default function CarRentalCard() {
     console.log({ plan, location });
     getLocation();
   };
-
+  const specs: Spec[] = [
+    { label: "Power", value: car.power_hp },
+    { label: "Top Speed", value: car.max_speed_kmh },
+    { label: "Acceleration", value: car.acceleration },
+  ];
+  const plans: Plan[] = [
+    {
+      id: car.id,
+      title: "Hourly Rent",
+      description: car.pickup_address,
+      price: car.hourly_rent,
+      icon: Clock,
+    },
+    {
+      id: car.id,
+      title: "Hourly Rent",
+      description: car.pickup_address,
+      price: car.daily_rent,
+      icon: CalendarDays,
+    },
+  ];
   const getLocation = () => {
     if (!navigator.geolocation) {
       alert("Geolocation not supported");
@@ -47,14 +68,18 @@ export default function CarRentalCard() {
       {/* Header */}
       <header className="flex items-center gap-3">
         <div className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
-          <Car className="size-5" aria-hidden />
+          {car.brand?.logo_url ? (
+            <Image src={car.brand.logo_url} alt={car.brand.name ?? "Car brand"} width={40} height={40} />
+          ) : (
+            <Car className="size-5" aria-hidden="true" />
+          )}
         </div>
         <div className="flex flex-col">
           <h1 className="text-xl font-semibold tracking-tight text-slate-900">
-            Rent Car
+            {car.brand?.name ?? "Car"}
           </h1>
           <p className="text-xs text-slate-500">
-            Choose a plan and pick up your ride
+            {car.model}
           </p>
         </div>
       </header>
@@ -118,9 +143,9 @@ export default function CarRentalCard() {
       <Button
         type="submit"
         className="h-12 w-full rounded-xl bg-primary text-sm font-semibold shadow-md transition-all hover:bg-primary-800 active:scale-[0.98]"
-          onClick={()=>{
-            location ? <Map/> :""
-          }}
+        onClick={() => {
+          location ? <Map /> : ""
+        }}
       >
         Pick Up
       </Button>

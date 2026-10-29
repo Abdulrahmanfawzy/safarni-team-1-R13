@@ -1,6 +1,6 @@
 import Mercedes from "@/assets/images/Merc.png"
 import Sedan from "@/assets/images/e744f4cf979ec01abb63356b5a84a958a241a35d.png"
-import { CarPopularTypes, Plan, TypeBranding } from "../types/typescars"
+import { CarPopularTypes, Plan, Spec, TypeBranding } from "../types/typescars"
 import { Clock, CalendarDays, MapPin } from "lucide-react";
 
 export const BrandsData: TypeBranding[] = [
