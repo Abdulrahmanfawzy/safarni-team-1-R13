@@ -32,7 +32,7 @@ const HotelCard = ({ hotel, variant = 'default' }: IProps) => {
 
             fill
             sizes={isHorizontal ? "124px sm:150px" : "(max-width: 640px) 90vw, 25vw"}
-            className="object-cover"
+            className="object-cover transition-transform duration-300 hover:scale-105"
           />
         </div>
 
