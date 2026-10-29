@@ -21,7 +21,7 @@ async function HotelRooms({ params }: HotelDetailsPageProps) {
   const { hotelId } = await params;
 
   return (
-    <section className="sm:app-container sm:mx-5 my-4 flex flex-col gap-4">
+    <section className="app-container my-4 flex flex-col gap-4">
         <SearchBar pathname="/" />
         <SectionHeader title="available rooms" viewAllHref="" />
         <AvailableRooms hotelId={hotelId} />

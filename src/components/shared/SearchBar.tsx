@@ -46,7 +46,7 @@ const SearchBar=({pathname,initialSearch=''}:IProps)=> {
     }
   }, [debouncedSearch, currentPath, router, searchParams]);
   return (
-      <div className="app-container flex flex-col items-start gap-3.5 sm:flex-row sm:items-center">
+      <div className=" flex flex-col items-start gap-3.5 sm:flex-row sm:items-center">
            <BackButton hrefName={pathname}/>
            <Input 
               placeholder="Search..." 

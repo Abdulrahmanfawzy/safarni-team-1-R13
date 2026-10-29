@@ -12,7 +12,7 @@ interface IProps {
 export default async  function  HotelPage({searchParams}:IProps) {
   const { search = "" } = await searchParams;
   return (
-    <section className="app-container my-4 flex flex-col gap-4 ">
+    <section className=" my-4 flex flex-col gap-4 ">
       <SearchBar pathname="/"  initialSearch={search}/>
          {search.trim() && (
         <HotelSearchResults search={search.trim()} />

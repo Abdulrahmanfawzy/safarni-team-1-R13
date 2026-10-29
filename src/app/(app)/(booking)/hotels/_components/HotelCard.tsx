@@ -13,7 +13,7 @@ interface IProps {
 const HotelCard = ({ hotel, variant = 'default' }: IProps) => {
   const isHorizontal = variant === "horizontal";
   return (
-    <Link  href={`/hotel/${hotel.id}`} className="block min-w-0">
+    <Link  href={`/hotels/${hotel.id}`} className="block min-w-0">
       <article className={cn("min-w-0 w-full overflow-hidden rounded-2xl bg-primary-foreground p-3 ",
         isHorizontal
           ? "flex items-center gap-3  shadow-[0px_3.39px_13.58px_0px_#838BB41F]"

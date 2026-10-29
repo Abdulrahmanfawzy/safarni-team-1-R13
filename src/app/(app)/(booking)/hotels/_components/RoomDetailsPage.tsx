@@ -77,7 +77,7 @@ export default function RoomDetailsPage({ hotelId, roomSlug }: IProps) {
   ];
 
   return (
-    <main className="app-container my-3.5 flex w-full flex-col gap-8 max-lg:my-0! max-lg:px-0! lg:flex-row lg:items-start lg:justify-between">
+    <main className="my-3.5 flex w-full flex-col gap-8 max-lg:my-0! max-lg:px-0! lg:flex-row lg:items-start lg:justify-between">
       <RoomDetailsImage
         images={images}
         mobileImages={images}
