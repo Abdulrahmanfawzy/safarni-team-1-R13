@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup } from "@/components/ui/radio-group";
 import SpecItem from "./SpecItem";
 import PlanOption from "./Plan";
+import CarCheckoutSheet from "./CarCheckoutSheet";
 import type { LatLng } from "./Maps/Map";
 import type { carDetails, Plan, Spec } from "../types/typescars";
 
@@ -21,6 +22,7 @@ export default function CarRentalCard({ car }: { car: carDetails }) {
   const [plan, setPlan] = React.useState<string>("");
   const [pickup, setPickup] = React.useState<LatLng | null>(null);
   const [isMapOpen, setIsMapOpen] = React.useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = React.useState(false);
   const [isLocating, setIsLocating] = React.useState(false);
   const [error, setError] = React.useState("");
 
@@ -78,17 +80,8 @@ export default function CarRentalCard({ car }: { car: carDetails }) {
 
   const confirmPickup = () => {
     if (!pickup || !carPosition) return;
-    const params = new URLSearchParams({
-      car_id: String(car.id),
-      plan,
-      pickup_latitude: String(pickup[0]),
-      pickup_longitude: String(pickup[1]),
-      car_latitude: String(carPosition[0]),
-      car_longitude: String(carPosition[1]),
-    });
-    console.log("Car pickup confirmation search params:", params.toString());
-    console.log("Car pickup confirmation:", Object.fromEntries(params.entries()));
     setIsMapOpen(false);
+    setIsCheckoutOpen(true);
   };
 
   if (isMapOpen && pickup && carPosition) {
@@ -159,6 +152,7 @@ export default function CarRentalCard({ car }: { car: carDetails }) {
   }
 
   return (
+    <>
     <div className="mx-auto flex w-full max-w-xl flex-col gap-6 rounded-3xl border bg-white p-6">
       <header className="flex items-center gap-3">
         <div className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
@@ -192,5 +186,13 @@ export default function CarRentalCard({ car }: { car: carDetails }) {
       </Button>
       {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
     </div>
+    <CarCheckoutSheet
+      carId={car.id}
+      rentalType={plan === "daily" ? "daily" : "hourly"}
+      pickupAddress={car.pickup_address ?? ""}
+      open={isCheckoutOpen}
+      onOpenChange={setIsCheckoutOpen}
+    />
+    </>
   );
 }
