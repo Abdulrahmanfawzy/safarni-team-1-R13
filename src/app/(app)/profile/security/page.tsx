@@ -32,6 +32,7 @@ export default function AccountSecurity() {
           <SecurityActionCard
             title="Deactivate Account"
             description="Temporarily deactivate your account. Easily reactivate when you're ready."
+              action="deactivate"
           />
           <SecurityActionCard
             title="Delete Account"

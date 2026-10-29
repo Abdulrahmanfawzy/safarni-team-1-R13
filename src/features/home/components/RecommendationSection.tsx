@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -10,12 +9,7 @@ import { Card } from "@/components/ui/card";
 export default function RecommendationSection() {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const {
-    data,
-    isPending,
-    isError,
-    error,
-  } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ["home", "recommendations"],
     queryFn: homeApi.getHomeFeed,
   });
@@ -33,18 +27,16 @@ export default function RecommendationSection() {
           Recommendations
         </h2>
 
-        {!isPending &&
-          !isError &&
-          recommendations.length > 3 && (
-            <button
-              type="button"
-              onClick={() => setIsExpanded((prev) => !prev)}
-              aria-expanded={isExpanded}
-              className="shrink-0 text-sm font-semibold text-(--primary) transition hover:opacity-75"
-            >
-              {isExpanded ? "Show less" : "View all"}
-            </button>
-          )}
+        {!isPending && !isError && recommendations.length > 3 && (
+          <button
+            type="button"
+            onClick={() => setIsExpanded((prev) => !prev)}
+            aria-expanded={isExpanded}
+            className="shrink-0 text-sm font-semibold text-(--primary) transition hover:opacity-75"
+          >
+            {isExpanded ? "Show less" : "View all"}
+          </button>
+        )}
       </div>
 
       {isPending && (
@@ -70,10 +62,7 @@ export default function RecommendationSection() {
       {!isPending && !isError && recommendations.length > 0 && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {visibleRecommendations.map((recommendation) => (
-            <Card
-              key={recommendation.id}
-              className="group overflow-hidden"
-            >
+            <Card key={recommendation.id} className="group overflow-hidden">
               <div className="p-4">
                 {recommendation.cover_photo ? (
                   <Image

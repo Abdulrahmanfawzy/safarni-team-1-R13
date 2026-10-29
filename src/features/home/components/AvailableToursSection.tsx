@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -9,12 +8,7 @@ import TourCard from "@/components/ui/tourCard";
 export default function AvailableToursSection() {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const {
-    data,
-    isPending,
-    isError,
-    error,
-  } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ["home-tours"],
     queryFn: homeApi.getTours,
   });
@@ -25,12 +19,10 @@ export default function AvailableToursSection() {
       ? data.items
       : [];
 
-  const visibleTours = isExpanded
-    ? tours
-    : tours.slice(0, 4);
+  const visibleTours = isExpanded ? tours : tours.slice(0, 4);
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <section className="py-6">
       <div className="mb-5 flex items-center justify-between gap-3">
         <h2 className="text-lg font-bold sm:text-xl lg:text-2xl">
           Available Tours
@@ -56,9 +48,7 @@ export default function AvailableToursSection() {
 
       {isError && (
         <p className="py-8 text-center text-red-600" role="alert">
-          {error instanceof Error
-            ? error.message
-            : "Failed to load tours."}
+          {error instanceof Error ? error.message : "Failed to load tours."}
         </p>
       )}
 

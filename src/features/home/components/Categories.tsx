@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -27,8 +26,8 @@ export default function Categories() {
   });
 
   return (
-    <section className="px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
+    <section className="py-12">
+      <div>
         <h2 className="mb-6 text-2xl font-bold text-gray-900 sm:text-3xl">
           Categories
         </h2>
