@@ -44,6 +44,7 @@ export default async function TourDetailsPage({ params }: PageProps) {
           images={tour.images}
           count={tour.gallery_count}
           title={tour.title}
+          tourId={tour.id}
         />
         <ReviewsSection reviews={tour.reviews} />
       </main>
