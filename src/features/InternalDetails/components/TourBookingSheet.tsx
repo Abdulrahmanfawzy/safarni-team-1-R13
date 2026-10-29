@@ -47,7 +47,10 @@ export function TourBookingSheet({
   open,
   onOpenChange,
 }: TourBookingSheetProps) {
-  const availableSchedules = schedules.filter((schedule) => schedule.available_slots > 0);
+  const availableSchedules = React.useMemo(
+    () => schedules.filter((schedule) => schedule.available_slots > 0),
+    [schedules],
+  );
   const [scheduleId, setScheduleId] = React.useState("");
   const [adults, setAdults] = React.useState(2);
   const [children, setChildren] = React.useState(0);
@@ -65,12 +68,18 @@ export function TourBookingSheet({
         ? current
         : String(availableSchedules[0]?.id ?? ""),
     );
-  }, [open, schedules]);
+  }, [availableSchedules, open]);
 
   const close = (nextOpen: boolean) => {
     onOpenChange(nextOpen);
     if (!nextOpen) {
+      setScheduleId("");
+      setAdults(2);
+      setChildren(0);
+      setInfants(0);
       setBooking(null);
+      setFullName("");
+      setEmail("");
       setError("");
     }
   };
