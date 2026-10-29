@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import SearchFilters from "@/features/search-filter/components/SearchFilters";
-import TourCard from "@/features/search-filter/components/TourCard";
+import TourCard from "@/components/ui/tourCard";
 import { fakeTours, INITIAL_FILTERS, type Filters } from "@/features/search-filter/components/filter-data";
 
 type FiltersDialogProps = {
@@ -70,7 +70,16 @@ return (
         {/* النتايج تحت */}
         <div className="grid gap-6 sm:grid-cols-2">
           {filtered.map((tour) => (
-            <TourCard key={tour.id} tour={{ ...tour, image: tour.image.src }} />
+            <TourCard
+              key={tour.id}
+              tour={{
+                ...tour,
+                slug: String(tour.id),
+                adventure_style: tour.category,
+                duration_text: tour.duration,
+                image: tour.image.src,
+              }}
+            />
           ))}
           {filtered.length === 0 && (
             <p className="col-span-full py-6 text-center text-sm text-muted-foreground">
