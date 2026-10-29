@@ -2,7 +2,7 @@ import RequestCars from "@/api/Cars";
 import Brands from "@/features/Cars/components/Brands";
 import PopularCar from "@/features/Cars/components/PopularCar";
 import SearchBar from "@/features/search-filter/components/SearchBar";
-import type { CarBrand, CarListItem } from "@/api/Cars";
+import type { CarBrand, CarListItem } from "@/app/(app)/profile/types/cars.types";
 import { Suspense } from "react";
 
 async function CarsContent() {

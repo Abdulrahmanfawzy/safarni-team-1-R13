@@ -15,7 +15,7 @@ type TourCardProps = {
   onFavoriteChange?: (value: boolean) => void;
 };
  
-export default function TourCard({
+export default function ToursCardsInternal({
   image,
   category = "Full Day Tours",
   title,

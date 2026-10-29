@@ -9,20 +9,20 @@ import { TourHero } from "@/features/InternalDetails/components/TourHero"
 import { GetTourById } from "@/actions/internalTour";
 
 type PageProps = {
-  params: Promise<{ id: string | number  }>;
+  params: Promise<{ id: string }>;
 };
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const tour = await GetTourById(id);
+  const tour = await GetTourById(Number(id));
   return { title: tour.title };
 }
 
 export default async function TourDetailsPage({ params }: PageProps) {
   const { id } = await params;
-  const {data:tour} = await GetTourById(id);
+  const {data:tour} = await GetTourById(Number(id));
 
   return (
     <>

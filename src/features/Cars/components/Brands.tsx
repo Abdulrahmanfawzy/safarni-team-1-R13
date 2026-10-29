@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { CarBrand } from "@/api/Cars";
+import type { CarBrand } from "@/app/(app)/profile/types/cars.types";
 
 const Brands = ({ brands }: { brands: CarBrand[] }) => {
     const uniqueBrands = Array.from(

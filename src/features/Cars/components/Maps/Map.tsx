@@ -80,7 +80,7 @@ export default function MapView({ route, etaLabel = "5 min", className }: MapVie
         const coordinates = selectedRoute?.geometry?.coordinates;
         if (!coordinates?.length) return;
         setRoadRoute(coordinates.map(([longitude, latitude]) => [latitude, longitude] as LatLng));
-        if (typeof selectedRoute.duration === "number") {
+        if (typeof selectedRoute?.duration === "number") {
           setEta(`${Math.max(1, Math.round(selectedRoute.duration / 60))} min`);
         }
       })

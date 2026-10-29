@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import type { CarListItem } from "@/api/Cars";
+import type { CarListItem } from "@/app/(app)/profile/types/cars.types";
 import CarFallbackImage from "@/assets/images/e744f4cf979ec01abb63356b5a84a958a241a35d.png";
 
 export default function PopularCar({
@@ -28,7 +28,7 @@ export default function PopularCar({
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 
           {cars.map((car) => {
-            const image = car.brand.image || car.brand.image?.[0] || CarFallbackImage;
+            const image = car.images[0] || car.image || CarFallbackImage;
             const carName = [car.brand?.name, car.model].filter(Boolean).join(" ");
 
             return (

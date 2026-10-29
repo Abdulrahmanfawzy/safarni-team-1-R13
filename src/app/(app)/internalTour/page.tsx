@@ -1,22 +1,29 @@
 import { InternalTour } from "@/actions/internalTour";
 import TourCard from "@/components/ui/tourCard";
 import SearchBar from "@/features/search-filter/components/SearchBar";
-import { Suspense } from "react";
+
+type InternalTourSummary = {
+    id: number;
+    image: string | null;
+    title: string;
+    adventure_style: string;
+    rating: number | null;
+    duration_text: string;
+    price: string | number;
+};
 
 export default async function InternalTourPage() {
-    const { data } = await InternalTour()
-    console.log(data);
+    const result = await InternalTour() as { data?: { items?: InternalTourSummary[] } };
+    const tours = result.data?.items ?? [];
 
     return (
         <section className="w-full ">
             <SearchBar />
-         <div className="grid grid-cols-1 mt-5 gap-3 md-grid-cols-2 lg:grid-cols-4">
-               {
-                    data?.items?.map((item) => {
-                       return <TourCard tour={item} key={item.id} />
-                    })
-                }
-                </div>       
+         <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
+               {tours.map((tour) => (
+                   <TourCard key={tour.id} tour={{ ...tour, price: Number(tour.price) }} />
+               ))}
+         </div>
              
         </section>
     );
