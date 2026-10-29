@@ -4,6 +4,7 @@ import { useGetHotelDetails } from "@/hooks/hotels/useGetHotelDetails";
 import { useGetHotelRooms } from "@/hooks/hotels/useGetHotelRooms";
 import RoomDetailsImage from "./RoomDetailsImage";
 import RoomDetailsInfo from "./RoomDetailsInfo";
+import RoomDetailsSkeleton from "@/components/skeletons/RoomDetailsSkeleton";
 
 interface IProps {
   hotelId: string;
@@ -25,12 +26,7 @@ export default function RoomDetailsPage({ hotelId, roomSlug }: IProps) {
   } = useGetHotelRooms(hotelId);
 
   if (isLoading || isRoomsLoading) {
-    return (
-      <main className="app-container grid gap-6 py-6 lg:grid-cols-2">
-        <div className="h-96 animate-pulse rounded-2xl bg-gray-200" />
-        <div className="h-96 animate-pulse rounded-2xl bg-gray-200" />
-      </main>
-    );
+    return <RoomDetailsSkeleton />;
   }
 
   if (isError || isRoomsError || !hotel || !roomsResponse) {

@@ -17,9 +17,9 @@ export default async  function  HotelPage({searchParams}:IProps) {
          {search.trim() && (
         <HotelSearchResults search={search.trim()} />
       )}
-      <SectionHeader title="Recommendation" viewAllHref="/hotel?section=recommended" />
+      <SectionHeader title="Recommendation" viewAllHref="/hotels" />
       <RecommendationSection />
-      <SectionHeader title="Nearby Hotel" viewAllHref="/hotel?section=nearby" />
+      <SectionHeader title="Nearby Hotel" viewAllHref="/hotels" />
       <NearbySection />
     </section>
   )
