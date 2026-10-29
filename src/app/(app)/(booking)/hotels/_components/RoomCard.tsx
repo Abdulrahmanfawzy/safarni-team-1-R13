@@ -17,14 +17,14 @@ const RoomCard = ({ room, hotelId }: IProps) => {
       className="block w-full min-w-0"
     >
       <article className="flex w-full flex-col gap-4 overflow-hidden rounded-3xl bg-primary-foreground p-4 shadow-[0px_0px_26.37px_0px_#6F6F6F40]">
-        <div className="relative aspect-4/3 w-full shrink-0 overflow-hidden rounded-lg">
+        <div className="relative aspect-4/3 w-full shrink-0 overflow-hidden rounded-lg ">
           <Image
             src={room.thumbnail_url}
             fill
             alt={room.room_name}
             unoptimized
-            className="object-cover"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-cover transition-transform duration-300 hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw "
           />
         </div>
         <div className="flex flex-col gap-3">
