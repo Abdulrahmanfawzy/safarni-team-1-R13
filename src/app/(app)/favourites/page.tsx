@@ -20,6 +20,7 @@ async function Favorites() {
               key={tour.id}
               id={tour.id}
               serviceType="tour"
+            rating={tour.rating}
               title={tour.title}
               adventure_style={tour.adventure_style}
               duration={`${tour.duration_hours} hours`}

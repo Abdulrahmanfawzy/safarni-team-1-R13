@@ -4,18 +4,22 @@ import Image from "next/image";
 import { IoStarSharp } from "react-icons/io5";
 import { getTours } from "../../service/tours.service";
 
+
 export default async function Tour() {
   const data = await getTours();
+console.log( "dddddddaaaaaaaatttttttttaaaa" ,  data);
+
 
   return (
     <div className="space-y-3 mx-10">
-      {data.items.map((tour) => (
+      {data?.map((tour) => (
         <article
           key={tour.id}
           className="flex items-center justify-between gap-3 rounded-xl border border-[#B22459] bg-white p-3"
         >
           <div className="flex min-w-0 items-center gap-2">
-            {tour.image ? (
+            {tour?.image ? (
+            
               <Image
                 src={tour.image}
                 alt={tour.title}

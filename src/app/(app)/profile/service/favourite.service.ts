@@ -15,7 +15,7 @@ interface FavoritesResponse {
 }
 
 export async function getFavorites(): Promise<FavoritesResponse> {
-  const baseUrl = process.env.API_BASE_URL;
+  const baseUrl = process.env.API;
 const token =await getAccessToken();
 
   if (!baseUrl) {
@@ -26,7 +26,7 @@ const token =await getAccessToken();
     throw new Error("TOKEN is missing from .env.local");
   }
 
-  const url = `${baseUrl}/favorites`;
+  const url = `${baseUrl}favorites`;
   console.log("Favorites URL:", url);
 console.log("Favorites URL:", url);
   const response = await fetch(url, {
@@ -62,7 +62,7 @@ export async function toggleFavorite(
     throw new Error("API_BASE_URL or TOKEN is missing from .env.local");
   }
 
-  const response = await fetch(`${baseUrl}/favourites/toggle`, {
+  const response = await fetch(`${baseUrl}favourites/toggle`, {
     method: "POST",
     headers: {
       Accept: "application/json",

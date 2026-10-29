@@ -34,29 +34,21 @@ const LoginForm = ({}: IProps) => {
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoggingIn(true);
-    try {
-      const result = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      });
-      if (!result || result.error) {
-        console.log("result", result);
+    const result = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
 
-        // toast.error("Invalid email or password");
-        toast.error(result?.error);
-        return;
-      }
-      toast.success("Login successful");
-      router.push("/");
-      router.refresh();
-    } catch (err) {
-      console.log("err", err);
-
-      toast.error("Something went wrong. Please try again.");
-    } finally {
+    if (!result || result.error) {
       setIsLoggingIn(false);
+      console.log("result", result);
+      toast.error(result?.error);
+      return;
     }
+    toast.success("Login successful");
+    router.push("/");
+    router.refresh();
   };
 
   return (

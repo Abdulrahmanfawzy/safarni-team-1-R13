@@ -13,10 +13,10 @@ interface FavoriteCardProps {
   title: string;
   rating?: string;
   duration?: string;
-  model?: string;
   price?: string | number;
   pickup_available?: boolean;
   adventure_style?: string;
+  
 }
 
 export default function FavoriteCard({
@@ -29,6 +29,7 @@ export default function FavoriteCard({
   price,
   pickup_available,
   adventure_style,
+  
 }: FavoriteCardProps) {
   const [isFavorite, setIsFavorite] = useState(true);
   const [isPending, startTransition] = useTransition();
@@ -91,13 +92,14 @@ setIsFavorite(false);
       </div>
 
       <div className="space-y-2 p-3">
-        <div className="flex items-center justify-between gap-2">
-          {rating && (
-            <span className="flex shrink-0 items-center gap-1 text-xs text-gray-700">
+        <div className="flex items-center  gap-2">
+          {
+          rating ? (
+            <span className="flex mt-1 items-center gap-1 text-end text-gray-700">
               <FaStar className="text-amber-400" aria-hidden="true" />
               {rating}
             </span>
-          )}
+          ) : null}
         </div>
 
         <h3 className="truncate text-sm font-semibold text-slate-900">

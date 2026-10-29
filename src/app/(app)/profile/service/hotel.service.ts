@@ -23,7 +23,7 @@ export async function getHotels(): Promise<HotelRoomsData> {
     throw new Error("API_BASE_URL is missing from .env.local");
   }
 
-  const response = await fetch(`${baseUrl}/hotels/3/rooms`, {
+  const response = await fetch(`${baseUrl}api/hotels/3/rooms`, {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,

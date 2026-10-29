@@ -23,7 +23,7 @@ export async function getCarDetails(carId: number): Promise<ICar> {
   }
 
   const response = await fetch(
-    `${baseUrl}/cars/${carId}`,
+    `${baseUrl}api/cars/${carId}`,
     {
        headers: {
       Accept: "application/json",

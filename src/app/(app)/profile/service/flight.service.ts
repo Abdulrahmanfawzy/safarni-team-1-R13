@@ -20,7 +20,7 @@ export async function getFlights(): Promise<Iflight[]> {
   }
 
   const response = await fetch(
-    `${baseUrl}/profile/bookings?service_type=flights`,
+      `${baseUrl?.replace(/\/+$/, "")}/api/profile/bookings?service_type=flights`,
     {
       headers: {
         Accept: "application/json",
@@ -29,12 +29,16 @@ export async function getFlights(): Promise<Iflight[]> {
       cache: "no-store",
     },
   );
+  console.log( "resflight " ,  response);
+  
 
   if (!response.ok) {
     throw new Error(`Failed to load flights: ${response.status}`);
   }
 
   const result = (await response.json()) as FlightResponse;
+  console.log("results" , result);
+  
   return result.data;
 }
 
