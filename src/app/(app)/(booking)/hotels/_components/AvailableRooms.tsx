@@ -2,6 +2,7 @@
 
 import RoomCard from "./RoomCard";
 import { useGetHotelRooms } from "@/hooks/hotels/useGetHotelRooms";
+import RoomCardSkeleton from "@/components/skeletons/RoomCardSkeleton";
 interface IProps {
     hotelId: string;
 }
@@ -16,12 +17,13 @@ const AvailableRooms = ({ hotelId }: IProps) => {
 
   if (isLoading) {
     return (
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section
+        aria-busy="true"
+        aria-label="Loading available rooms"
+        className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+      >
         {Array.from({ length: 8 }).map((_, index) => (
-          <div
-            key={index}
-            className="h-64 animate-pulse rounded-2xl bg-gray-200"
-          />
+          <RoomCardSkeleton key={index} />
         ))}
       </section>
     );
