@@ -2,12 +2,17 @@ import { Suspense } from "react";
 import SearchBar from "@/components/shared/SearchBar";
 import SectionHeader from "../_components/SectionHeader";
 import AvailableRooms from "../_components/AvailableRooms";
+import { getAvailableHotelRoomsMetadata } from "../metadata";
 
 type HotelDetailsPageProps = {
   params: Promise<{
     hotelId: string;
   }>;
 };
+
+export async function generateMetadata() {
+  return getAvailableHotelRoomsMetadata();
+}
 
 export default function HotelDetailsPage({ params }: HotelDetailsPageProps) {
   return (
