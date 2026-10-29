@@ -80,3 +80,35 @@ export async function getHotelDetails(
 
   return response.json();
 }
+// ---get all hotels-------------------------------------------
+export async function getHotelsByParams(
+  search: string
+): Promise<HotelsResponse> {
+  const baseUrl = process.env.API;
+
+  if (!baseUrl) {
+    throw new Error("API environment variable is missing");
+  }
+   const params = new URLSearchParams();
+
+  if (search.trim()) {
+    params.set("search", search.trim());
+  }
+  const query = params.toString();
+  const response = await fetch(
+    `${baseUrl}api/hotels${query ? `?${query}` : ""}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch hotels");
+  }
+
+  return response.json();
+}
