@@ -1,7 +1,7 @@
 import "server-only";
 
 import { getAccessToken } from "@/lib/auth";
-import type { HotelsResponse } from "@/types/hotel.types";
+import type { HotelDetailsResponse, HotelsResponse } from "@/types/hotel.types";
 import { HotelRoomsResponse } from "@/types/room.types";
 
 // ---get all hotels-------------------------------------------
@@ -49,6 +49,33 @@ export async function getHotelRooms(hotelId: number): Promise<HotelRoomsResponse
 
   if (!response.ok) {
     throw new Error("Failed to fetch hotel rooms");
+  }
+
+  return response.json();
+}
+//--- Get hotel details-----------------------------------------------
+export async function getHotelDetails(
+  hotelId: number
+): Promise<HotelDetailsResponse> {
+  const baseUrl = process.env.API;
+
+  if (!baseUrl) {
+    throw new Error("API environment variable is missing");
+  }
+
+  const response = await fetch(
+    `${baseUrl}api/hotels/${hotelId}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch hotel details");
   }
 
   return response.json();

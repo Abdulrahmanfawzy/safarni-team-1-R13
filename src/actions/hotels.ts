@@ -1,6 +1,6 @@
 "use server";
 
-import { getHotelRooms, getHotels } from "@/api/hotels";
+import { getHotelDetails, getHotelRooms, getHotels } from "@/api/hotels";
 import { HotelRoomsResponse } from "@/types/room.types";
 
 
@@ -15,4 +15,8 @@ export async function getHotelsAction(
 
 export async function getHotelRoomsActions(hotelId: number): Promise<HotelRoomsResponse> {
   return getHotelRooms(hotelId);
+}
+//-- Get hotel details---------------------------------------------------------
+export async function getHotelDetailsAction(hotelId: number) {
+  return getHotelDetails(hotelId);
 }

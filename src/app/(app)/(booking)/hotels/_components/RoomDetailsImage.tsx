@@ -29,7 +29,7 @@ export default function RoomDetailsImage({ images, mobileImages }: IProps) {
           width={508}
           height={602}
           priority
-          className="object-contain mt-19 ml-8"
+          className=" mt-19 ml-8 h-[602px]! w-[508px]! object-cover rounded-20  "
         />
         {images.length > 0 && (
           <div className="absolute bottom-2.5 z-10 flex items-center gap-2 rounded-20 bg-white p-4 shadow-[0px_2px_8px_0px_#838BB41F]">

@@ -1,11 +1,5 @@
-export interface HotelDummy {
-  id: string;
-  name: string;
-  image: string;
-  rating: number;
-  discount: number;
-  location: string;
-}
+
+
 export interface Hotel {
   id: number;
   name: string;
@@ -37,4 +31,36 @@ export interface HotelsResponse {
       total: number;
     };
   };
+}
+
+export interface HotelDetails {
+  id: number;
+  name: string;
+  slug: string;
+  city: string;
+  address: string;
+  stars_count: number;
+  discount_rate: number;
+  is_favorite: boolean;
+  distance_km: number | null;
+  cover_photo: string;
+  description: string;
+  amenities: string[];
+  location: {
+    latitude: number;
+    longitude: number;
+    address: string;
+    city: string;
+  };
+  media_gallery: string[];
+  review_aggregates: {
+    average_rating: number;
+    total_reviews: number;
+  };
+}
+
+export interface HotelDetailsResponse {
+  code: number;
+  message: string;
+  data: HotelDetails;
 }

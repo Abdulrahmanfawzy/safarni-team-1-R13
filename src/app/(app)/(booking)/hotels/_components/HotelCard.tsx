@@ -1,4 +1,4 @@
-import type { Hotel, HotelDummy } from "@/types/hotel.types";
+import type { Hotel } from "@/types/hotel.types";
 import Image from "next/image";
 import DiscountBadge from "./DiscountBadge";
 import HotelRating from "./HotelRating";

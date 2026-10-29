@@ -2,14 +2,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import RoomAbout from "./RoomAbout"
 import RoomGallery from "./RoomGallery"
 import RoomReview from "./RoomReview"
+import type { HotelDetails } from "@/types/hotel.types";
+import type { HotelRoom } from "@/types/room.types";
 
 interface IProps {
-
+  hotel: HotelDetails;
+  room: HotelRoom;
   onAddReview: () => void;
-
 }
 
-const RoomDetailsTabs = ({onAddReview }: IProps) => {
+const RoomDetailsTabs = ({ hotel, room, onAddReview }: IProps) => {
+    const galleryImages = [...new Set([room.thumbnail_url, ...hotel.media_gallery].filter(Boolean))];
+
     return (
         <Tabs defaultValue="About" className="w-full ">
             <TabsList className="relative inline-flex h-auto w-full items-start justify-start gap-6 rounded-none bg-transparent p-0 max-lg:!h-auto max-lg:grid max-lg:grid-cols-3 max-lg:items-end max-lg:justify-between max-lg:gap-0
@@ -33,13 +37,26 @@ const RoomDetailsTabs = ({onAddReview }: IProps) => {
 
             </TabsList>
             <TabsContent value="About">
-                <RoomAbout />
+                <RoomAbout
+                    bedsCount={room.beds_count}
+                    bathroomsCount={room.bathrooms_count}
+                    areaSqft={room.area_sqft}
+                    galleryCount={galleryImages.length}
+                    description={hotel.description}
+                    amenities={hotel.amenities}
+                    address={hotel.location?.address || hotel.address}
+                    city={hotel.location?.city || hotel.city}
+                />
             </TabsContent>
             <TabsContent value="Gallery">
-                <RoomGallery />
+                <RoomGallery images={galleryImages} />
             </TabsContent>
             <TabsContent value="Review">
-                <RoomReview onAddReview={onAddReview} />
+                <RoomReview
+                    rating={hotel.review_aggregates?.average_rating ?? 0}
+                    totalReviews={hotel.review_aggregates?.total_reviews ?? 0}
+                    onAddReview={onAddReview}
+                />
             </TabsContent>
         </Tabs>
 

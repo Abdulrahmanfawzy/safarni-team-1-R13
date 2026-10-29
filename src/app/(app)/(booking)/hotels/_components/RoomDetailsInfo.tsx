@@ -8,36 +8,53 @@ import RoomDetailsTabs from "./RoomDetailsTabs";
 import { useState } from "react";
 import AddReview from "./AddReview";
 import RoomBooking from "./RoomBooking";
+import { HotelDetails } from "@/types/hotel.types";
+import type { HotelRoom } from "@/types/room.types";
+import { MapPin } from "lucide-react";
 
 type View = "details" | "addReview" | "booking";
-export default function RoomDetailsInfo() {
+interface IProps {
+  hotel: HotelDetails;
+  room: HotelRoom;
+}
+export default function RoomDetailsInfo({hotel, room}:IProps) {
   const [view, setView] = useState<View>("details");
+    const { name, address, discount_rate, review_aggregates } = hotel;
+
+  const rating = review_aggregates?.average_rating ?? 0;
+  const totalReviews = review_aggregates?.total_reviews ?? 0;
   return (
     <section className="flex w-full min-w-0 flex-1 flex-col justify-start gap-6 mt-18 ml-8 mr-8 max-lg:mx-0 max-lg:mt-4 max-lg:gap-4 max-lg:px-4 max-lg:pb-24">
       <div className="flex items-start justify-between gap-4">
-        <DiscountBadge discount={20} />
+        <DiscountBadge discount={discount_rate ?? 0} />
 
         <div className="flex items-center gap-2">
-          <HotelRating rating={4.5} />
+          <HotelRating rating={rating} />
           <span className="text-sm font-semibold text-[#4B4F63]">
-            (345Reviews)
+            ({totalReviews}Reviews)
           </span>
         </div>
       </div>
 
       <div className="space-y-2">
         <h1 className="text-xl font-medium capitalize text-gray-900">
-          HarborHaven Hideaway
+          {name}
         </h1>
 
-        <p className="text-base capitalize text-gray-500">
-          1012 Ocean Avenue, New York, USA
-        </p>
+        
+         {(address) && (
+                <p className="flex items-start gap-2 text-sm text-gray-600 lg:text-base">
+                  <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
+                  <span>{[address].filter(Boolean).join(", ")}</span>
+                </p>
+              )}
       </div>
       {/* Dynamic content */}
       {view === "details" && (
         <>
           <RoomDetailsTabs
+            hotel={hotel}
+            room={room}
             onAddReview={() => setView("addReview")}
           />
 
@@ -45,7 +62,7 @@ export default function RoomDetailsInfo() {
             <h4 className="text-xl text-[#111928]">
               Total Price:{" "}
               <span className="text-2xl font-semibold text-[#1E429F]">
-                $150
+                ${room.final_price.toLocaleString()}
               </span>
               <span className="text-base text-[#606369]">/night</span>
             </h4>
@@ -65,7 +82,7 @@ export default function RoomDetailsInfo() {
           <p className="text-xs text-gray-600">
             Total price
             <span className="mt-0.5 block text-base font-semibold text-primary">
-              $150.00
+              ${room.final_price.toLocaleString()}
               <span className="ml-1 text-xs font-normal text-gray-500">
                 /night
               </span>
