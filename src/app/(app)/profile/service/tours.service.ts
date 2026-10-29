@@ -29,7 +29,7 @@ export async function getTours(): Promise<Itours[]> {
 
   // const response = await fetch(`${baseUrl}api/tours?per_page=1`
   const response = await fetch(`
-    ${baseUrl}api/tours?min_budget=50&max_budget=500&tour_type=cultural&location=Egypt&rate=4&per_page=10&page=1
+${baseUrl}api/tours?min_budget=50&max_budget=500&tour_type=cultural&location=Egypt&rate=4&per_page=10&page=1
     `
    
     

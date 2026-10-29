@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 export default function PersonalInfoForm() {
   
   
-  const router = useRouter()
+
     const {
     register,
     handleSubmit,
@@ -31,10 +31,30 @@ export default function PersonalInfoForm() {
   });
 
   
-  function submitForm(data: PersonalInfoValues) {
-    console.log(data);
-      router.push("/profile")
+  const router = useRouter();
+
+async function submitForm(data: PersonalInfoValues) {
+  const response = await fetch("/api/profile/update", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok || result.success === false) {
+    window.alert(result.message || "Could not update your profile.");
+    return;
   }
+
+  window.alert(result.message || "Profile updated successfully.");
+  router.push("/profile");
+  router.refresh();
+}
+ 
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="mt-6 space-y-3">

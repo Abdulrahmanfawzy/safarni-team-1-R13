@@ -7,7 +7,6 @@ import { getTours } from "../../service/tours.service";
 
 export default async function Tour() {
   const data = await getTours();
-console.log( "dddddddaaaaaaaatttttttttaaaa" ,  data);
 
 
   return (
