@@ -1,7 +1,6 @@
 
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getApiBaseUrl } from "@/lib/api-url";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -24,9 +23,9 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
        
-        let response: Response;
-        try {
-          response = await fetch(`${getApiBaseUrl()}/api/auth/login`, {
+        const response = await fetch(
+          `${process.env.API}api/auth/login`,
+          {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -36,21 +35,16 @@ export const authOptions: NextAuthOptions = {
               email: credentials.email,
               password: credentials.password,
             }),
-          });
-        } catch (error) {
-          console.error("Login API request failed:", error);
-          throw new Error("Unable to connect to the login service.");
-        }
+          }
+        );
 
-        
         if (!response.ok) {
-            const error = await response.json();
-          throw new Error(error.message || "حدث خطأ أثناء تسجيل الدخول");
+          return null;
         }
 
-        const result = await response.json().catch(() => null);
+        const result = await response.json();
 
-        if (!result?.success || !result.data?.token) {
+        if (!result.success || !result.data?.token) {
           return null;
         }
 
