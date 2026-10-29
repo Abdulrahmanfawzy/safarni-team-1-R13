@@ -48,7 +48,11 @@ export default async function TourDetailsPage({ params }: PageProps) {
         <ReviewsSection reviews={tour.reviews} />
       </main>
 
-      <BookingBar slug={tour.slug} price={tour.price} />
+      <BookingBar
+        tourId={tour.id}
+        schedules={tour.schedules}
+        price={tour.price}
+      />
     </>
   );
 }
