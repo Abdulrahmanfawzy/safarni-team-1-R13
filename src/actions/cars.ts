@@ -55,6 +55,8 @@ const RequestCarBookingDetailsAction = async (id: string) => {
     }
 }
 
+
+export default RequestCarBookingDetailsAction;
 export const CarPayment = async (
     id: string | number,
     payload: CarCheckoutPayload,
@@ -130,5 +132,3 @@ export const CarPayment = async (
         };
     }
 };
-
-export default RequestCarBookingDetailsAction;
