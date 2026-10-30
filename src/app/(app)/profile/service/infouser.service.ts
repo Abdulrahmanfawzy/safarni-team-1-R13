@@ -1,6 +1,5 @@
 import type { Iavatar } from "../types/infouser.types";
 
-
 import { getAccessToken } from "@/lib/auth";
 
 interface ProfileResponse {
@@ -12,9 +11,7 @@ interface ProfileResponse {
 
 export async function getAvatar(): Promise<Iavatar> {
   const baseUrl = process.env.API;
- const token =await getAccessToken();
-console.log("token " , token)
-// const token = process.env.TOKEN
+  const token = await getAccessToken();
 
   if (!baseUrl) {
     throw new Error("API_BASE_URL is missing from .env.local");
@@ -29,45 +26,9 @@ console.log("token " , token)
   });
 
   if (!response.ok) {
-   console.log('res' ,response);
-   console.log( await response.json())
     throw new Error(`Failed to load profile: ${response.status}`);
   }
 
-  const result = await response.json() as ProfileResponse ;
+  const result = (await response.json()) as ProfileResponse;
   return result.data;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

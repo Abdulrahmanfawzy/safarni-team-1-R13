@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { CreateFlightBookingAction } from "@/actions/Flights";
+import { CreateFlightBookingAction, FlightPayment } from "@/actions/Flights";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,7 +45,11 @@ export function PassengerBookingSheet({
   seats: BookingSeat[];
 }) {
   const [submitError, setSubmitError] = useState("");
-  const [bookingComplete, setBookingComplete] = useState(false);
+  const [createdBooking, setCreatedBooking] = useState<{
+    key: string;
+    id: string | number;
+  } | null>(null);
+  const [isStartingPayment, setIsStartingPayment] = useState(false);
   const {
     register,
     control,
@@ -56,41 +60,81 @@ export function PassengerBookingSheet({
     defaultValues: { passengers: [] },
   });
   const { fields } = useFieldArray({ control, name: "passengers" });
+  const bookingKey = `${flightId}:${seats.map((seat) => seat.id).sort().join(",")}`;
+  const activeBookingId = createdBooking?.key === bookingKey ? createdBooking.id : null;
 
   useEffect(() => {
     if (!open) return;
     setSubmitError("");
-    setBookingComplete(false);
-    reset({
-      passengers: seats.map((seat) => ({
-        full_name: "",
-        age: "",
-        gender: "male",
-        passport_number: "",
-        seat_id: seat.id,
-      })),
-    });
-  }, [open, reset, seats]);
+    if (createdBooking?.key !== bookingKey) {
+      reset({
+        passengers: seats.map((seat) => ({
+          full_name: "",
+          age: "",
+          gender: "male",
+          passport_number: "",
+          seat_id: seat.id,
+        })),
+      });
+    }
+  }, [bookingKey, createdBooking?.key, open, reset, seats]);
+
+  const startCheckout = async (id: string | number) => {
+    setSubmitError("");
+    setIsStartingPayment(true);
+    try {
+      const response = await FlightPayment(id);
+      if (response?.error || response?.success === false) {
+        setSubmitError(response.error || response.message || "Could not start checkout.");
+        return;
+      }
+
+      const checkoutUrl = response?.data?.checkout_url ?? response?.checkout_url;
+      if (typeof checkoutUrl !== "string" || !checkoutUrl.startsWith("https://")) {
+        setSubmitError("The payment service did not return a valid checkout URL.");
+        return;
+      }
+
+      window.location.assign(checkoutUrl);
+    } catch {
+      setSubmitError("Unable to start checkout. Please try again.");
+    } finally {
+      setIsStartingPayment(false);
+    }
+  };
 
   const submit = handleSubmit(async (values) => {
     setSubmitError("");
-    const response = await CreateFlightBookingAction({
-      flight_id: toApiId(flightId),
-      passengers: values.passengers.map((passenger) => ({
-        full_name: passenger.full_name.trim(),
-        age: Number(passenger.age),
-        gender: passenger.gender,
-        passport_number: passenger.passport_number.trim(),
-        seat_id: toApiId(passenger.seat_id),
-      })),
-    });
+    let bookingId = activeBookingId;
 
-    if (response?.error || response?.success === false) {
-      setSubmitError(response.error || response.message || "Booking could not be completed.");
-      return;
+    if (!bookingId) {
+      const response = await CreateFlightBookingAction({
+        flight_id: toApiId(flightId),
+        passengers: values.passengers.map((passenger) => ({
+          full_name: passenger.full_name.trim(),
+          age: Number(passenger.age),
+          gender: passenger.gender,
+          passport_number: passenger.passport_number.trim(),
+          seat_id: toApiId(passenger.seat_id),
+        })),
+      });
+
+      if (response?.error || response?.success === false) {
+        setSubmitError(response.error || response.message || "Booking could not be completed.");
+        return;
+      }
+
+      const bookingData = response?.data?.booking ?? response?.data ?? response?.booking ?? response;
+      bookingId = bookingData?.id ?? bookingData?.booking_id ?? response?.booking_id;
+      if (bookingId === undefined || bookingId === null) {
+        setSubmitError("Booking was created, but the response did not include a booking ID.");
+        return;
+      }
+
+      setCreatedBooking({ key: bookingKey, id: bookingId });
     }
 
-    setBookingComplete(true);
+    await startCheckout(bookingId);
   });
 
   return (
@@ -103,11 +147,21 @@ export function PassengerBookingSheet({
           </SheetDescription>
         </SheetHeader>
 
-        {bookingComplete ? (
+        {activeBookingId ? (
           <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800" role="status">
-            Booking created successfully.
-            <Button className="mt-4 w-full" onClick={() => onOpenChange(false)}>
-              Done
+            Booking created. Continue to secure checkout.
+            {submitError && (
+              <p role="alert" className="mt-3 rounded-md bg-red-50 p-3 text-red-700">
+                {submitError}
+              </p>
+            )}
+            <Button
+              className="mt-4 w-full"
+              loading={isStartingPayment}
+              disabled={isStartingPayment}
+              onClick={() => void startCheckout(activeBookingId)}
+            >
+              {isStartingPayment ? "Opening checkout..." : "Continue to payment"}
             </Button>
           </div>
         ) : (
@@ -213,8 +267,8 @@ export function PassengerBookingSheet({
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
                 Cancel
               </Button>
-              <Button type="submit" loading={isSubmitting} disabled={isSubmitting || seats.length === 0}>
-                {isSubmitting ? "Submitting booking..." : "Submit booking"}
+              <Button type="submit" loading={isSubmitting || isStartingPayment} disabled={isSubmitting || isStartingPayment || seats.length === 0}>
+                {isSubmitting || isStartingPayment ? "Creating checkout..." : "Submit booking and continue to payment"}
               </Button>
             </SheetFooter>
           </form>

@@ -24,7 +24,8 @@ async function SeatsContent({
       console.error("Failed to fetch flight seats from API:", error);
     }
   }
-
+  console.log(apiSeats?.data?.price);
+  
   return (
     <SeatPicker
       apiSeats={apiSeats}
