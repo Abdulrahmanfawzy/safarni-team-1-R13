@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -5,6 +6,29 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { homeApi } from "@/api/home.api";
 import { Card } from "@/components/ui/card";
+
+function RecommendationSkeleton() {
+  return (
+    <Card
+      className="animate-pulse overflow-hidden"
+      aria-hidden="true"
+    >
+      <div className="p-4">
+        {/* Image Skeleton */}
+        <div className="h-[220px] w-full rounded-xl bg-slate-200" />
+
+        {/* Content Skeleton */}
+        <div className="mt-4 space-y-3">
+          <div className="h-5 w-3/4 rounded-md bg-slate-200" />
+
+          <div className="h-4 w-1/2 rounded-md bg-slate-200" />
+
+          <div className="mt-3 h-4 w-1/3 rounded-md bg-slate-200" />
+        </div>
+      </div>
+    </Card>
+  );
+}
 
 export default function RecommendationSection() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -40,9 +64,19 @@ export default function RecommendationSection() {
       </div>
 
       {isPending && (
-        <p className="py-8 text-center text-slate-500" role="status">
-          Loading recommendations...
-        </p>
+        <div
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          role="status"
+          aria-label="Loading recommendations"
+        >
+          {Array.from({ length: 3 }).map((_, index) => (
+            <RecommendationSkeleton key={index} />
+          ))}
+
+          <span className="sr-only">
+            Loading recommendations...
+          </span>
+        </div>
       )}
 
       {isError && (
