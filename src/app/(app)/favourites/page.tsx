@@ -1,14 +1,12 @@
 import { Suspense } from "react";
 
-
-
 import { getFavorites } from "../profile/service/favourite.service";
-import FavoriteCard from "@/components/shared/favouritesCard/page";
+import FavoriteCard from "../../../components/shared/FavouritesCard/page";
 
 export default async function Favorites() {
   const data = await getFavorites();
 
-console.log("fav" ,  data);
+  console.log("fav", data);
 
   const favorites = [
     ...data.tours.map((tour) => ({
@@ -17,7 +15,7 @@ console.log("fav" ,  data);
       title: tour.title,
       subtitle: tour.adventure_style,
       duration: `${tour.duration_hours} hours`,
-      image:tour.image , 
+      image: tour.image,
       price: tour.base_price,
       rating: tour.rating,
     })),
@@ -25,7 +23,7 @@ console.log("fav" ,  data);
       id: hotel.id,
       serviceType: "hotel" as const,
       title: hotel.name,
-      image:hotel.image ,
+      image: hotel.image,
       subtitle: hotel.address,
       duration: undefined,
       price: hotel.discount_rate,
@@ -35,7 +33,7 @@ console.log("fav" ,  data);
       id: car.id,
       serviceType: "car" as const,
       title: car.model,
-      image:car.image ,
+      image: car.image,
       subtitle: car.body_type,
       duration: undefined,
       price: car.daily_rate,
@@ -47,7 +45,7 @@ console.log("fav" ,  data);
       title: flight.flight_number,
       subtitle: `${flight.origin_airport_id} → ${flight.dest_airport_id}`,
       duration: undefined,
-      image:flight.image,
+      image: flight.image,
       price: undefined,
       rating: undefined,
     })),
@@ -80,11 +78,7 @@ console.log("fav" ,  data);
   );
 }
 
-
-
-
-
-export  function FavouritesPage() {
+export function FavouritesPage() {
   return (
     <Suspense fallback={<p className="p-8">Loading favorites...</p>}>
       <Favorites />

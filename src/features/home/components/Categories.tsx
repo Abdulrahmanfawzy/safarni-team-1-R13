@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -43,6 +42,8 @@ export default function Categories() {
       return response.categories ?? [];
     },
   });
+
+  console.log(categories);
 
   return (
     <section className="py-12">

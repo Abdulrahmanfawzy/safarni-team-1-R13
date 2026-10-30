@@ -1,8 +1,6 @@
-import { QueryProvider } from "@/components/providers/query-provider";
+import { AppProviders } from "@/components/providers/app-providers";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner";
-import Navbar from "@/components/ui/Navbar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -17,11 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.className} h-full antialiased`}>
       <body className="min-h-full app-container">
-        <QueryProvider>
-          <Navbar/>
-            {children}
-            <Toaster  position="top-right" richColors/>
-            </QueryProvider>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );
