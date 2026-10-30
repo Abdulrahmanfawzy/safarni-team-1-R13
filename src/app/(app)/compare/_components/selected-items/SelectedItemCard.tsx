@@ -20,13 +20,13 @@ export default function SelectedItemCard({ item }: Props) {
       </div>
 
       <div className="min-w-0 flex-1 gap-1.5">
-        <h3 className="break-words text-base font-medium text-[#0F1417] sm:text-lg lg:text-xl">
+        <h3 className="wrap-break-word text-base font-medium text-[#0F1417] sm:text-lg lg:text-xl">
           {item.title}
         </h3>
       
-        <p className="mt-1 break-words text-xs text-gray-500 sm:text-sm lg:text-base">
-          {item.schedule_line || item.time_range || "Schedule unavailable"}
-          <span> | {item.price_label || `$${item.price}`}</span>
+        <p className="mt-1 wrap-break-wordtext-xs text-gray-500 sm:text-sm lg:text-base">
+          { item.time_range || "Schedule unavailable"}
+          <span> {item.price_label}</span>
         </p>
         <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500 sm:text-sm lg:text-base">
           {item.description}
