@@ -1,4 +1,16 @@
-import { CompareItem } from "@/types/compare.types";
+type CompareItem = {
+  id: string;
+  title: string;
+  time: string;
+  price: number;
+  description: string;
+  image: string;
+  duration: string;
+  highlights: string[];
+  availability: string;
+  location: string;
+  transportation: string;
+};
 
 
 export const compareItems: CompareItem[] = [
