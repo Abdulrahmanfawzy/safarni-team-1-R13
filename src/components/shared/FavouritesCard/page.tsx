@@ -9,26 +9,27 @@ import { IoMdHeart } from "react-icons/io";
 interface FavoriteCardProps {
   id: number;
   serviceType: string;
-  imageUrl?: string;
+  image?: string;
   title: string;
-  rating?: string;
+  rating?: number;
   duration?: string;
-  model?: string;
   price?: string | number;
   pickup_available?: boolean;
   adventure_style?: string;
+  
 }
 
 export default function FavoriteCard({
   id,
   serviceType,
-  imageUrl,
+  image,
   title,
   rating,
   duration,
   price,
   pickup_available,
   adventure_style,
+  
 }: FavoriteCardProps) {
   const [isFavorite, setIsFavorite] = useState(true);
   const [isPending, startTransition] = useTransition();
@@ -36,7 +37,7 @@ export default function FavoriteCard({
   function handleHeartClick() {
     startTransition(async () => {
       try {
-        const response = await fetch("/api/favourites/toggle", {
+        const response = await fetch("/api/favorites/toggle", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -52,9 +53,6 @@ export default function FavoriteCard({
         console.log("Toggle response:", result);
 
  
-if (!response.ok || result.data?.is_favorite !== false) {
-  throw new Error(result.message );
-}
 
 setIsFavorite(false);
 
@@ -73,7 +71,7 @@ setIsFavorite(false);
       <div className="relative h-36 overflow-hidden rounded-xl bg-gray-100 sm:h-40">
         
           <img
-            src={imageUrl}
+            src={image}
             alt={title}
             className="h-full w-full object-cover"
           />
@@ -91,13 +89,14 @@ setIsFavorite(false);
       </div>
 
       <div className="space-y-2 p-3">
-        <div className="flex items-center justify-between gap-2">
-          {rating && (
-            <span className="flex shrink-0 items-center gap-1 text-xs text-gray-700">
+        <div className="flex items-center  gap-2">
+          {
+          rating ? (
+            <span className="flex mt-1 items-center gap-1 text-end text-gray-700">
               <FaStar className="text-amber-400" aria-hidden="true" />
               {rating}
             </span>
-          )}
+          ) : null}
         </div>
 
         <h3 className="truncate text-sm font-semibold text-slate-900">
@@ -128,3 +127,5 @@ setIsFavorite(false);
     </article>
   );
 }
+
+

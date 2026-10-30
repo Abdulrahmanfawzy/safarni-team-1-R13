@@ -1,3 +1,4 @@
+import { getAccessToken } from "@/lib/auth";
 import { ICar } from "../types/cars.types";
 
 
@@ -12,15 +13,17 @@ interface CarResponse {
 }
 
 export async function getCarDetails(carId: number): Promise<ICar> {
-  const baseUrl = process.env.API_BASE_URL;
-  const token = process.env.TOKEN;
+  const baseUrl = process.env.API;
+   const token =await getAccessToken();
+// const token = process.env.TOKEN
+
 
   if (!baseUrl) {
     throw new Error("API_BASE_URL is missing from .env.local");
   }
 
   const response = await fetch(
-    `${baseUrl}/cars/${carId}`,
+    `${baseUrl}api/cars/${carId}`,
     {
        headers: {
       Accept: "application/json",

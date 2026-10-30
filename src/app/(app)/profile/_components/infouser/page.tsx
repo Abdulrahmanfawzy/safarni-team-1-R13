@@ -2,8 +2,8 @@ import Image from "next/image";
 import { getAvatar } from "../../service/infouser.service";
 
 
-
 export default async function Infouser() {
+  
 
 const data=await getAvatar()
 console.log(data);
