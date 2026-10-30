@@ -43,8 +43,6 @@ export default function Categories() {
     },
   });
 
-  console.log(categories);
-
   return (
     <section className="py-12">
       <div>
@@ -92,7 +90,11 @@ export default function Categories() {
           >
             {categories.map((category) => (
               <Link
-                href={`/${category.slug ?? category.name.toLowerCase()}`}
+                href={
+                  category.slug === "hotel"
+                    ? `/${category.slug}s`
+                    : `/${category.slug}`
+                }
                 key={category.id}
                 className="group flex w-full flex-col items-center gap-6"
               >
