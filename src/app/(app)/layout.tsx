@@ -43,20 +43,3 @@ import Navbar from "@/components/ui/Navbar";
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

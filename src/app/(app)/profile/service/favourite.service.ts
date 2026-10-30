@@ -14,22 +14,56 @@ interface FavoritesResponse {
   data: FavoritesData;
 }
 
-export async function getFavorites(): Promise<FavoritesResponse> {
+// export async function getFavorites(): Promise<FavoritesResponse> {
+//   const baseUrl = process.env.API;
+// const token =await getAccessToken();
+
+//   if (!baseUrl) {
+//     throw new Error("API_BASE_URL is missing from .env.local");
+//   }
+
+//   if (!token) {
+//     throw new Error("TOKEN is missing from .env.local");
+//   }
+
+//   const url = `${baseUrl}favorites`;
+//   console.log("Favorites URL:", url);
+// console.log("Favorites URL:", url);
+//   const response = await fetch(url, {
+//     headers: {
+//       Accept: "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     cache: "no-store",
+//   });
+
+//   if (!response.ok) {
+//     const errorBody = await response.text();
+//     throw new Error(
+//       `Failed to load favorites: ${response.status} ${errorBody}`,
+//     );
+//   }
+
+//   return (await response.json()) as FavoritesResponse;
+// }
+
+
+
+
+
+export async function getFavorites(): Promise<FavoritesData> {
   const baseUrl = process.env.API;
-const token =await getAccessToken();
+  const token = await getAccessToken();
 
   if (!baseUrl) {
-    throw new Error("API_BASE_URL is missing from .env.local");
+    throw new Error("API is missing.");
   }
 
   if (!token) {
-    throw new Error("TOKEN is missing from .env.local");
+    throw new Error("You must be signed in.");
   }
 
-  const url = `${baseUrl}favorites`;
-  console.log("Favorites URL:", url);
-console.log("Favorites URL:", url);
-  const response = await fetch(url, {
+  const response = await fetch(`${baseUrl}api/favorites`, {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
@@ -37,15 +71,37 @@ console.log("Favorites URL:", url);
     cache: "no-store",
   });
 
-  if (!response.ok) {
-    const errorBody = await response.text();
-    throw new Error(
-      `Failed to load favorites: ${response.status} ${errorBody}`,
-    );
+  const result = (await response.json()) as FavoritesResponse;
+
+  if (!response.ok || !result.success) {
+    throw new Error(result.message || "Failed to load favourites.");
   }
 
-  return (await response.json()) as FavoritesResponse;
+  return result.data;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -62,7 +118,7 @@ export async function toggleFavorite(
     throw new Error("API_BASE_URL or TOKEN is missing from .env.local");
   }
 
-  const response = await fetch(`${baseUrl}favourites/toggle`, {
+  const response = await fetch(`${baseUrl}api/favorites/toggle`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -76,8 +132,11 @@ export async function toggleFavorite(
     cache: "no-store",
   });
 
+console.log("response ", response)
+
   const result = await response.json();
 
+  
   console.log("Toggle response:", result);
   if (!response.ok) {
     throw new Error(result.message || "Failed to update favorites");
