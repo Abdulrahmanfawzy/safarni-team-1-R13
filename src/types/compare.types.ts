@@ -11,3 +11,28 @@ export interface CompareItem {
   location: string;
   transportation: string;
 }
+export interface CompareTour {
+  id: number;
+  image: string;
+  title: string;
+  time_range: string | null;
+  price: number;
+  price_label: string;
+  schedule_line: string;
+  description: string;
+}
+
+export interface CompareToursResponse {
+  success: boolean;
+  message: string;
+  errors: string[];
+  data: {
+    items: CompareTour[];
+    pagination: {
+      current_page: number;
+      last_page: number;
+      per_page: number;
+      total: number;
+    };
+  };
+}
