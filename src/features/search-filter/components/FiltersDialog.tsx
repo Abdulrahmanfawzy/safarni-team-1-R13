@@ -74,6 +74,7 @@ return (
               key={tour.id}
               tour={{
                 ...tour,
+                id: Number(tour.id),
                 slug: String(tour.id),
                 adventure_style: tour.category,
                 duration_text: tour.duration,
