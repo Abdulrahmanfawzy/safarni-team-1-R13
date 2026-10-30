@@ -36,7 +36,7 @@ export default function CompareContent({
 
     const tours = data?.data?.items ?? [];
     //------------------------------------- Select / Unselect Tour-------------------------------------------------------
-    const MAX_COMPARE_ITEMS = 3;
+    const MAX_COMPARE_ITEMS = 6;
 
 
 
