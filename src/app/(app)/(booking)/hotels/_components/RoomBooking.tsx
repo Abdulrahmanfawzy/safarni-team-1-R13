@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import GuestDialog from "./GuestDialog";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRoomBooking } from "@/hooks/hotels/useRoomBooking";
+import RoomBookingSkeleton from "@/components/skeletons/RoomBookingSkeleton";
 
 interface IProps {
   onBack: () => void;
@@ -68,7 +69,7 @@ export default function RoomBooking({ onBack, roomId }: IProps) {
           </Button>
         </div>
 
-        {/* Month Navigation */}
+        {/* Month Navigation-------------------------------------------------------------- */}
         <div className="flex items-center justify-between">
           <Button
             type="button"
@@ -98,21 +99,17 @@ export default function RoomBooking({ onBack, roomId }: IProps) {
           </Button>
         </div>
 
-        {/* Loading */}
-        {isLoading && (
-          <p className="text-sm text-gray-500">
-            Loading available dates...
-          </p>
-        )}
+        {/* Loading -------------------------------------------------------------- ---------*/}
+        {isLoading && <RoomBookingSkeleton />}
 
-        {/* Error */}
+        {/* Error-------------------------------------------------------------- ------------- */}
         {isError && (
           <p className="text-sm text-red-500">
             Failed to load availability. Please try again.
           </p>
         )}
 
-        {/* Calendar */}
+        {/* Calendar-------------------------------------------------------------- ----------- */}
         {!isLoading && !isError && (
           <>
             {/* Check In */}
