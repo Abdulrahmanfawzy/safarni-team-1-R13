@@ -6,6 +6,10 @@ import {
   HiOutlineUser,
 } from "react-icons/hi2";
 
+<<<<<<< HEAD
+import ModalLogout from "../../shared/Modal/page";
+=======
+>>>>>>> origin/main
 import CardProfile from "../cardprofile/page";
 import ModalLogout from "../../shared/Modal/page";
 

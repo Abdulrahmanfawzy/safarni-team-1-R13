@@ -3,13 +3,12 @@ import ImgOne from '@/assets/images/hotel1.svg'
 import ImgTwo from '@/assets/images/hotel2.svg'
 import ImgThree from '@/assets/images/hotel3.svg'
 import ImgFour from '@/assets/images/hotel4.svg'
-import { HotelDummy } from "@/types/hotel.types"
 interface IProps {
 
 
 
 }
-const dummyData: HotelDummy[] = [
+const dummyData = [
   {
     id: "1",
     name: "Oasis Overture",
@@ -47,7 +46,11 @@ const NearbySection = ({ }: IProps) => {
     return (
        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 mx-5">
       {dummyData.map((hotel) => (
-        <HotelCard key={hotel.id} hotel={hotel} variant="horizontal" />
+        <HotelCard
+          key={hotel.id}
+          hotel={hotel as unknown as React.ComponentProps<typeof HotelCard>["hotel"]}
+          variant="horizontal"
+        />
       ))}
     </section>
     )

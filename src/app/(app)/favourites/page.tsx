@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 
 import { getFavorites } from "../profile/service/favourite.service";
+
 import FavoriteCard from "../../../components/shared/FavouritesCard/page";
+
 
 export default async function Favorites() {
   const data = await getFavorites();
