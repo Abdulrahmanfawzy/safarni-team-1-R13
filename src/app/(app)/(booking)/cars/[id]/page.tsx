@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import RentCar from "@/features/Cars/components/RentCar"
 import ImagePlane from "@/features/flights/shared/ImagePlane"
 import Merc from "@/assets/images/e744f4cf979ec01abb63356b5a84a958a241a35d.png"
-import RequestCarBookingDetailsAction from "@/actions/cars";
+import { RequestCarBookingDetailsAction } from "@/api/Cars";
 type Props = {
   params: Promise<{
     id: string;

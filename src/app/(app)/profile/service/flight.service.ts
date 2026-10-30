@@ -9,7 +9,7 @@ interface FlightResponse {
 }
 
 export async function getFlights(): Promise<Iflight[]> {
-  const baseUrl = process.env.API_BASE_URL;
+  const baseUrl = process.env.API;
   const token = process.env.TOKEN;
 
   if (!baseUrl) {
