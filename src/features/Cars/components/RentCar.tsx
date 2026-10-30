@@ -10,6 +10,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 import SpecItem from "./SpecItem";
 import { plans, specs } from "../constants/DataCars";
 import PlanOption from "./Plan";
+import Map from "./Maps/Map";
 
 export default function CarRentalCard() {
   const [plan, setPlan] = React.useState<string>("hourly");
@@ -117,6 +118,9 @@ export default function CarRentalCard() {
       <Button
         type="submit"
         className="h-12 w-full rounded-xl bg-primary text-sm font-semibold shadow-md transition-all hover:bg-primary-800 active:scale-[0.98]"
+          onClick={()=>{
+            location ? <Map/> :""
+          }}
       >
         Pick Up
       </Button>
