@@ -1,7 +1,7 @@
 import "server-only";
 
 
-import type { CompareToursResponse } from "@/types/compare.types";
+import type { CompareRequest, CompareResponse, CompareToursResponse } from "@/types/compare.types";
 import { getAccessToken } from "@/lib/auth";
 
 export async function getCompareTours(
@@ -21,12 +21,9 @@ export async function getCompareTours(
     params.set("search", query);
   }
 
-  const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
-  const apiBaseUrl = /\/api$/i.test(normalizedBaseUrl)
-    ? normalizedBaseUrl
-    : `${normalizedBaseUrl}/api`;
+  
   const response = await fetch(
-    `${apiBaseUrl}/v1/compare/tours?${params.toString()}`,
+    `${baseUrl}api/v1/compare/tours?${params.toString()}`,
     {
       method: "GET",
       headers: {
@@ -66,4 +63,39 @@ export async function getCompareTours(
   }
 
   return result;
+}
+// Compare Tours--------------------------------------------------------------------------
+export async function compareTours(
+  body: CompareRequest
+): Promise<CompareResponse> {
+  const baseUrl = process.env.API;
+
+  if (!baseUrl) {
+    throw new Error("API environment variable is missing");
+  }
+
+  const accessToken = await getAccessToken();
+
+  const response = await fetch(
+    `${baseUrl}api/v1/compare/tours`,
+    {
+      method: "POST",
+
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+
+      body: JSON.stringify(body),
+
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to compare tours");
+  }
+
+  return response.json();
 }
