@@ -58,3 +58,64 @@ export interface CompareResponse {
 export interface CompareRequest {
   tour_ids: number[];
 }
+
+
+// --checkout
+
+export interface TourCheckoutRequest {
+  full_name: string;
+  email: string;
+  payment_method: "visa";
+}
+
+export interface TourCheckoutResponse {
+  success: boolean;
+  message: string;
+  errors: string[];
+  data: {
+    booking_id: number;
+    booking_code: string;
+    status: string;
+
+    tour: {
+      id: number;
+      title: string;
+    };
+
+    schedule: {
+      id: number;
+      start_at: string;
+      end_at: string;
+    };
+
+    pricing: {
+      currency: string;
+      lines: {
+        type: string;
+        label: string;
+        quantity: number;
+        unit_price: number;
+        subtotal: number;
+      }[];
+      subtotal: number;
+      discount: number;
+      total: number;
+      total_cents: number;
+    };
+
+    payment: {
+      id: number;
+      gateway: string;
+      provider: string;
+      method: string;
+      status: string;
+      amount: number;
+      currency: string;
+      session_id: string;
+      checkout_url: string;
+      transaction_ref: string;
+    };
+
+    expires_at: string;
+  };
+}

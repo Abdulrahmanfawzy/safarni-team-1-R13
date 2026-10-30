@@ -1,7 +1,7 @@
 import "server-only";
 
 
-import type { CompareRequest, CompareResponse, CompareToursResponse } from "@/types/compare.types";
+import type { CompareRequest, CompareResponse, CompareToursResponse, TourCheckoutRequest, TourCheckoutResponse } from "@/types/compare.types";
 import { getAccessToken } from "@/lib/auth";
 
 export async function getCompareTours(
@@ -98,4 +98,43 @@ export async function compareTours(
   }
 
   return response.json();
+}
+// pay----------------------------------------------------------------
+
+
+export async function checkoutTour(
+  tourId: number,
+  body: TourCheckoutRequest
+): Promise<TourCheckoutResponse> {
+  const baseUrl = process.env.API;
+
+  if (!baseUrl) {
+    throw new Error("API environment variable is missing");
+  }
+
+  const accessToken = await getAccessToken();
+
+  const response = await fetch(
+    `${baseUrl}api/v1/tour-checkout/tours/${tourId}/checkout`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+      cache: "no-store",
+    }
+  );
+
+  const result = await response.json();
+
+  if (!response.ok || !result.success) {
+    throw new Error(
+      result.message || "Failed to start tour checkout"
+    );
+  }
+
+  return result as TourCheckoutResponse;
 }
