@@ -1,9 +1,11 @@
+
 "use client";
 
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { Menu, Search, SlidersHorizontal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/images/logo.svg";
@@ -17,40 +19,15 @@ const navLinks = [
   { label: "Maps", href: "/maps" },
 ];
 
-type NavbarUser = {
-  name: string;
-  avatar?: string;
-};
-
-type NavbarProps = {
-  user?: NavbarUser | null;
-};
-
-function Avatar({ user }: { user: NavbarUser }) {
-  return user.avatar ? (
-    <Image
-      src={user.avatar}
-      alt={`${user.name}'s avatar`}
-      width={44}
-      height={44}
-      className="size-11 rounded-full object-cover"
-    />
-  ) : (
-    <span
-      aria-hidden="true"
-      className="flex size-11 items-center justify-center rounded-full bg-[#1E429F] text-sm font-semibold text-white"
-    >
-      {user.name.charAt(0).toUpperCase()}
-    </span>
-  );
-}
-
-export default function Navbar({ user }: NavbarProps) {
+export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const pathname = usePathname();
+  const { status, data: session } = useSession();
+
+  const isAuthenticated = status === "authenticated";
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -65,6 +42,54 @@ export default function Navbar({ user }: NavbarProps) {
     setIsFilterOpen(true);
   };
 
+  const profileName = session?.user?.name || "Profile";
+  const avatar = (session?.user as { image?: string | null } | undefined)?.image;
+
+  const authLinks = (
+    <>
+      {isAuthenticated ? (
+        <Link
+          href="/profile"
+          aria-label="Your profile"
+          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          {avatar ? (
+            <Image
+              src={avatar}
+              alt={`${profileName}'s avatar`}
+              width={36}
+              height={36}
+              className="size-9 rounded-full object-cover"
+            />
+          ) : (
+            <span className="flex size-9 items-center justify-center rounded-full bg-[#1E429F] text-sm font-semibold text-white">
+              {profileName.charAt(0).toUpperCase()}
+            </span>
+          )}
+          <span>Profile</span>
+        </Link>
+      ) : (
+        <>
+          <Link
+            href="/login"
+            onClick={() => setIsMenuOpen(false)}
+            className="rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100"
+          >
+            Log in
+          </Link>
+          <Link
+            href="/signup"
+            onClick={() => setIsMenuOpen(false)}
+            className="rounded-lg bg-[#1E429F] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1E429F]/90"
+          >
+            Sign up
+          </Link>
+        </>
+      )}
+    </>
+  );
+
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur">
@@ -72,7 +97,6 @@ export default function Navbar({ user }: NavbarProps) {
           className="grid grid-cols-[1fr_auto_1fr] items-center py-3"
           aria-label="Main navigation"
         >
-          {/* Logo */}
           <Link
             href="/"
             className="flex shrink-0 items-center justify-self-start"
@@ -88,7 +112,6 @@ export default function Navbar({ user }: NavbarProps) {
             />
           </Link>
 
-          {/* Desktop navigation */}
           <ul className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
               <li key={link.label}>
@@ -97,7 +120,9 @@ export default function Navbar({ user }: NavbarProps) {
                   aria-current={isActive(link.href) ? "page" : undefined}
                   className={cn(
                     "text-sm font-medium transition-colors hover:text-[#1E429F]",
-                    isActive(link.href) ? "text-[#1E429F]" : "text-gray-800",
+                    isActive(link.href)
+                      ? "text-[#1E429F]"
+                      : "text-gray-800",
                   )}
                 >
                   {link.label}
@@ -106,7 +131,6 @@ export default function Navbar({ user }: NavbarProps) {
             ))}
           </ul>
 
-          {/* Desktop actions */}
           <div className="hidden items-center gap-4 justify-self-end md:flex">
             <button
               type="button"
@@ -123,32 +147,15 @@ export default function Navbar({ user }: NavbarProps) {
               aria-label="Filters"
               className="text-gray-600 transition-colors hover:text-[#1E429F]"
             >
-              <SlidersHorizontal className="size-[18px]" aria-hidden="true" />
+              <SlidersHorizontal
+                className="size-[18px]"
+                aria-hidden="true"
+              />
             </button>
 
-            {user ? (
-              <Link href="/profile" aria-label="Your profile">
-                <Avatar user={user} />
-              </Link>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100"
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/signup"
-                  className="rounded-lg bg-[#1E429F] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1E429F]/90"
-                >
-                  Sign up
-                </Link>
-              </>
-            )}
+            {status !== "loading" && authLinks}
           </div>
 
-          {/* Mobile menu button */}
           <button
             type="button"
             onClick={() => setIsMenuOpen((open) => !open)}
@@ -165,7 +172,6 @@ export default function Navbar({ user }: NavbarProps) {
           </button>
         </nav>
 
-        {/* Mobile navigation */}
         {isMenuOpen && (
           <div
             id="mobile-navigation"
@@ -180,7 +186,9 @@ export default function Navbar({ user }: NavbarProps) {
                   aria-current={isActive(link.href) ? "page" : undefined}
                   className={cn(
                     "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-gray-50",
-                    isActive(link.href) ? "text-[#1E429F]" : "text-gray-700",
+                    isActive(link.href)
+                      ? "text-[#1E429F]"
+                      : "text-gray-700",
                   )}
                 >
                   {link.label}
@@ -207,44 +215,25 @@ export default function Navbar({ user }: NavbarProps) {
 
               <div className="my-2 border-t border-gray-100" />
 
-              {user ? (
-                <Link
-                  href="/profile"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-                >
-                  <Avatar user={user} />
-                  {user.name}
-                </Link>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    href="/signup"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="rounded-lg bg-[#1E429F] px-4 py-3 text-center text-sm font-semibold text-white hover:bg-[#1E429F]/90"
-                  >
-                    Sign up
-                  </Link>
-                </>
+              {status !== "loading" && (
+                <div className="flex flex-col gap-2">{authLinks}</div>
               )}
             </div>
           </div>
         )}
       </header>
 
-      {/* Dialogs: خارج الـ header عشان backdrop-blur ميحصرش الـ overlay */}
       <Suspense fallback={null}>
-        <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
+        <SearchDialog
+          open={isSearchOpen}
+          onOpenChange={setIsSearchOpen}
+        />
       </Suspense>
 
-      <FiltersDialog open={isFilterOpen} onOpenChange={setIsFilterOpen} />
+      <FiltersDialog
+        open={isFilterOpen}
+        onOpenChange={setIsFilterOpen}
+      />
     </>
   );
 }
