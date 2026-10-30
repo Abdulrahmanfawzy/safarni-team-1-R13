@@ -7,7 +7,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Modal, Button, toast } from "@heroui/react";
+import { Modal, Button } from "@heroui/react";
 import { logout } from "../../service/logout.service";
 
 

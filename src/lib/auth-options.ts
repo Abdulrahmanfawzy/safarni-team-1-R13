@@ -37,6 +37,7 @@ export const authOptions: NextAuthOptions = {
             }),
           }
         );
+        console.log(response);
 
         if (!response.ok) {
             const error = await response.json();
@@ -44,7 +45,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const result = await response.json();
-
+console.log(  "result" ,  result)
         if (!result.success || !result.data?.token) {
           return null;
         }

@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 
 
-
 interface IProps {
 pathname:string;
 initialSearch?: string;
