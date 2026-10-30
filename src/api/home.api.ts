@@ -2,29 +2,22 @@ import apiClient from "@/api/client";
 import { homeFeedResponseSchema } from "@/features/home/schemas/home.schema";
 
 export const homeApi = {
-  async getTours() {
-    const response = await apiClient.get<unknown>("/tours");
 
-    const result = response.data as {
-      success?: unknown;
-      message?: unknown;
-      data?: { items?: unknown };
-    };
+async getTours() {
+  const response = await apiClient.get<unknown>("/tours");
 
-    if (result.success !== true) {
-      throw new Error(
-        typeof result.message === "string"
-          ? result.message
-          : "Failed to retrieve tours."
-      );
-    }
+  const result = response.data as {
+    data?: unknown;
+    links?: unknown;
+    meta?: unknown;
+  };
 
-    if (!Array.isArray(result.data?.items)) {
-      throw new Error("Invalid tours response.");
-    }
+  if (!Array.isArray(result.data)) {
+    throw new Error("Invalid tours response.");
+  }
 
-    return result.data;
-  },
+  return result.data;
+},
 
   async getHomeFeed() {
     const response = await apiClient.get<unknown>("/home");

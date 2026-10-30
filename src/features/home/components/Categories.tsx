@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -11,6 +12,24 @@ const cairo = Cairo({
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-cairo",
 });
+
+function CategorySkeleton() {
+  return (
+    <div
+      className="flex w-full animate-pulse flex-col items-center gap-6"
+      aria-hidden="true"
+    >
+      <div
+        className="
+          size-56 rounded-full bg-slate-200
+          sm:size-60 lg:size-64
+        "
+      />
+
+      <div className="h-8 w-32 rounded-lg bg-slate-200" />
+    </div>
+  );
+}
 
 export default function Categories() {
   const {
@@ -33,9 +52,21 @@ export default function Categories() {
         </h2>
 
         {isPending && (
-          <p className="py-8 text-center text-muted-foreground">
-            Loading categories...
-          </p>
+          <div
+            className="
+              grid grid-cols-1 justify-items-center gap-8 px-4 pb-4
+              sm:grid-cols-2 sm:gap-5
+              lg:grid-cols-4
+            "
+            role="status"
+            aria-label="Loading categories"
+          >
+            {Array.from({ length: 4 }).map((_, index) => (
+              <CategorySkeleton key={index} />
+            ))}
+
+            <span className="sr-only">Loading categories...</span>
+          </div>
         )}
 
         {isError && (
