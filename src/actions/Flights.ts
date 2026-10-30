@@ -1,6 +1,7 @@
 "use server";
 
 import { getAccessToken } from "@/lib/auth";
+import { headers } from "next/headers";
 
 type SearchFlightsData = {
     type?: string;
@@ -190,11 +191,25 @@ export const FlightPayment = async (id: string | number) => {
     try {
         const apiBaseUrl = getApiBaseUrl();
         const authorization = await getApiAuthorizationHeader();
-        console.log(authorization);
-        
+
         if (!authorization) {
             return { error: "You must be logged in to start payment." };
         }
+
+        const requestHeaders = await headers();
+        const forwardedHost = requestHeaders.get("x-forwarded-host");
+        const host = forwardedHost || requestHeaders.get("host");
+        const protocol = requestHeaders.get("x-forwarded-proto") || "https";
+        const origin = process.env.NEXTAUTH_URL || (host ? `${protocol}://${host}` : "");
+        if (!origin) {
+            return { error: "Could not determine the return address for flight checkout." };
+        }
+        const bookingId = encodeURIComponent(String(id));
+        const successUrl = new URL(
+            `/profile/booking/flight/${bookingId}`,
+            origin,
+        ).toString();
+        const cancelUrl = new URL("/profile/booking?payment=cancelled", origin).toString();
 
         const requestOptions: RequestInit = {
             method: "POST",
@@ -203,11 +218,10 @@ export const FlightPayment = async (id: string | number) => {
                 Accept: "application/json",
                 ...authorization,
             },
-            body: JSON.stringify({}),
+            body: JSON.stringify({ success_url: successUrl, cancel_url: cancelUrl }),
             cache: "no-store",
         };
 
-        const bookingId = encodeURIComponent(String(id));
         let response = await fetch(`${apiBaseUrl}/api/bookings/${bookingId}/payment/checkout`, requestOptions);
         if (response.status === 404) {
             response = await fetch(`${apiBaseUrl}/bookings/${bookingId}/payment/checkout`, requestOptions);

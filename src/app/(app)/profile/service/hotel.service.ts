@@ -13,7 +13,7 @@ interface HotelResponse {
 }
 
 export async function getHotels(): Promise<HotelRoomsData> {
-  const baseUrl = process.env.API_BASE_URL;
+  const baseUrl = process.env.API;
   const token = process.env.TOKEN;
 
   if (!baseUrl) {

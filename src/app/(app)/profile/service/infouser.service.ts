@@ -8,7 +8,7 @@ interface ProfileResponse {
 }
 
 export async function getAvatar(): Promise<Iavatar> {
-  const baseUrl = process.env.API_BASE_URL;
+  const baseUrl = process.env.API;
   const token = process.env.TOKEN;
 
   if (!baseUrl) {
@@ -24,7 +24,7 @@ export async function getAvatar(): Promise<Iavatar> {
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to load profile: ${response.status}`);
+    throw new Error(`Failed to load profile: ${response?.status}`);
   }
 
   const result = await response.json() as ProfileResponse ;
