@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-// @ts-expect-error Leaflet is provided by react-leaflet but its declarations may not be installed.
+
 import L from "leaflet";
 import { LocateFixed } from "lucide-react";
-// @ts-expect-error react-leaflet may be installed without its type declarations.
+
 import { MapContainer, Marker, Polyline, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 

@@ -9,7 +9,7 @@ export default function AppLayout({
   return (
     <QueryProvider>
       <AuthSessionProvider>
-        <Navbar />
+        {/* <Navbar /> */}
 
         {children}
 
