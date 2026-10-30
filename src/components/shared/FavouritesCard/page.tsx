@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useState, useTransition } from "react";
@@ -16,7 +14,6 @@ interface FavoriteCardProps {
   price?: string | number;
   pickup_available?: boolean;
   adventure_style?: string;
-  
 }
 
 export default function FavoriteCard({
@@ -29,7 +26,6 @@ export default function FavoriteCard({
   price,
   pickup_available,
   adventure_style,
-  
 }: FavoriteCardProps) {
   const [isFavorite, setIsFavorite] = useState(true);
   const [isPending, startTransition] = useTransition();
@@ -52,11 +48,8 @@ export default function FavoriteCard({
 
         console.log("Toggle response:", result);
 
- 
+        setIsFavorite(false);
 
-setIsFavorite(false);
-
-      
         setIsFavorite(result.data.is_favorite);
       } catch (error) {
         console.error("Favorite toggle failed:", error);
@@ -69,13 +62,7 @@ setIsFavorite(false);
   return (
     <article className="overflow-hidden rounded-2xl bg-white p-2 shadow-md transition hover:-translate-y-1 hover:shadow-lg">
       <div className="relative h-36 overflow-hidden rounded-xl bg-gray-100 sm:h-40">
-        
-          <img
-            src={image}
-            alt={title}
-            className="h-full w-full object-cover"
-          />
-        
+        <img src={image} alt={title} className="h-full w-full object-cover" />
 
         <button
           type="button"
@@ -90,8 +77,7 @@ setIsFavorite(false);
 
       <div className="space-y-2 p-3">
         <div className="flex items-center  gap-2">
-          {
-          rating ? (
+          {rating ? (
             <span className="flex mt-1 items-center gap-1 text-end text-gray-700">
               <FaStar className="text-amber-400" aria-hidden="true" />
               {rating}
@@ -127,5 +113,3 @@ setIsFavorite(false);
     </article>
   );
 }
-
-

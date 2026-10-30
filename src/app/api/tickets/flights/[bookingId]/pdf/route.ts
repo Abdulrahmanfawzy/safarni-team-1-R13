@@ -1,8 +1,6 @@
 import { createFlightTicketPdf } from "@/lib/flight-ticket-pdf";
 import { verifyFlightTicketToken } from "@/lib/flight-ticket";
 
-export const runtime = "nodejs";
-
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ bookingId: string }> },

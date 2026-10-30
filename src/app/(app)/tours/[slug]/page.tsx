@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -18,29 +17,18 @@ type PageProps = {
 };
 
 function formatDate(date: string) {
-  return new Date(`${date}T00:00:00`).toLocaleDateString(
-    "en-GB",
-    {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    },
-  );
+  return new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
 
-function ErrorState({
-  title,
-  message,
-}: {
-  title: string;
-  message: string;
-}) {
+function ErrorState({ title, message }: { title: string; message: string }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 px-6">
       <section className="max-w-lg rounded-2xl bg-white p-8 text-center shadow-sm">
-        <h1 className="text-2xl font-bold text-gray-900">
-          {title}
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
 
         <p className="mt-3 text-gray-600">{message}</p>
 
@@ -56,15 +44,15 @@ function ErrorState({
   );
 }
 
-export default async function TourDetailsPage({
-  params,
-}: PageProps) {
+export default async function TourDetailsPage({ params }: PageProps) {
   const { slug } = await params;
+  console.log("slug", slug);
 
   let tour: TourDetails | null;
 
   try {
     tour = await getTourDetails(slug);
+    console.log(tour);
   } catch (error) {
     console.error("Failed to load tour details:", error);
 
@@ -86,8 +74,7 @@ export default async function TourDetailsPage({
   }
 
   const availableImage =
-    tour.images.find((image) => image.url)?.url ||
-    (tour.image || "").trim();
+    tour.images.find((image) => image.url)?.url || (tour.image || "").trim();
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:py-12">
@@ -112,10 +99,7 @@ export default async function TourDetailsPage({
                 />
               ) : (
                 <div className="flex h-64 items-center justify-center bg-gray-200 sm:h-96">
-                  <Compass
-                    size={56}
-                    className="text-gray-400"
-                  />
+                  <Compass size={56} className="text-gray-400" />
                 </div>
               )}
 
@@ -127,8 +111,7 @@ export default async function TourDetailsPage({
 
                   <span className="inline-flex items-center gap-1 text-sm text-gray-600">
                     <MapPin size={16} />
-                    {tour.location.city},{" "}
-                    {tour.location.country}
+                    {tour.location.city}, {tour.location.country}
                   </span>
                 </div>
 
@@ -143,10 +126,7 @@ export default async function TourDetailsPage({
                   </span>
 
                   <span className="inline-flex items-center gap-2">
-                    <Star
-                      size={18}
-                      className="text-amber-500"
-                    />
+                    <Star size={18} className="text-amber-500" />
                     {tour.rating} ({tour.reviews_count} reviews)
                   </span>
                 </div>
@@ -197,16 +177,11 @@ export default async function TourDetailsPage({
 
             {tour.images.length > 1 && (
               <section className="rounded-2xl bg-white p-6 shadow-sm sm:p-8">
-                <h2 className="text-xl font-bold text-gray-900">
-                  Gallery
-                </h2>
+                <h2 className="text-xl font-bold text-gray-900">Gallery</h2>
 
                 <div className="mt-5 grid grid-cols-2 gap-4">
                   {tour.images.map((image) => (
-                    <div
-                      key={image.id}
-                      className="overflow-hidden rounded-xl"
-                    >
+                    <div key={image.id} className="overflow-hidden rounded-xl">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={image.url}
@@ -221,18 +196,14 @@ export default async function TourDetailsPage({
           </div>
 
           <aside className="h-fit rounded-2xl bg-white p-6 shadow-sm sm:p-8 lg:sticky lg:top-8">
-            <p className="text-sm text-gray-500">
-              Starting from
-            </p>
+            <p className="text-sm text-gray-500">Starting from</p>
 
             <div className="mt-1 flex items-baseline gap-2">
               <span className="text-3xl font-bold text-gray-900">
                 ${Number(tour.price).toFixed(2)}
               </span>
 
-              <span className="text-sm text-gray-500">
-                / person
-              </span>
+              <span className="text-sm text-gray-500">/ person</span>
             </div>
 
             <div className="my-6 border-t border-gray-100" />
@@ -269,9 +240,7 @@ export default async function TourDetailsPage({
 
                     <div className="mt-4 flex items-center gap-2 text-sm text-gray-600">
                       <Users size={17} />
-                      <span>
-                        {schedule.available_slots} spots available
-                      </span>
+                      <span>{schedule.available_slots} spots available</span>
                     </div>
                   </div>
                 ))}
