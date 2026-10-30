@@ -1,7 +1,7 @@
 "use server";
 
-import { getHotelDetails, getHotelRooms, getHotels, getHotelsByParams } from "@/api/hotels";
-import { HotelRoomsResponse } from "@/types/room.types";
+import { getHotelDetails, getHotelRooms, getHotels, getHotelsByParams, getRoomAvailability } from "@/api/hotels";
+import { HotelRoomsResponse, RoomAvailabilityResponse } from "@/types/room.types";
 
 
 // ---get all hotels------------------------------------------------------------------------
@@ -23,4 +23,13 @@ export async function getHotelDetailsAction(hotelId: number) {
 //-- Get hotels by param ---------------------------------------------------------------------
 export async function getHotelsByParamsAction(search:string) {
   return getHotelsByParams(search);
+}
+// --- Get room availability --------------------------------
+
+export async function getRoomAvailabilityAction(
+  roomId: number,
+  month: number,
+  year: number
+): Promise<RoomAvailabilityResponse> {
+  return getRoomAvailability(roomId, month, year);
 }

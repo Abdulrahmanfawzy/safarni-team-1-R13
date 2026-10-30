@@ -2,7 +2,7 @@ import "server-only";
 
 import { getAccessToken } from "@/lib/auth";
 import type { HotelDetailsResponse, HotelsResponse } from "@/types/hotel.types";
-import { HotelRoomsResponse } from "@/types/room.types";
+import { HotelRoomsResponse, RoomAvailabilityResponse } from "@/types/room.types";
 
 // ---get all hotels-------------------------------------------
 export async function getHotels(
@@ -108,6 +108,37 @@ export async function getHotelsByParams(
 
   if (!response.ok) {
     throw new Error("Failed to fetch hotels");
+  }
+
+  return response.json();
+}
+// 
+export async function getRoomAvailability(
+  roomId: number,
+  month: number,
+  year: number
+): Promise<RoomAvailabilityResponse> {
+  const accessToken = await getAccessToken();
+
+  const params = new URLSearchParams({
+    month: String(month),
+    year: String(year),
+  });
+
+  const response = await fetch(
+    `${process.env.API}api/hotels/rooms/${roomId}/availability?${params.toString()}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch room availability");
   }
 
   return response.json();

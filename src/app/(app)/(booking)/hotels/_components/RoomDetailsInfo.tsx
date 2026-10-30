@@ -102,7 +102,10 @@ export default function RoomDetailsInfo({hotel, room}:IProps) {
       )}
 
       {view === "booking" && (
-        <RoomBooking onBack={() => setView("details")} />
+        <RoomBooking
+          roomId={room.id}
+          onBack={() => setView("details")}
+        />
       )}
 
     </section>

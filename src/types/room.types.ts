@@ -56,3 +56,22 @@ export interface HotelRoomsResponse {
     };
   };
 }
+// booking availability----------------------------------------------
+export interface BookedRange {
+  check_in: string;
+  check_out: string;
+}
+
+export interface RoomAvailability {
+  room_id: number;
+  booked_ranges: BookedRange[];
+  disabled_dates: string[];
+}
+
+export interface RoomAvailabilityResponse {
+  status: string;
+  success: boolean;
+  code: number;
+  message: string;
+  data: RoomAvailability;
+}
