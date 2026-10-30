@@ -1,3 +1,4 @@
+
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -28,12 +29,12 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "thumb.wikimedia.org",
-        pathname: "/wikipedia/commons/**",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "upload.wikimedia.org",
-        pathname: "/wikipedia/commons/**",
+        pathname: "/**",
       },
     ],
   },

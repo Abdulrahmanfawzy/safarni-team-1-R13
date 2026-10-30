@@ -1,39 +1,86 @@
-import Image from "next/image"
-import { PopularCarData } from "../constants/DataCars"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-const PopularCar = () => {
-    return (
-        <div className="mt-6">
-            <h1 className="mb-4 text-[23px] font-medium text-gray-800">Popular Cars</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
-                {PopularCarData.map((item) => {
-                    return (
-                        <div className="w-full flex flex-col  px-4 py-2   gap-4 shadow-2xs" key={item.id}>
-                            <div className="flex flex-row-reverse items-end justify-between">
-                                <Image src={item.image} alt={item.name} width={233} height={187} className="rotate-y-180" />
-                                <h2 className="text-[20px] font-medium pl-3 text-gray-800">{item.name}</h2>
-                            </div>
-                            <div className="flex gap-6 justify-between px-3 ">
-                                <p className="text-[15px] font-normal text-gray-500">{item.type}</p>
-                                <p className="text-[15px] font-normal text-gray-500">{item.seats}</p>
-                                <p className="text-[15px] font-normal text-gray-500">{item.Turn}</p>
-                            </div>
-                            <div className="flex gap-10 w-full "  >
-                                <Link href={"/cars/rent-now"} className="w-[45%]">
-                                    <Button variant={"primary"} size={"lg"} className={"w-full"} >Rent Now </Button>
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import type { CarListItem } from "@/app/(app)/profile/types/cars.types";
+import CarFallbackImage from "@/assets/images/e744f4cf979ec01abb63356b5a84a958a241a35d.png";
 
-                                </Link>
-                                <Link href={"/cars/:id"} className="w-[45%]">
-                                    <Button variant={"default"} className={" w-full bg-transparent border border-primary text-primary hover:bg-gray-200 "} size={"lg"}>Detail </Button>
-                                </Link>
+export default function PopularCar({
+  cars,
+  errorMessage,
+}: {
+  cars: CarListItem[];
+  errorMessage?: string;
+}) {
 
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
+  return (
+    <section className="mt-6">
+      <h1 className="mb-4 text-[23px] font-medium text-gray-800">Popular Cars</h1>
+
+      {errorMessage ? (
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {errorMessage}
+        </p>
+      ) : cars.length === 0 ? (
+        <p className="rounded-lg border border-gray-200 bg-white p-4 text-sm text-gray-600">
+          No cars are available right now.
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+
+          {cars.map((car) => {
+            const image = car.images[0] || car.image || CarFallbackImage;
+            const carName = [car.brand?.name, car.model].filter(Boolean).join(" ");
+
+            return (
+              <article
+                className="flex w-full flex-col gap-4 rounded-md border border-gray-200 px-4 py-3 shadow-2xs"
+                key={car.id}
+              >
+                <div className="flex items-end justify-between gap-3">
+                  <h2 className="pl-3 text-[20px] font-medium text-gray-800">{carName}</h2>
+                  <Image
+                    src={image}
+                    alt={carName || "Rental car"}
+                    width={233}
+                    height={187}
+                    className="rotate-y-180 object-contain"
+                    unoptimized={typeof image === "string"}
+                  />
+                </div>
+
+                <div className="flex justify-between gap-4 px-3 text-[15px] text-gray-500">
+                  <p>{car.body_type}</p>
+                  <p>{car.seats_count} seats</p>
+                  <p>{car.transmission}</p>
+                </div>
+
+                <div className="flex justify-between gap-4 px-3 text-sm text-gray-700">
+                  <p>{car.fuel_type}</p>
+                  <p>{car.hourly_rent} / hour</p>
+                  <p>{car.daily_rent} / day</p>
+                </div>
+
+                <div className="flex w-full gap-4">
+                  <Link href={`/cars/${car.id}`} className="w-1/2">
+                    <Button variant="primary" size="lg" className="w-full">
+                      Rent Now
+                    </Button>
+                  </Link>
+                  <Link href={`/cars/${car.id}}`} className="w-1/2">
+                    <Button
+                      variant="default"
+                      className="w-full border border-primary bg-transparent text-primary hover:bg-gray-200"
+                      size="lg"
+                    >
+                      Details
+                    </Button>
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
-    )
+      )}
+    </section>
+  );
 }
-export default PopularCar

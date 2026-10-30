@@ -21,9 +21,7 @@ import {
 
 import { useFilter } from "@/features/search-filter/hooks/useFilter";
 
-import type {
-  FilteredTour,
-} from "@/features/search-filter/types/filter.types";
+import type { FilteredTour } from "@/features/search-filter/types/filter.types";
 
 type FiltersDialogProps = {
   open: boolean;
@@ -36,25 +34,14 @@ export default function FiltersDialog({
 }: FiltersDialogProps) {
   const [filters, setFilters] = useState<Filters>(INITIAL_FILTERS);
 
-  // Fetch all tours without requiring a destination.
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-  } = useFilter();
+  const { data, isLoading, isError, error } = useFilter();
 
   const tours: FilteredTour[] = data?.data?.tours ?? [];
 
-  // Apply filters and sorting locally.
   const filteredTours = useMemo(() => {
     let result = tours.filter((tour) => {
-      // Published tours only.
-      if (tour.status !== "published") {
-        return false;
-      }
+      if (tour.status !== "published") return false;
 
-      // Price filter.
       const price = Number(tour.base_price);
 
       if (
@@ -65,7 +52,6 @@ export default function FiltersDialog({
         return false;
       }
 
-      // Rating filter.
       if (
         filters.ratings.length > 0 &&
         !filters.ratings.some(
@@ -77,7 +63,6 @@ export default function FiltersDialog({
         return false;
       }
 
-      // Adventure style filter.
       if (
         filters.styles.length > 0 &&
         !filters.styles.some(
@@ -89,7 +74,6 @@ export default function FiltersDialog({
         return false;
       }
 
-      // Location filter.
       if (
         filters.locations.length > 0 &&
         !filters.locations.some(
@@ -104,26 +88,22 @@ export default function FiltersDialog({
       return true;
     });
 
-    // Sorting.
     switch (filters.sort) {
       case "Price (Low to High)":
         result = [...result].sort(
-          (a, b) =>
-            Number(a.base_price) - Number(b.base_price),
+          (a, b) => Number(a.base_price) - Number(b.base_price),
         );
         break;
 
       case "Price (High to Low)":
         result = [...result].sort(
-          (a, b) =>
-            Number(b.base_price) - Number(a.base_price),
+          (a, b) => Number(b.base_price) - Number(a.base_price),
         );
         break;
 
       case "Most Reviewed":
         result = [...result].sort(
-          (a, b) =>
-            b.reviews_count - a.reviews_count,
+          (a, b) => b.reviews_count - a.reviews_count,
         );
         break;
 
@@ -132,15 +112,11 @@ export default function FiltersDialog({
           (a, b) => b.rating - a.rating,
         );
         break;
-
-      default:
-        break;
     }
 
     return result;
   }, [tours, filters]);
 
-  // Reset all filters.
   function clearFilters() {
     setFilters({ ...INITIAL_FILTERS });
   }
@@ -165,7 +141,6 @@ export default function FiltersDialog({
             resultCount={filteredTours.length}
           />
 
-          {/* Clear All */}
           <button
             type="button"
             onClick={clearFilters}
@@ -174,7 +149,6 @@ export default function FiltersDialog({
             Clear All
           </button>
 
-          {/* Loading */}
           {isLoading && (
             <div className="grid gap-6 sm:grid-cols-2">
               {[1, 2, 3, 4].map((item) => (
@@ -186,18 +160,14 @@ export default function FiltersDialog({
             </div>
           )}
 
-          {/* Error */}
           {isError && (
-            <div className="py-8 text-center">
-              <p className="text-sm text-red-500">
-                {error instanceof Error
-                  ? error.message
-                  : "Failed to load tours."}
-              </p>
-            </div>
+            <p className="py-8 text-center text-sm text-red-500">
+              {error instanceof Error
+                ? error.message
+                : "Failed to load tours."}
+            </p>
           )}
 
-          {/* Results */}
           {!isLoading && !isError && (
             <div className="grid gap-6 sm:grid-cols-2">
               {filteredTours.map((tour) => {
@@ -208,19 +178,15 @@ export default function FiltersDialog({
                   tour.destination?.icon_url ??
                   "";
 
-                const tourCardData = {
-                  ...tour,
-                  price: Number(tour.base_price),
-                  duration_text: `${tour.duration_hours} hours`,
-                  image: coverImage,
-                  location: tour.destination.name,
-                  category: tour.adventure_style,
-                };
-
                 return (
                   <TourCard
                     key={tour.id}
-                    tour={tourCardData}
+                    tour={{
+                      ...tour,
+                      price: Number(tour.base_price),
+                      duration_text: `${tour.duration_hours} hours`,
+                      image: coverImage,
+                    }}
                   />
                 );
               })}
