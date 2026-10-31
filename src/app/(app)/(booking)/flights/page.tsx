@@ -1,10 +1,10 @@
 import SearchFlight from "@/features/flights/components/SearchFlight";
-const Fight = () => {
-  return (
-    <div>
+import { Suspense } from "react";
 
+export default function FlightPage() {
+  return (
+    <Suspense fallback={<div>Loading flight search...</div>}>
       <SearchFlight />
-    </div>
+    </Suspense>
   );
-};
-export default Fight;
+}

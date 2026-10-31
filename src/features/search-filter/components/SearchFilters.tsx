@@ -271,7 +271,7 @@ export default function SearchFilters({
             step={PRICE_STEP}
             minStepsBetweenThumbs={1}
             value={budget}
-            onValueChange={(value) => {
+            onValueChange={(value: number[]) => {
               if (value.length === 2) setBudget([value[0], value[1]]);
             }}
             aria-label="Budget range"

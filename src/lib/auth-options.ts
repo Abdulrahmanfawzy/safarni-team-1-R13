@@ -37,14 +37,14 @@ export const authOptions: NextAuthOptions = {
             }),
           }
         );
+        console.log(response);
 
         if (!response.ok) {
-            const error = await response.json();
-          throw new Error(error.message || "حدث خطأ أثناء تسجيل الدخول");
+          return null;
         }
 
         const result = await response.json();
-
+console.log(  "result" ,  result)
         if (!result.success || !result.data?.token) {
           return null;
         }
@@ -85,5 +85,5 @@ export const authOptions: NextAuthOptions = {
   },
 
 
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
 };

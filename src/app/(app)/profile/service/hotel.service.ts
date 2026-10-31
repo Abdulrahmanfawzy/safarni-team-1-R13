@@ -1,5 +1,6 @@
-
 import type { Hotel, Room } from "../types/hotel.types";
+
+import { getAccessToken } from "@/lib/auth";
 
 interface HotelRoomsData {
   hotel: Hotel;
@@ -13,14 +14,14 @@ interface HotelResponse {
 }
 
 export async function getHotels(): Promise<HotelRoomsData> {
-  const baseUrl = process.env.API_BASE_URL;
-  const token = process.env.TOKEN;
+  const baseUrl = process.env.API;
+  const token = await getAccessToken();
 
   if (!baseUrl) {
     throw new Error("API_BASE_URL is missing from .env.local");
   }
 
-  const response = await fetch(`${baseUrl}/hotels/3/rooms`, {
+  const response = await fetch(`${baseUrl}api/hotels/3/rooms`, {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
