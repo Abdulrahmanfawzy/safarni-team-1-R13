@@ -99,10 +99,10 @@ export default function CarRentalCard({ car }: { car: carDetails }) {
           <MoveLeft className="size-5" aria-hidden="true" />
         </button>
 
-        <section className="absolute bottom-5 left-1/2 z-[1001] w-[calc(100%-2rem)] max-w-[650px] -translate-x-1/2 rounded-2xl bg-white p-4 shadow-xl sm:p-5" aria-label="Car pickup details">
-          <div className="relative flex min-h-14 items-start justify-between pr-28">
+        <section className="absolute bottom-3 left-1/2 z-[1001] max-h-[62vh] w-[calc(100%-1.5rem)] max-w-[650px] -translate-x-1/2 overflow-y-auto rounded-2xl bg-white p-3 shadow-xl sm:bottom-5 sm:max-h-[70vh] sm:p-5" aria-label="Car pickup details">
+          <div className="relative flex min-h-14 items-start justify-between pr-20 sm:pr-28">
             <div>
-              <h2 className="text-lg font-semibold text-slate-900">
+              <h2 className="break-words text-base font-semibold text-slate-900 sm:text-lg">
                 {car.brand?.name ?? "Car"} {car.model}
               </h2>
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
@@ -118,7 +118,7 @@ export default function CarRentalCard({ car }: { car: carDetails }) {
                 width={155}
                 height={90}
                 unoptimized
-                className="absolute -right-1 -top-5 h-[88px] w-[150px] object-contain"
+                className="absolute -right-1 -top-2 h-16 w-[92px] object-contain sm:-top-5 sm:h-[88px] sm:w-[150px]"
               />
             ) : (
               <Car className="absolute right-5 top-1 size-14 text-slate-400" aria-hidden="true" />
@@ -153,7 +153,7 @@ export default function CarRentalCard({ car }: { car: carDetails }) {
 
   return (
     <>
-    <div className="mx-auto flex w-full max-w-xl flex-col gap-6 rounded-3xl border bg-white p-6">
+    <div className="mx-auto flex w-full min-w-0 max-w-none flex-col gap-5 rounded-2xl border bg-white p-4 sm:gap-6 sm:rounded-3xl sm:p-6">
       <header className="flex items-center gap-3">
         <div className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
           {car.brand?.logo_url ? (
@@ -170,7 +170,7 @@ export default function CarRentalCard({ car }: { car: carDetails }) {
 
       <section className="flex flex-col gap-3">
         <h2 className="text-sm font-semibold text-slate-900">Car details</h2>
-        <div className="grid grid-cols-3 gap-2">{specs.map((spec) => <SpecItem key={spec.label} {...spec} />)}</div>
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">{specs.map((spec) => <SpecItem key={spec.label} {...spec} />)}</div>
       </section>
 
       <section className="flex flex-col gap-3">

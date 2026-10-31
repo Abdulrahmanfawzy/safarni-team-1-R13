@@ -11,14 +11,17 @@ import { ChevronLeft, Search } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { useSearchTours } from "@/features/search-filter/hooks/useSearchTours";
 
 type SearchBarProps = {
   showBackButton?: boolean;
+  className?: string;
 };
 
 export default function SearchBar({
   showBackButton = true,
+  className,
 }: SearchBarProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -82,11 +85,11 @@ export default function SearchBar({
   }
 
   return (
-    <div className="w-full space-y-4">
+    <div className={cn("w-full min-w-0 space-y-3 sm:space-y-4", className)}>
       <form
         role="search"
         onSubmit={(event) => event.preventDefault()}
-        className="flex w-full items-center gap-3"
+        className="flex w-full min-w-0 items-center gap-2 sm:gap-3"
       >
         {showBackButton && (
           <Button
@@ -104,7 +107,7 @@ export default function SearchBar({
           </Button>
         )}
 
-        <div className="relative flex-1">
+        <div className="relative min-w-0 flex-1">
           <Search
             className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-blue-500"
             aria-hidden="true"
@@ -117,7 +120,7 @@ export default function SearchBar({
             onChange={(event) => setValue(event.target.value)}
             placeholder="Search destinations..."
             aria-label="Search destinations"
-            className="h-10 rounded-full border-blue-200 pl-10 focus-visible:border-blue-400 focus-visible:ring-blue-200"
+            className="h-11 w-full min-w-0 rounded-full border-blue-200 pl-10 pr-3 text-sm focus-visible:border-blue-400 focus-visible:ring-blue-200 sm:h-10 sm:pl-11"
           />
         </div>
       </form>

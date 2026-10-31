@@ -11,7 +11,6 @@ export default function PaymentResult({ status }: PaymentResultProps) {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Navbar />
       <main className="mx-auto flex min-h-[calc(100vh-72px)] max-w-3xl items-center justify-center px-4 py-12">
         <section className="w-full rounded-3xl border border-slate-100 bg-white px-6 py-12 text-center shadow-sm sm:px-12">
           {isSuccess ? (

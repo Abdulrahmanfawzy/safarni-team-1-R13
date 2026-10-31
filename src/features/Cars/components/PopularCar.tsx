@@ -13,8 +13,8 @@ export default function PopularCar({
 }) {
 
   return (
-    <section className="mt-6">
-      <h1 className="mb-4 text-[23px] font-medium text-gray-800">Popular Cars</h1>
+    <section className="mt-7 sm:mt-10">
+      <h2 className="mb-4 text-xl font-medium text-gray-800 sm:text-[23px]">Popular Cars</h2>
 
       {errorMessage ? (
         <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
@@ -25,7 +25,7 @@ export default function PopularCar({
           No cars are available right now.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
 
           {cars.map((car) => {
             const image = car.images[0] || car.image || CarFallbackImage;
@@ -33,40 +33,40 @@ export default function PopularCar({
 
             return (
               <article
-                className="flex w-full flex-col gap-4 rounded-md border border-gray-200 px-4 py-3 shadow-2xs"
+                className="flex min-w-0 w-full flex-col gap-3 overflow-hidden rounded-xl border border-gray-200 p-3 shadow-2xs sm:gap-4 sm:p-4"
                 key={car.id}
               >
-                <div className="flex items-end justify-between gap-3">
-                  <h2 className="pl-3 text-[20px] font-medium text-gray-800">{carName}</h2>
+                <div className="flex min-h-28 items-center justify-between gap-2 sm:min-h-36">
+                  <h3 className="min-w-0 flex-1 break-words text-lg font-medium text-gray-800 sm:pl-2 sm:text-xl">{carName}</h3>
                   <Image
                     src={image}
                     alt={carName || "Rental car"}
                     width={233}
                     height={187}
-                    className="rotate-y-180 object-contain"
+                    className="h-28 w-[46%] max-w-[233px] rotate-y-180 object-contain sm:h-36"
                     unoptimized={typeof image === "string"}
                   />
                 </div>
 
-                <div className="flex justify-between gap-4 px-3 text-[15px] text-gray-500">
-                  <p>{car.body_type}</p>
+                <div className="grid grid-cols-3 gap-2 px-1 text-center text-xs text-gray-500 sm:px-3 sm:text-sm">
+                  <p className="break-words">{car.body_type}</p>
                   <p>{car.seats_count} seats</p>
-                  <p>{car.transmission}</p>
+                  <p className="break-words">{car.transmission}</p>
                 </div>
 
-                <div className="flex justify-between gap-4 px-3 text-sm text-gray-700">
-                  <p>{car.fuel_type}</p>
+                <div className="grid grid-cols-3 gap-2 px-1 text-center text-xs text-gray-700 sm:px-3 sm:text-sm">
+                  <p className="break-words">{car.fuel_type}</p>
                   <p>{car.hourly_rent} / hour</p>
                   <p>{car.daily_rent} / day</p>
                 </div>
 
-                <div className="flex w-full gap-4">
-                  <Link href={`/cars/${car.id}`} className="w-1/2">
+                <div className="grid w-full grid-cols-2 gap-2 sm:gap-4">
+                  <Link href={`/cars/${car.id}`} className="min-w-0">
                     <Button variant="primary" size="lg" className="w-full">
                       Rent Now
                     </Button>
                   </Link>
-                  <Link href={`/cars/${car.id}}`} className="w-1/2">
+                  <Link href={`/cars/${car.id}`} className="min-w-0">
                     <Button
                       variant="default"
                       className="w-full border border-primary bg-transparent text-primary hover:bg-gray-200"

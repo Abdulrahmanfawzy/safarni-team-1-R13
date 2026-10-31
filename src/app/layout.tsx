@@ -1,8 +1,31 @@
 import { AppProviders } from "@/components/providers/app-providers";
 import { Poppins, Cairo } from "next/font/google";
+import type { Metadata } from "next";
 import "./globals.css";
 
 export const instant = false;
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://safarni-team-1-r13-hg3b-tau.vercel.app"),
+  title: {
+    default: "Safarni | Travel your way",
+    template: "%s | Safarni",
+  },
+  description: "Discover tours, flights, hotels, and car rentals with Safarni.",
+  applicationName: "Safarni",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Safarni",
+    title: "Safarni | Travel your way",
+    description: "Discover tours, flights, hotels, and car rentals with Safarni.",
+    url: "https://safarni-team-1-r13-hg3b-tau.vercel.app",
+    images: ["/icon.svg"],
+  },
+};
 
 const poppins = Poppins({
   subsets: ["latin"],

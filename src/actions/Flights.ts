@@ -66,7 +66,7 @@ export const SearchFlightsAction = async (data: SearchFlightsData) => {
         if (tripType === "one-way" || tripType === "one_way" || tripType === "oneway") {
             apiType = "one_way";
         } else if (tripType === "multi" || tripType === "multi_city") {
-            apiType = "multi";
+            apiType = "multi_city";
         }
 
         const payload: Record<string, string> = {
@@ -103,13 +103,24 @@ export const SearchFlightsAction = async (data: SearchFlightsData) => {
         }
 
         if (!response.ok) {
-            const responseDetails = await response.text().catch(() => "");
+            const responseDetails = await response.json().catch(async () => {
+                const text = await response.text().catch(() => "");
+                return text ? { message: text } : null;
+            });
             console.error(
                 `Flights API error: ${response.status} ${response.statusText}`,
                 responseDetails,
             );
+            const apiMessage =
+                typeof responseDetails?.message === "string"
+                    ? responseDetails.message
+                    : responseDetails?.errors && typeof responseDetails.errors === "object"
+                      ? Object.values(responseDetails.errors).flat().filter(Boolean).join(" ")
+                      : "";
             return {
-                error: `Flight search failed (${response.status} ${response.statusText}).`,
+                error: apiMessage
+                    ? `Flight search failed: ${apiMessage}`
+                    : `Flight search failed (${response.status} ${response.statusText}).`,
             };
         }
 

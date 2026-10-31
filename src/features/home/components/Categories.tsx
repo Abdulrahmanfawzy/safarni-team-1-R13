@@ -89,15 +89,17 @@ export default function Categories() {
             "
           >
             {categories.map((category) => (
-              <Link
-                href={
-                  category.slug === "hotel"
-                    ? `/${category.slug}s`
-                    : `/${category.slug}`
-                }
-                key={category.id}
-                className="group flex w-full flex-col items-center gap-6"
-              >
+                <Link
+                  href={
+                    category.slug === "hotel"
+                      ? `/${category.slug}s`
+                    : category.slug === "flight"
+                      ? "/flights"
+                    :category.slug==="tours" ? "/internaltour":`${category.slug}`
+                  }
+                  key={category.id}
+                  className="group flex w-full flex-col items-center gap-6"
+                >
                 <div
                   className="
                     size-56 overflow-hidden rounded-full shadow-sm

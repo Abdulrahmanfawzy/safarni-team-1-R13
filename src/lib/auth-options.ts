@@ -85,5 +85,5 @@ console.log(  "result" ,  result)
   },
 
 
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
 };
