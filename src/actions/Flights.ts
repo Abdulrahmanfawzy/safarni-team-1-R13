@@ -1,7 +1,6 @@
 "use server";
 
 import { getAccessToken } from "@/lib/auth";
-import { headers } from "next/headers";
 
 type SearchFlightsData = {
     type?: string;
@@ -67,7 +66,7 @@ export const SearchFlightsAction = async (data: SearchFlightsData) => {
         if (tripType === "one-way" || tripType === "one_way" || tripType === "oneway") {
             apiType = "one_way";
         } else if (tripType === "multi" || tripType === "multi_city") {
-            apiType = "multi";
+            apiType = "multi_city";
         }
 
         const payload: Record<string, string> = {
@@ -104,13 +103,24 @@ export const SearchFlightsAction = async (data: SearchFlightsData) => {
         }
 
         if (!response.ok) {
-            const responseDetails = await response.text().catch(() => "");
+            const responseDetails = await response.json().catch(async () => {
+                const text = await response.text().catch(() => "");
+                return text ? { message: text } : null;
+            });
             console.error(
                 `Flights API error: ${response.status} ${response.statusText}`,
                 responseDetails,
             );
+            const apiMessage =
+                typeof responseDetails?.message === "string"
+                    ? responseDetails.message
+                    : responseDetails?.errors && typeof responseDetails.errors === "object"
+                      ? Object.values(responseDetails.errors).flat().filter(Boolean).join(" ")
+                      : "";
             return {
-                error: `Flight search failed (${response.status} ${response.statusText}).`,
+                error: apiMessage
+                    ? `Flight search failed: ${apiMessage}`
+                    : `Flight search failed (${response.status} ${response.statusText}).`,
             };
         }
 
@@ -196,20 +206,9 @@ export const FlightPayment = async (id: string | number) => {
             return { error: "You must be logged in to start payment." };
         }
 
-        const requestHeaders = await headers();
-        const forwardedHost = requestHeaders.get("x-forwarded-host");
-        const host = forwardedHost || requestHeaders.get("host");
-        const protocol = requestHeaders.get("x-forwarded-proto") || "https";
-        const origin = process.env.NEXTAUTH_URL || (host ? `${protocol}://${host}` : "");
-        if (!origin) {
-            return { error: "Could not determine the return address for flight checkout." };
-        }
         const bookingId = encodeURIComponent(String(id));
-        const successUrl = new URL(
-            `/profile/booking/flight/${bookingId}`,
-            origin,
-        ).toString();
-        const cancelUrl = new URL("/profile/booking?payment=cancelled", origin).toString();
+        const successUrl = "https://safarni-team-1-r13-hg3b-tau.vercel.app/payment-success";
+        const cancelUrl = "https://safarni-team-1-r13-hg3b-tau.vercel.app/failed-success";
 
         const requestOptions: RequestInit = {
             method: "POST",

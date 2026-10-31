@@ -26,7 +26,7 @@ export async function getAvatar(): Promise<Iavatar> {
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to load profile: ${response.status}`);
+    throw new Error(`Failed to load profile: ${response?.status}`);
   }
 
   const result = (await response.json()) as ProfileResponse;

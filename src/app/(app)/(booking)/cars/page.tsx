@@ -18,9 +18,9 @@ async function CarsContent() {
         errorMessage = error instanceof Error ? error.message : "Unable to load cars.";
     }
     return (
-        <div className="mx-auto w-full">
-            <main className="container mx-auto mt-5 max-w-7xl">
-                <SearchBar />
+        <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+            <main className="container mx-auto mt-4 max-w-7xl sm:mt-6">
+                <SearchBar showBackButton={false} className="mx-auto max-w-4xl" />
                 <Brands brands={brands} />
                 <PopularCar cars={cars} errorMessage={errorMessage} />
             </main>

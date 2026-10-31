@@ -104,7 +104,7 @@ export default function CarCheckoutSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="sm:max-w-xl">
+      <SheetContent side="right" className="w-full max-w-full overflow-y-auto p-4 sm:max-w-xl sm:p-6">
         <SheetHeader>
           <SheetTitle>Confirm your car rental</SheetTitle>
           <SheetDescription>

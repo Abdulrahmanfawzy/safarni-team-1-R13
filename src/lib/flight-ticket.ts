@@ -16,8 +16,8 @@ export type FlightTicketData = {
 };
 
 function getSigningSecret() {
-  const secret = process.env.NEXTAUTH_SECRET;
-  if (!secret) throw new Error("NEXTAUTH_SECRET is required to create flight ticket links.");
+  const secret = process.env.AUTH_SECRET;
+  if (!secret) throw new Error("AUTH_SECRET is required to create flight ticket links.");
   return secret;
 }
 
