@@ -18,7 +18,7 @@ export default function Info_profile() {
             <HiOutlineUser className="size-5 shrink-0" aria-hidden="true" />
           }
           title="Personal Info"
-          href="profile/personalInfo"
+          href="/profile/personalInfo"
         />
 
         <CardProfile

@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { connection } from "next/server";
 import ToursCardsInternal from "@/features/InternalTours/components/ToursCardsInternal";
 import SearchBar from "@/features/search-filter/components/SearchBar";
 import { InternalTour } from "@/actions/internalTour";
@@ -14,6 +15,7 @@ type InternalTourSummary = {
 };
 
 async function ToursList() {
+  await connection();
   const result = (await InternalTour()) as {
     data?: { items?: InternalTourSummary[] };
     error?: string;
