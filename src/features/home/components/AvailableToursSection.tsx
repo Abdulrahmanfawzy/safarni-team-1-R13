@@ -1,9 +1,31 @@
+
 "use client";
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { homeApi } from "@/api/home.api";
 import TourCard from "@/components/ui/tourCard";
+
+function TourCardSkeleton() {
+  return (
+    <div
+      className="animate-pulse overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-sm"
+      aria-hidden="true"
+    >
+      <div className="h-48 w-full rounded-xl bg-slate-200" />
+
+      <div className="space-y-3 p-2 pt-4">
+        <div className="h-5 w-3/4 rounded-md bg-slate-200" />
+        <div className="h-4 w-1/2 rounded-md bg-slate-200" />
+
+        <div className="flex items-center justify-between pt-2">
+          <div className="h-5 w-20 rounded-md bg-slate-200" />
+          <div className="h-9 w-24 rounded-lg bg-slate-200" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AvailableToursSection() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -13,11 +35,8 @@ export default function AvailableToursSection() {
     queryFn: homeApi.getTours,
   });
 
-  const tours = Array.isArray(data)
-    ? data
-    : data && Array.isArray(data.items)
-      ? data.items
-      : [];
+  // homeApi.getTours returns the tours array directly.
+  const tours = Array.isArray(data) ? data : [];
 
   const visibleTours = isExpanded ? tours : tours.slice(0, 4);
 
@@ -41,14 +60,23 @@ export default function AvailableToursSection() {
       </div>
 
       {isPending && (
-        <p className="py-8 text-center text-slate-500" role="status">
-          Loading tours...
-        </p>
+        <div
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-5"
+          role="status"
+          aria-label="Loading tours"
+        >
+          {Array.from({ length: 4 }).map((_, index) => (
+            <TourCardSkeleton key={index} />
+          ))}
+          <span className="sr-only">Loading tours...</span>
+        </div>
       )}
 
       {isError && (
         <p className="py-8 text-center text-red-600" role="alert">
-          {error instanceof Error ? error.message : "Failed to load tours."}
+          {error instanceof Error
+            ? error.message
+            : "Failed to load tours."}
         </p>
       )}
 
@@ -63,7 +91,10 @@ export default function AvailableToursSection() {
           {visibleTours.map((tour) => (
             <TourCard
               key={tour.id}
-              tour={{ ...tour, price: Number(tour.price) }}
+              tour={{
+                ...tour,
+                price: Number(tour.price),
+              }}
             />
           ))}
         </div>

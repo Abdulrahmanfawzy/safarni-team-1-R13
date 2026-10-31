@@ -15,7 +15,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await fetch(`${baseUrl}/favorites/toggle`, {
+    const response = await fetch(`${baseUrl}favorites/toggle`, {
       method: "POST",
       headers: {
         Accept: "application/json",
