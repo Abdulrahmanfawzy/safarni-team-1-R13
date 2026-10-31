@@ -37,13 +37,14 @@ export const authOptions: NextAuthOptions = {
             }),
           }
         );
+        console.log(response);
 
         if (!response.ok) {
           return null;
         }
 
         const result = await response.json();
-
+console.log(  "result" ,  result)
         if (!result.success || !result.data?.token) {
           return null;
         }

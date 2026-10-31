@@ -1,12 +1,18 @@
-import { QueryProvider } from "@/components/providers/query-provider";
-import { Poppins } from "next/font/google";
+import { AppProviders } from "@/components/providers/app-providers";
+import { Poppins, Cairo } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner";
-import Navbar from "@/components/ui/Navbar";
+
+export const instant = false;
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-cairo",
 });
 
 export default function RootLayout({
@@ -15,13 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.className} h-full antialiased`}>
+    <html lang="en" className={`${poppins.className} ${cairo.variable} h-full antialiased`}>
       <body className="min-h-full app-container">
-        <QueryProvider>
-          <Navbar/>
-            {children}
-            <Toaster  position="top-right" richColors/>
-            </QueryProvider>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

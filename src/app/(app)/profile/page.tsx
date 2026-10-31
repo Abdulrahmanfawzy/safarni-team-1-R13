@@ -1,8 +1,11 @@
+
+
 import Infouser from "./_components/infouser/page";
 import Info_profile from "./_components/Info_profile/page";
 import { Suspense } from "react";
 
-export default function FirstprofileImage() {
+export default async function FirstprofileImage() {
+ 
   return (
     <div>
       <div className="py-20 ml-16">

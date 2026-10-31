@@ -1,18 +1,19 @@
 
+
+
+
 "use client";
 
 import { useState } from "react";
 import { signOut } from "next-auth/react";
-
+  import { IoMdArrowDropright } from "react-icons/io";
 
 type SecurityActionCardProps = {
   title: string;
   description: string;
   variant?: "default" | "danger";
-  action?: "deactivate";
+  action?: "deactivate" | "delete";
 };
-
-
 
 export default function SecurityActionCard({
   title,
@@ -25,46 +26,68 @@ export default function SecurityActionCard({
   const [error, setError] = useState("");
 
   async function handleClick() {
-    if (action !== "deactivate" || isPending) return;
+    if (!action || isPending) return;
 
-    if (!window.confirm("Are you sure you want to temporarily deactivate your account?")) {
-      return;
-    }
+    const isDelete = action === "delete";
+    const confirmed = window.confirm(
+      isDelete
+        ? "Are you sure you want to permanently delete your account? This cannot be undone."
+        : "Are you sure you want to temporarily deactivate your account?",
+    );
+
+    if (!confirmed) return;
 
     setIsPending(true);
     setError("");
 
+
+
     try {
-      const response = await fetch("/api/profile/deactivate", {
-        method: "POST",
-      });
-      const result = await response.json();
+      const response = await fetch(
+        isDelete ? "/api/profile/delete-account" : "/api/profile/deactivate",
+        { method: isDelete ? "DELETE" : "POST" },
+      );
+
+      const responseText = await response.text();
+      const result = responseText ? JSON.parse(responseText) : {};
 
       if (!response.ok || result.success === false) {
-        throw new Error(result.message || "Could not deactivate the account.");
+        throw new Error(
+          result.message ||
+            (isDelete
+              ? "Could not delete the account."
+              : "Could not deactivate the account."),
+        );
       }
 
-      window.alert(result.message || "Your account has been deactivated.");
+      window.alert(
+        result.message ||
+          (isDelete
+            ? "Your account has been deleted."
+            : "Your account has been deactivated."),
+      );
+
       await signOut({ callbackUrl: "/login" });
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Could not deactivate the account.",
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
       );
     } finally {
       setIsPending(false);
     }
   }
 
- 
+  const pendingText =
+    action === "delete" ? "Deleting account..." : "Deactivating account...";
 
   return (
-
-
     <button
       type="button"
-       disabled={isPending}
-        onClick={handleClick}
-      className="flex w-full items-center justify-between rounded-xl bg-white px-3 py-3 text-left shadow-sm ring-1 ring-slate-100 transition hover:shadow-md"
+      disabled={!action || isPending}
+      onClick={handleClick}
+      className="flex w-full items-center justify-between rounded-xl bg-white px-3 py-3 text-left shadow-sm ring-1 ring-slate-100 transition hover:shadow-md disabled:cursor-wait disabled:opacity-70"
     >
       <span>
         <span
@@ -75,42 +98,22 @@ export default function SecurityActionCard({
           {title}
         </span>
 
-      
-<span className="mt-1 block text-xs text-slate-500">
-  {isPending ? "Deactivating account..." : description}
-</span>
+        <span className="mt-1 block text-xs text-slate-500">
+          {isPending ? pendingText : description}
+        </span>
 
-{error && (
-  <span role="alert" className="mt-2 block text-xs text-red-600">
-    {error}
-  </span>
-)}
-
-
+        {error && (
+          <span role="alert" className="mt-2 block text-xs text-red-600">
+            {error}
+          </span>
+        )}
       </span>
 
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        fill="none"
-        className="ml-4 size-4 shrink-0 text-slate-500"
-      >
-        <path
-          d="m9 18 6-6-6-6"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.5"
-        />
-      </svg>
   
+  
+ <IoMdArrowDropright />
+    
+    
     </button>
   );
 }
-
-
-
-
-
-
-

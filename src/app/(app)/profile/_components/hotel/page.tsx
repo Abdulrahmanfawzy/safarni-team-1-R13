@@ -65,7 +65,7 @@ export default async function Hotel() {
         </div>
       </div>
 
-      <div className="mt-4 space-y-3 border-t pt-4">
+      {/* <div className="mt-4 space-y-3 border-t pt-4">
         {rooms.map((room: Room) => (
           <div
             key={room.id}
@@ -93,7 +93,7 @@ export default async function Hotel() {
             </p>
           </div>
         ))}
-      </div>
+      </div> */}
     </article>
   );
 }
