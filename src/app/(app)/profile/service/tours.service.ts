@@ -1,6 +1,6 @@
 
 
-import type { Hotel, Room } from "../types/hotel.types";
+import { getAccessToken } from "@/lib/auth";
 import { Itours } from "../types/tours.types";
 
 interface ToursData {
@@ -8,21 +8,33 @@ interface ToursData {
  
 }
 
+
+
 interface ToursResponse {
-  code: number;
+  success: boolean;
   message: string;
-  data: ToursData;
+  errors: unknown[];
+  data: Itours[];
 }
 
-export async function getTours(): Promise<ToursData> {
-  const baseUrl = process.env.API_BASE_URL;
-  const token = process.env.TOKEN;
+
+export async function getTours(): Promise<Itours[]> {
+  const baseUrl = process.env.API;
+ const token =await getAccessToken();
+// const token = process.env.TOKEN
 
   if (!baseUrl) {
     throw new Error("API_BASE_URL is missing from .env.local");
   }
 
-  const response = await fetch(`${baseUrl}/tours?per_page=10`, {
+  // const response = await fetch(`${baseUrl}api/tours?per_page=1`
+  const response = await fetch(`
+${baseUrl}api/tours?min_budget=50&max_budget=500&tour_type=cultural&location=Egypt&rate=4&per_page=10&page=1
+    `
+   
+    
+    
+    , {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
@@ -34,6 +46,6 @@ export async function getTours(): Promise<ToursData> {
     throw new Error(`Failed to load hotel rooms: ${response.status}`);
   }
 
-  const result = (await response.json()) as ToursResponse;
+const result = (await response.json()) as ToursResponse;
   return result.data;
 }

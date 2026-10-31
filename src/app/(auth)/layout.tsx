@@ -17,3 +17,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <div className={`${poppins.variable} h-full antialiased`}>{children}</div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

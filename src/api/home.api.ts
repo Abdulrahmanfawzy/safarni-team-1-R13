@@ -6,20 +6,12 @@ export const homeApi = {
     const response = await apiClient.get<unknown>("/tours");
 
     const result = response.data as {
-      success?: unknown;
-      message?: unknown;
-      data?: { items?: unknown };
+      data?: unknown;
+      links?: unknown;
+      meta?: unknown;
     };
 
-    if (result.success !== true) {
-      throw new Error(
-        typeof result.message === "string"
-          ? result.message
-          : "Failed to retrieve tours."
-      );
-    }
-
-    if (!Array.isArray(result.data?.items)) {
+    if (!Array.isArray(result.data)) {
       throw new Error("Invalid tours response.");
     }
 
@@ -28,14 +20,13 @@ export const homeApi = {
 
   async getHomeFeed() {
     const response = await apiClient.get<unknown>("/home");
-    const result =  homeFeedResponseSchema.parse(response.data);
-    
+    const result = homeFeedResponseSchema.parse(response.data);
 
     if (!result.success) {
-      throw new Error(
-        result.message || "Failed to retrieve tours."
-      );
+      throw new Error(result.message || "Failed to retrieve tours.");
     }
+    console.log(response);
+
     return result.data;
   },
 };
