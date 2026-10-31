@@ -3,7 +3,7 @@
 
 
 import { useState } from "react";
-import SwitchIcon from "../../shared/switchIcon/page";
+import SwitchIcon from "../../shared/SwitchIcon/page";
 
 type SecurityToggleRowProps = {
   label: string;

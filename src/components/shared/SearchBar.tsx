@@ -5,7 +5,7 @@ import { Input } from "../ui/input"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useGetHotelsByParams } from "@/hooks/hotels/useGetHotelsBySearchParam";
+
 
 interface IProps {
 pathname:string;

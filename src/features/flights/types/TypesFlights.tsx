@@ -13,6 +13,7 @@ export interface Passenger {
 
 export type Flight = {
   id: string;
+  planeId?: string;
   departTime: string;
   arriveTime: string;
   from: string;
@@ -39,7 +40,9 @@ export type PropsDepartureDate = {
   departureDate?: Date | string | undefined;
   returnDate?: Date | string | undefined;
   onSelect?: (flight: Flight, leg: "departure" | "return") => void;
+  selectedDepartureFlightId?: string | null;
+  selectedReturnFlightId?: string | null;
   selectedDepartureFlight?: Flight | null;
   selectedReturnFlight?: Flight | null;
-  passengerCount?: string | number;
+  apiFlights?: any;
 };

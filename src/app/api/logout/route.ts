@@ -1,10 +1,11 @@
 
 
+import { getAccessToken } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 export async function POST() {
-  const baseUrl = process.env.API_BASE_URL;
-  const token = process.env.TOKEN;
+  const baseUrl = process.env.API;
+  const token = await getAccessToken();
 
   if (!baseUrl) {
     return NextResponse.json(
@@ -21,7 +22,7 @@ export async function POST() {
   }
 
   const response = await fetch(
-    `${baseUrl}/profile/logout`,
+    `${baseUrl}api/profile/logout`,
     {
       method: "POST",
       headers: {
