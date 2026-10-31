@@ -1,7 +1,6 @@
 "use server";
 
 import { getAccessToken } from "@/lib/auth";
-import { headers } from "next/headers";
 
 type SearchFlightsData = {
     type?: string;
@@ -196,20 +195,9 @@ export const FlightPayment = async (id: string | number) => {
             return { error: "You must be logged in to start payment." };
         }
 
-        const requestHeaders = await headers();
-        const forwardedHost = requestHeaders.get("x-forwarded-host");
-        const host = forwardedHost || requestHeaders.get("host");
-        const protocol = requestHeaders.get("x-forwarded-proto") || "https";
-        const origin = process.env.NEXTAUTH_URL || (host ? `${protocol}://${host}` : "");
-        if (!origin) {
-            return { error: "Could not determine the return address for flight checkout." };
-        }
         const bookingId = encodeURIComponent(String(id));
-        const successUrl = new URL(
-            `/profile/booking/flight/${bookingId}`,
-            origin,
-        ).toString();
-        const cancelUrl = new URL("/profile/booking?payment=cancelled", origin).toString();
+        const successUrl = "https://safarni-team-1-r13-hg3b-tau.vercel.app/payment-success";
+        const cancelUrl = "https://safarni-team-1-r13-hg3b-tau.vercel.app/failed-success";
 
         const requestOptions: RequestInit = {
             method: "POST",
