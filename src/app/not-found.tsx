@@ -5,7 +5,6 @@ import Navbar from "@/components/ui/Navbar";
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
-      <Navbar />
       <main className="flex flex-1 items-center justify-center px-4 py-12 sm:px-6">
         <section className="w-full max-w-xl rounded-3xl border border-slate-100 bg-white px-6 py-10 text-center shadow-sm sm:px-12 sm:py-14">
           <div className="relative mx-auto flex size-24 items-center justify-center rounded-full bg-blue-50 text-[#1E429F]">
