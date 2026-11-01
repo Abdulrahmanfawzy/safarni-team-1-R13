@@ -37,7 +37,7 @@ export default function Info_profile() {
             <HiOutlineGlobeAlt className="size-5 shrink-0" aria-hidden="true" />
           }
           title="App Language"
-          href="/profile/myAppLang"
+          href="/profile/appLang"
         />
 
         <CardProfile
