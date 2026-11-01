@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node init && next dev",
+    
+    "dev": "next dev",
     "build": "node init && next build",
     "start": "node init && next start",
     "lint": "eslint"
