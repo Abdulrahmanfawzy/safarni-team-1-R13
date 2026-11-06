@@ -32,16 +32,42 @@ export default function AccountSecurity() {
           <SecurityActionCard
             title="Deactivate Account"
             description="Temporarily deactivate your account. Easily reactivate when you're ready."
+              action="deactivate"
           />
-          <SecurityActionCard
-            title="Delete Account"
-            description="Permanently remove your account and data from Tripmate. Proceed with caution."
-            variant="danger"
-          />
+         
+<SecurityActionCard
+  title="Delete Account"
+  description="Permanently remove your account and data from Tripmate. Proceed with caution."
+  variant="danger"
+  action="delete"
+/>
+
+         
         </div>
       </section>
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

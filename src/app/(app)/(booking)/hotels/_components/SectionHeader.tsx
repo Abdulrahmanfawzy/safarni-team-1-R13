@@ -2,7 +2,7 @@ import Link from "next/link";
 
 interface SectionHeaderProps {
   title: string;
-  viewAllHref: string;
+  viewAllHref?: string;
 }
 
 export default function SectionHeader({
@@ -10,17 +10,17 @@ export default function SectionHeader({
   viewAllHref,
 }: SectionHeaderProps) {
   return (
-    <div className="mt-4 mx-5 flex items-center justify-between">
+    <div className="app-container mt-4 flex items-center justify-between">
       <h2 className="text-xl font-medium text-slate-900 leading-[100%] capitalize">
         {title}
       </h2>
-
-      <Link
+  
+      {viewAllHref && <Link
         href={viewAllHref}
         className="text-lg font-medium text-[#1E429F] hover:text-blue-900"
       >
         View all
-      </Link>
+      </Link>}
     </div>
   );
 }

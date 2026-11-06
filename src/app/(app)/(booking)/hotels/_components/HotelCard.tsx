@@ -1,4 +1,4 @@
-import type { HotelDummy } from "@/types/hotel.types";
+import type { Hotel } from "@/types/hotel.types";
 import Image from "next/image";
 import DiscountBadge from "./DiscountBadge";
 import HotelRating from "./HotelRating";
@@ -7,13 +7,13 @@ import { cn } from "cn";
 import Link from "next/link";
 
 interface IProps {
-  hotel: HotelDummy;
+  hotel: Hotel;
   variant?: "default" | "horizontal";
 }
 const HotelCard = ({ hotel, variant = 'default' }: IProps) => {
   const isHorizontal = variant === "horizontal";
   return (
-    <Link  href={`/hotel/${hotel.id}`} className="block min-w-0">
+    <Link  href={`/hotels/${hotel.id}`} className="block min-w-0">
       <article className={cn("min-w-0 w-full overflow-hidden rounded-2xl bg-primary-foreground p-3 ",
         isHorizontal
           ? "flex items-center gap-3  shadow-[0px_3.39px_13.58px_0px_#838BB41F]"
@@ -27,19 +27,19 @@ const HotelCard = ({ hotel, variant = 'default' }: IProps) => {
             : "mx-1 aspect-4/3",
         )}>
           <Image
-            src={hotel.image}
+            src={hotel.cover_photo}
             alt={hotel.name}
 
             fill
             sizes={isHorizontal ? "124px sm:150px" : "(max-width: 640px) 90vw, 25vw"}
-            className="object-cover"
+            className="object-cover transition-transform duration-300 hover:scale-105"
           />
         </div>
 
         <div className="min-w-0 flex-1">
           <div className={cn("flex items-center justify-between gap-2", isHorizontal ? "mt-0" : "mt-3 ")}>
-            <DiscountBadge discount={hotel.discount} />
-            <HotelRating rating={hotel.rating} />
+            <DiscountBadge discount={hotel.discount_rate} />
+            <HotelRating rating={hotel.stars_count} />
           </div>
 
           <h3 className="mt-2 truncate text-xl font-medium text-slate-900">
@@ -48,7 +48,7 @@ const HotelCard = ({ hotel, variant = 'default' }: IProps) => {
 
           <div className="mt-2 flex items-center gap-1 text-xs text-slate-400">
             <MapPin className="w-[20.75] h-[24.5px] text-gray-400 " />
-            <span className="text-base text-gray-400 leading-7.25 tracking-[-0.24px] ">{hotel.location}</span>
+            <span className="text-base text-gray-400 leading-7.25 tracking-[-0.24px] ">{hotel.address}</span>
           </div>
         </div>
       </article>

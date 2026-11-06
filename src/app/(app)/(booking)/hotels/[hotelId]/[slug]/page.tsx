@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import RoomDetailsImage from "../../_components/RoomDetailsImage"
 import RoomDetailsInfo from "../../_components/RoomDetailsInfo"
 import roomImg from "@/assets/images/room-details.svg";
@@ -34,3 +35,24 @@ const RoomDetailsPage = () => {
 }
 
 export default RoomDetailsPage
+=======
+import RoomDetailsPage from "../../_components/RoomDetailsPage";
+import { getRoomDetailsMetadata } from "../../metadata";
+
+interface IProps {
+  params: Promise<{
+    hotelId: string;
+    slug: string;
+  }>;
+}
+
+export async function generateMetadata({ params }: IProps) {
+  const { slug } = await params;
+  return getRoomDetailsMetadata(slug);
+}
+
+export default async function Page({ params }: IProps) {
+  const { hotelId, slug } = await params;
+  return <RoomDetailsPage hotelId={hotelId} roomSlug={slug} />;
+}
+>>>>>>> 9044ef1f4853745c6a8b6e12648a3184b2920bd7
